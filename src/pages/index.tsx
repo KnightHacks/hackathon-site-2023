@@ -145,7 +145,7 @@ function ScheduleSection() {
   return (
     <section className="mb-10">
       <Header>Schedule</Header>
-      <div className="mb-4 flex flex-col gap-2 sm:flex-row">
+      <div className="mb-8 flex flex-col gap-2 sm:flex-row">
         {days.map((day, i) => (
           <button
             key={i}
@@ -158,7 +158,7 @@ function ScheduleSection() {
           </button>
         ))}
       </div>
-      <ul className="flex flex-col gap-6">
+      <ul className="flex flex-col gap-4">
         {Array.from({ length: 5 }).map((_, i) => (
           <Event key={i} />
         ))}
