@@ -32,7 +32,7 @@ function Header({
 function MainSection() {
   return (
     <section className="mb-10" id="">
-      <div className="my-8 text-center text-6xl font-bold">
+      <div className="my-12 text-center text-6xl font-bold">
         Knight <br />
         Hacks
       </div>
@@ -122,6 +122,15 @@ function FAQ({ QAs }: { QAs: QA[] }) {
   );
 }
 
+function Event() {
+  return (
+    <li>
+      <div className="text-2xl font-extrabold">Lorem Ipsum</div>
+      <div className="text-lg">4:00 - 7:00 PM EST</div>
+    </li>
+  );
+}
+
 function ScheduleSection() {
   const [selectedDay, setSelectedDay] = useState(0);
   const days = ["Fri, Oct 6", "Sat, Oct 7", "Sun, Oct 8"];
@@ -130,6 +139,8 @@ function ScheduleSection() {
     "border border-black px-6 py-2 font-bold text-white bg-black";
   const unselectedDayStyles =
     "border border-black px-6 py-2 font-bold text-black";
+
+  // TODO: Render out particular schedule based on the selected day
 
   return (
     <section className="mb-10">
@@ -147,12 +158,11 @@ function ScheduleSection() {
           </button>
         ))}
       </div>
-      <div>
-        <div>{days[selectedDay]}</div>
-        <ul>
-          <li></li>
-        </ul>
-      </div>
+      <ul className="flex flex-col gap-6">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Event key={i} />
+        ))}
+      </ul>
     </section>
   );
 }
@@ -165,7 +175,7 @@ function SponsorsSection() {
       <Header className="text-center">Sponsors</Header>
       <div className="grid gap-4 text-center sm:grid-cols-2 md:grid-cols-3">
         {sponsors.map((_, i) => (
-          <div key={i} className="text-3xl font-semibold">
+          <div key={i} className="text-3xl font-extrabold uppercase">
             Lorem Ipsum
           </div>
         ))}
