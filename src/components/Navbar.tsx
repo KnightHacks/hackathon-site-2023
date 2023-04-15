@@ -7,12 +7,15 @@ export default function Navbar() {
       <button className="mr-4">
         <Bars3Icon className="h-7 w-7" />
       </button>
-      <Link className="font-bold leading-4" href="/">
+      <Link href="/" className="font-bold leading-4">
         Knight <br /> Hacks
       </Link>
-      <button className="ml-auto border-black bg-black px-4 py-2 font-bold text-white">
+      <Link
+        href="/register"
+        className="ml-auto border-black bg-black px-4 py-2 font-bold text-white"
+      >
         Register
-      </button>
+      </Link>
     </nav>
   );
 }
