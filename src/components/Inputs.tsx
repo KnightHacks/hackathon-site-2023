@@ -4,7 +4,12 @@ export function Input({ label }: { label: string }) {
       <label className="mb-1" htmlFor={label}>
         {label}
       </label>
-      <input className="px-4 py-3" id={label} type="text" />
+      <input
+        className="border px-4 py-3"
+        placeholder={label}
+        id={label}
+        type="text"
+      />
     </div>
   );
 }
@@ -17,9 +22,11 @@ export function Select({
   options: string[];
 }) {
   return (
-    <div>
-      <label htmlFor={label}>{label}</label>
-      <select id={label}>
+    <div className="mb-4 flex flex-col">
+      <label className="mb-1" htmlFor={label}>
+        {label}
+      </label>
+      <select className="border px-4 py-3" placeholder={label} id={label}>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
