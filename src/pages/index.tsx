@@ -5,15 +5,13 @@ import { useState } from "react";
 
 export default function Home() {
   return (
-    <main className="px-6">
-      <div className="mx-auto my-28 w-full max-w-screen-md border px-8">
-        <MainSection />
-        <AboutSection />
-        <FAQSection />
-        <ScheduleSection />
-        <SponsorsSection />
-      </div>
-    </main>
+    <div className="mx-auto my-28 border px-8">
+      <MainSection />
+      <AboutSection />
+      <FAQSection />
+      <ScheduleSection />
+      <SponsorsSection />
+    </div>
   );
 }
 
@@ -141,7 +139,6 @@ function ScheduleSection() {
     "border border-black px-6 py-2 font-bold text-black";
 
   // TODO: Render out particular schedule based on the selected day
-
   return (
     <section className="mb-10">
       <Header>Schedule</Header>

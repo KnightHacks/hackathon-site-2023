@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`${inter.className}`}>
       <Navbar />
-      {children}
+      <main className="mx-auto w-full max-w-screen-md px-6">{children}</main>
     </div>
   );
 }
