@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useState } from "react";
+import { HTMLAttributes, HTMLProps, useState } from "react";
 
 export default function Home() {
   return (
@@ -14,16 +14,11 @@ export default function Home() {
     </div>
   );
 }
+// Create a section element that can take all the props that a regular section element can
 
-function Header({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function Header({ children, className, ...rest }: HTMLAttributes<HTMLElement>) {
   return (
-    <div className={`mb-2 text-xl font-bold ${className}`}>{children}</div>
+    <div {...rest} className={`mb-2 text-xl font-bold ${className}`}>{children}</div>
   );
 }
 
@@ -58,7 +53,7 @@ function MainSection() {
 function AboutSection() {
   return (
     <section className="mb-10">
-      <Header>About Us</Header>
+      <Header id="about">About Us</Header>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum veritatis
         libero, voluptatum consectetur distinctio placeat aperiam quaerat
@@ -83,7 +78,7 @@ function FAQSection() {
 
   return (
     <section className="mb-10">
-      <Header>FAQ</Header>
+      <Header id="faq">FAQ</Header>
       <FAQ QAs={QAs} />
     </section>
   );
@@ -104,9 +99,8 @@ function FAQ({ QAs }: { QAs: QA[] }) {
               <Disclosure.Button className="flex w-full justify-between bg-black px-6 py-4 text-sm font-medium text-white">
                 <span>{question}</span>
                 <ChevronUpIcon
-                  className={`${
-                    open ? "rotate-180 transform" : ""
-                  } h-5 w-5 text-white`}
+                  className={`${open ? "rotate-180 transform" : ""
+                    } h-5 w-5 text-white`}
                 />
               </Disclosure.Button>
               <Disclosure.Panel className="border-x border-b px-6 py-4 text-sm shadow">
@@ -141,7 +135,7 @@ function ScheduleSection() {
   // TODO: Render out particular schedule based on the selected day
   return (
     <section className="mb-10">
-      <Header>Schedule</Header>
+      <Header id="schedule">Schedule</Header>
       <div className="mb-8 flex flex-col gap-2 sm:flex-row">
         {days.map((day, i) => (
           <button
@@ -169,7 +163,7 @@ function SponsorsSection() {
 
   return (
     <section className="mb-10">
-      <Header className="text-center">Sponsors</Header>
+      <Header id="sponsors" className="text-center">Sponsors</Header>
       <div className="grid gap-4 text-center sm:grid-cols-2 md:grid-cols-3">
         {sponsors.map((_, i) => (
           <div key={i} className="text-3xl font-extrabold uppercase">
