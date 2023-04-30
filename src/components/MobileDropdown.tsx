@@ -1,3 +1,4 @@
+import { scrollTo } from '@/utils';
 import { Menu, Transition } from '@headlessui/react'
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { Fragment } from 'react';
@@ -20,41 +21,37 @@ export default function MobileDropdown() {
         <Menu.Items className="absolute border flex flex-col bg-white top-10 w-48 p-2">
           <Menu.Item>
             {({ active }) => (
-              <a
+              <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                href="#about"
-              >
+                onClick={() => scrollTo("#about")}>
                 About
-              </a>
+              </button>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
+              <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                href="#faq"
-              >
+                onClick={() => scrollTo("#faq")}>
                 FAQ
-              </a>
+              </button>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
+              <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                href="#schedule"
-              >
+                onClick={() => scrollTo("#schedule")}>
                 Schedule
-              </a>
+              </button>
             )}
           </Menu.Item>      <Menu.Item>
             {({ active }) => (
-              <a
+              <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                href="#sponsors"
-              >
+                onClick={() => scrollTo("#sponsors")}>
                 Sponsors
-              </a>
+              </button>
             )}
           </Menu.Item>
         </Menu.Items>

@@ -2,6 +2,11 @@ import Link from "next/link";
 import MobileDropdown from "./MobileDropdown";
 
 export default function Navbar() {
+  const scrollTo = (id: string) => {
+    const element: HTMLElement = document.querySelector(id)!;
+    window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 100 });
+  }
+
   return (
     <nav className="fixed top-0 flex h-20 w-full items-center justify-between bg-white px-4 shadow">
       <div className="flex">
@@ -12,16 +17,16 @@ export default function Navbar() {
       </div>
       <ul className="hidden gap-4 font-bold sm:flex">
         <li>
-          <Link href="/">About</Link>
+          <button onClick={() => scrollTo("#about")}>About</button>
         </li>
         <li>
-          <Link href="/">FAQ</Link>
+          <button onClick={() => scrollTo("#faq")}>FAQ</button>
         </li>
         <li>
-          <Link href="/">Schedule</Link>
+          <button onClick={() => scrollTo("#schedule")}>Schedule</button>
         </li>
         <li>
-          <Link href="/">Sponsors</Link>
+          <button onClick={() => scrollTo("#sponsors")}>Sponsors</button>
         </li>
       </ul>
       <Link
