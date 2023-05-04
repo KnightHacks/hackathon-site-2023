@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MobileDropdown from "./MobileDropdown";
 import { useRouter } from "next/router";
-import { ArrowLongRightIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export default function Navbar() {
   const { pathname } = useRouter();
@@ -12,16 +12,18 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 flex h-20 w-full items-center justify-between bg-white px-4 shadow">
+    <nav className="fixed top-0 flex h-20 w-full items-center justify-between bg-white px-6 shadow">
       <div className="flex">
-        <MobileDropdown />
         {pathname === "/" ? (
-          <button
-            onClick={() => scrollTo("#main")}
-            className="text-left font-bold leading-4"
-          >
-            Knight <br /> Hacks
-          </button>
+          <>
+            <MobileDropdown />
+            <button
+              onClick={() => scrollTo("#main")}
+              className="text-left font-bold leading-4"
+            >
+              Knight <br /> Hacks
+            </button>
+          </>
         ) : (
           <Link href="/" className="font-bold leading-4">
             Knight <br /> Hacks
