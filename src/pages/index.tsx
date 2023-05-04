@@ -1,11 +1,12 @@
+import { Header } from "@/components/Header";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { HTMLAttributes, HTMLProps, useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
   return (
-    <div className="mx-auto my-28 border px-8">
+    <div className="mx-auto mb-10 mt-28 border px-8">
       <MainSection />
       <AboutSection />
       <FAQSection />
@@ -14,17 +15,10 @@ export default function Home() {
     </div>
   );
 }
-// Create a section element that can take all the props that a regular section element can
-
-function Header({ children, className, ...rest }: HTMLAttributes<HTMLElement>) {
-  return (
-    <div {...rest} className={`mb-2 text-xl font-bold ${className}`}>{children}</div>
-  );
-}
 
 function MainSection() {
   return (
-    <section className="mb-10" id="">
+    <section className="mb-10">
       <div className="my-12 text-center text-6xl font-bold">
         Knight <br />
         Hacks
@@ -99,8 +93,9 @@ function FAQ({ QAs }: { QAs: QA[] }) {
               <Disclosure.Button className="flex w-full justify-between bg-black px-6 py-4 text-sm font-medium text-white">
                 <span>{question}</span>
                 <ChevronUpIcon
-                  className={`${open ? "rotate-180 transform" : ""
-                    } h-5 w-5 text-white`}
+                  className={`${
+                    open ? "rotate-180 transform" : ""
+                  } h-5 w-5 text-white`}
                 />
               </Disclosure.Button>
               <Disclosure.Panel className="border-x border-b px-6 py-4 text-sm shadow">
@@ -163,7 +158,9 @@ function SponsorsSection() {
 
   return (
     <section className="mb-10">
-      <Header id="sponsors" className="text-center">Sponsors</Header>
+      <Header id="sponsors" className="text-center">
+        Sponsors
+      </Header>
       <div className="grid gap-4 text-center sm:grid-cols-2 md:grid-cols-3">
         {sponsors.map((_, i) => (
           <div key={i} className="text-3xl font-extrabold uppercase">
