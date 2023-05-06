@@ -3,6 +3,17 @@ export const scrollTo = (id: string) => {
   window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 100 });
 };
 
+export const ethnicities = [
+  "American Indian or Alaska Native",
+  "Asian",
+  "Black or African American",
+  "Hispanic or Latino",
+  "Middle Eastern",
+  "Native Hawaiian or Other Pacific Islander",
+  "White",
+  "Two or more",
+];
+
 export const countries = [
   "United States",
   "Canada",
@@ -261,4 +272,15 @@ export const graduationYears = [
   "Summer 2027",
   "Fall 2027",
   "Spring 2027",
+];
+
+export const tracks = ["Beginner", "Intermediate/Advanced", "Cybersecurity"];
+
+export const yearInCollege = [
+  "Freshman",
+  "Sophomore",
+  "Junior",
+  "Senior",
+  "Graduate",
+  "Other",
 ];
