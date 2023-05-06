@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { countries, graduationYears, tracks, yearInCollege } from "@/utils";
+import { countries, graduationYears, tracks } from "@/utils";
 import { HTMLProps, useState } from "react";
 import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
 
@@ -157,7 +157,6 @@ type Fields = {
   email: string;
   school: string;
   major: string;
-  yearInCollege: string;
   graduationYear: string;
   isComfortableSharingInfo: boolean;
   whyAttending: string;
@@ -238,12 +237,6 @@ export default function Register() {
           field="major"
           label="Major"
           placeholder="Major"
-        />
-        <Select
-          register={register}
-          field="yearInCollege"
-          label="Year in College"
-          options={yearInCollege}
         />
         <Select
           register={register}

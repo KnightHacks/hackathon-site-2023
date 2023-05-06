@@ -275,12 +275,3 @@ export const graduationYears = [
 ];
 
 export const tracks = ["Beginner", "Intermediate/Advanced", "Cybersecurity"];
-
-export const yearInCollege = [
-  "Freshman",
-  "Sophomore",
-  "Junior",
-  "Senior",
-  "Graduate",
-  "Other",
-];
