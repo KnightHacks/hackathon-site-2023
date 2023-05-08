@@ -25,7 +25,7 @@ function MainSection() {
         <Image
           width={500}
           height={500}
-          src="/gold_dragon_full_logo.png"
+          src="/gold_dragon_full_logo.svg"
           alt="KnightHacks logo"
         />
       </div>

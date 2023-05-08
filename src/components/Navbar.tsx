@@ -25,7 +25,7 @@ export default function Navbar() {
               <Image
                 width={100}
                 height={100}
-                src="/gold_dragon_full_logo.png"
+                src="/gold_dragon_full_logo.svg"
                 alt="KnightHacks logo"
               />
             </button>
@@ -35,7 +35,7 @@ export default function Navbar() {
             <Image
               width={100}
               height={100}
-              src="/gold_dragon_full_logo.png"
+              src="/gold_dragon_full_logo.svg"
               alt="KnightHacks logo"
             />
           </Link>
