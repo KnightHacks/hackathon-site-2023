@@ -1,7 +1,21 @@
 import { Header } from "@/components/Header";
-import { countries, graduationYears, tracks } from "@/utils";
+import {
+  countries,
+  ethnicities,
+  graduationYears,
+  schools,
+  tracks,
+} from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { HTMLProps, useState } from "react";
-import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
+import {
+  FieldError,
+  Path,
+  SubmitHandler,
+  UseFormRegister,
+  useForm,
+} from "react-hook-form";
+import * as z from "zod";
 
 const ResumeUpload = ({
   register,
@@ -39,48 +53,51 @@ const ResumeUpload = ({
 
 const Input = ({
   label,
-  field,
+  name,
   register,
+  errors,
   ...props
 }: {
   label: string;
-  field: keyof Fields;
+  name: Path<Fields>;
   register: UseFormRegister<Fields>;
+  errors?: FieldError;
 } & HTMLProps<HTMLInputElement>) => {
   return (
-    <div className="mb-4 flex flex-col">
-      <label className="mb-1" htmlFor={label}>
-        {label}
-      </label>
+    <label className="mb-4 flex flex-col" htmlFor={label}>
+      {label}
       <input
-        className="border px-4 py-3"
+        className={`border px-4 py-3 outline-none transition duration-200 ease-in-out ${
+          errors
+            ? "border-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
+            : "focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400"
+        }`}
         id={label}
-        {...register(field)}
+        {...register(name)}
         {...props}
       />
-    </div>
+      {errors && <p>{errors.message}</p>}
+    </label>
   );
 };
 
 const TextArea = ({
   label,
-  field,
+  name,
   register,
   ...props
 }: {
   label: string;
-  field: keyof Fields;
+  name: Path<Fields>;
   register: UseFormRegister<Fields>;
 } & HTMLProps<HTMLTextAreaElement>) => {
   return (
     <div className="mb-4 flex flex-col">
-      <label className="mb-1" htmlFor={label}>
-        {label}
-      </label>
+      <label htmlFor={label}>{label}</label>
       <textarea
         className="border px-4 py-3"
         id={label}
-        {...register(field)}
+        {...register(name)}
         {...props}
       />
     </div>
@@ -89,25 +106,23 @@ const TextArea = ({
 
 const Select = ({
   label,
-  field,
+  name,
   options,
   register,
   ...props
 }: {
   label: string;
-  field: keyof Fields;
-  options: string[];
+  name: Path<Fields>;
+  options: readonly string[];
   register: UseFormRegister<Fields>;
-}) => {
+} & HTMLProps<HTMLSelectElement>) => {
   return (
-    <div className="mb-4 flex flex-col">
-      <label className="mb-1" htmlFor={label}>
-        {label}
-      </label>
+    <label className="mb-4 flex flex-col" htmlFor={props.id}>
+      {label}
       <select
         className="border px-4 py-3"
         id={label}
-        {...register(field)}
+        {...register(name)}
         {...props}
       >
         {options.map((option) => (
@@ -116,31 +131,27 @@ const Select = ({
           </option>
         ))}
       </select>
-    </div>
+    </label>
   );
 };
 
 function Checkbox({
-  text,
+  label,
   register,
-  field,
+  errors,
+  name,
   ...props
 }: {
-  text: string;
+  label: string;
   register: UseFormRegister<Fields>;
-  field: keyof Fields;
+  errors?: FieldError;
+  name: Path<Fields>;
 } & HTMLProps<HTMLInputElement>) {
   return (
-    <label className="mb-2 flex" htmlFor={props.id}>
-      <div>
-        <input
-          className="mr-3"
-          {...register(field)}
-          {...props}
-          type="checkbox"
-        />
-      </div>
-      <span>{text}</span>
+    <label className="mb-2 block" htmlFor={props.id}>
+      <input className="mr-3" {...register(name)} {...props} type="checkbox" />
+      <span>{label}</span>
+      {errors && <p className="w-full">{errors.message}</p>}
     </label>
   );
 }
@@ -152,7 +163,7 @@ type Fields = {
   track: string;
   ethnicity: string;
   country: string;
-  birthdate: string;
+  birthdate: Date;
   phoneNumber: string;
   email: string;
   school: string;
@@ -168,12 +179,49 @@ type Fields = {
   isSubscribedToMLHNewsletter: boolean;
 };
 
+const schema = z.object({
+  firstName: z.string().nonempty("First name is required"),
+  lastName: z.string().nonempty("Last name is required"),
+  resume: z.any(),
+  track: z.enum(tracks),
+  ethnicity: z.enum(ethnicities),
+  country: z.enum(countries),
+  birthdate: z.coerce.date({
+    errorMap: () => ({
+      message: "Birthdate is required",
+    }),
+  }),
+  phoneNumber: z.string().nonempty("Phone number is required"),
+  email: z.string().nonempty("Email is required").email("Invalid email"),
+  school: z.string().nonempty("School is required"),
+  major: z.string().nonempty("Major is required"),
+  graduationYear: z.enum(graduationYears),
+  isComfortableSharingInfo: z.boolean(),
+  whyAttending: z.string(),
+  whatHopingToLearn: z.string(),
+  github: z.string().url().optional().or(z.literal("")),
+  linkedin: z.string().url().optional().or(z.literal("")),
+  hasReadMLHCodeOfConduct: z.literal(true, {
+    errorMap: () => ({
+      message: "Field must be checked",
+    }),
+  }),
+  isAuthorizedToShareAppWithMLH: z.literal(true, {
+    errorMap: () => ({
+      message: "Field must be checked",
+    }),
+  }),
+  isSubscribedToMLHNewsletter: z.boolean(),
+});
+
 export default function Register() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Fields>();
+  } = useForm<Fields>({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit: SubmitHandler<Fields> = (data) => console.log(data);
   return (
@@ -182,13 +230,15 @@ export default function Register() {
         <Header>Welcome Hacker!</Header>
         <Input
           register={register}
-          field="firstName"
+          errors={errors.firstName}
+          name="firstName"
           label="First Name"
           placeholder="First Name"
         />
         <Input
           register={register}
-          field="lastName"
+          name="lastName"
+          errors={errors.lastName}
           label="Last Name"
           placeholder="Last Name"
         />
@@ -196,72 +246,76 @@ export default function Register() {
         <Header>About You</Header>
         <Select
           register={register}
-          field="track"
+          name="track"
           label="Track"
           options={tracks}
         />
         <Select
           register={register}
-          field="country"
+          name="country"
           label="Country"
           options={countries}
         />
         <Input
           register={register}
-          field="birthdate"
+          errors={errors.birthdate}
+          name="birthdate"
           label="Birthdate"
           type="date"
         />
         <Header>Contact</Header>
         <Input
           register={register}
-          field="phoneNumber"
+          errors={errors.phoneNumber}
+          name="phoneNumber"
           label="Phone Number"
           placeholder="Phone Number"
         />
         <Input
           register={register}
-          field="email"
+          errors={errors.email}
+          name="email"
           label="Email"
           placeholder="Email"
         />
         <Header>School</Header>
-        <Input
+        <Select
           register={register}
-          field="school"
+          name="school"
           label="School"
-          placeholder="School"
+          options={schools}
         />
         <Input
           register={register}
-          field="major"
+          errors={errors.major}
+          name="major"
           label="Major"
           placeholder="Major"
         />
         <Select
           register={register}
-          field="graduationYear"
+          name="graduationYear"
           label="Graduation Year"
           options={graduationYears}
         />
         <Header>Hackathon</Header>
-        <p>
+        <p className="mb-1">
           Is it okay if we share your information (name, resume, graduation
           year, etc.) with sponsors?
         </p>
         <Checkbox
           register={register}
-          field="isComfortableSharingInfo"
-          text="I am comfortable with sharing my information with sponsors"
+          name="isComfortableSharingInfo"
+          label="I am comfortable with sharing my information with sponsors"
         />
         <TextArea
           register={register}
-          field="whyAttending"
+          name="whyAttending"
           label="Why are you attending KnightHacks?"
         />
         <TextArea
           register={register}
-          field="whyAttending"
+          name="whyAttending"
           label="What do you hope to learn at KnightHacks?"
         />
         <Header>External Links</Header>
@@ -271,33 +325,37 @@ export default function Register() {
         </div>
         <Input
           register={register}
-          field="github"
+          errors={errors.github}
+          name="github"
           label="Github"
           placeholder="Github"
         />
         <Input
           register={register}
-          field="linkedin"
+          errors={errors.linkedin}
+          name="linkedin"
           label="LinkedIn"
           placeholder="LinkedIn"
         />
         <Header>Final Steps!</Header>
         <Checkbox
           register={register}
-          field="hasReadMLHCodeOfConduct"
-          text="I have read and agree to the MLH Code of Conduct"
+          errors={errors.hasReadMLHCodeOfConduct}
+          name="hasReadMLHCodeOfConduct"
+          label="I have read and agree to the MLH Code of Conduct"
         />
         <Checkbox
           register={register}
-          field="isAuthorizedToShareAppWithMLH"
-          text="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational emails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
+          errors={errors.isAuthorizedToShareAppWithMLH}
+          name="isAuthorizedToShareAppWithMLH"
+          label="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational emails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
         />
         <Checkbox
           register={register}
-          field="isSubscribedToMLHNewsletter"
-          text="I authorize you to share my provided information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
+          name="isSubscribedToMLHNewsletter"
+          label="I authorize you to share my provided information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
         />
-        <button className="w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
+        <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
           Submit
         </button>
       </form>
