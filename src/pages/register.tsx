@@ -64,19 +64,28 @@ const Input = ({
   errors?: FieldError;
 } & HTMLProps<HTMLInputElement>) => {
   return (
-    <label className="mb-4 flex flex-col" htmlFor={label}>
-      {label}
+    <label
+      className={`mb-4 flex flex-col duration-200 ease-in-out  ${
+        errors && "text-red-500"
+      }`}
+      htmlFor={label}
+    >
+      <div>
+        {label}
+        {errors && (
+          <span className="text-sm italic text-red-500">
+            - {errors.message}
+          </span>
+        )}
+      </div>
       <input
-        className={`border px-4 py-3 outline-none transition duration-200 ease-in-out ${
-          errors
-            ? "border-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
-            : "focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 ${
+          errors ? "border-red-500 focus:ring-red-500" : " focus:ring-blue-500"
         }`}
         id={label}
         {...register(name)}
         {...props}
       />
-      {errors && <p>{errors.message}</p>}
     </label>
   );
 };
