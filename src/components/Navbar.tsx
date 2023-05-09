@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 flex h-20 w-full items-center justify-between bg-white px-6 shadow">
+    <nav className="fixed top-0 flex h-16 w-full items-center justify-between border-b bg-white px-6">
       <div className="flex">
         {pathname === "/" ? (
           <>
@@ -43,6 +43,9 @@ export default function Navbar() {
       </div>
       {pathname === "/" && (
         <ul className="hidden gap-4 font-bold sm:flex">
+          <li>
+            <button onClick={() => scrollTo("#main")}>Home</button>
+          </li>
           <li>
             <button onClick={() => scrollTo("#about")}>About</button>
           </li>
