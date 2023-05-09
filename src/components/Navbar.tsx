@@ -23,8 +23,8 @@ export default function Navbar() {
               className="text-left font-bold leading-4"
             >
               <Image
-                width={150}
-                height={150}
+                width={100}
+                height={100}
                 src="/gold_dragon_full_logo.png"
                 alt="KnightHacks logo"
               />
@@ -33,8 +33,8 @@ export default function Navbar() {
         ) : (
           <Link href="/" className="font-bold leading-4">
             <Image
-              width={150}
-              height={150}
+              width={100}
+              height={100}
               src="/gold_dragon_full_logo.png"
               alt="KnightHacks logo"
             />
