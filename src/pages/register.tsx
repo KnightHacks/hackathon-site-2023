@@ -74,6 +74,7 @@ const Input = ({
         {label}
         {errors && (
           <span className="text-sm italic text-red-500">
+            {" "}
             - {errors.message}
           </span>
         )}
@@ -118,16 +119,26 @@ const Select = ({
   name,
   options,
   register,
+  errors,
   ...props
 }: {
   label: string;
   name: Path<Fields>;
   options: readonly string[];
   register: UseFormRegister<Fields>;
+  errors?: FieldError;
 } & HTMLProps<HTMLSelectElement>) => {
   return (
     <label className="mb-4 flex flex-col" htmlFor={props.id}>
-      {label}
+      <div>
+        {label}
+        {errors && (
+          <span className="text-sm italic text-red-500">
+            {" "}
+            - {errors.message}
+          </span>
+        )}
+      </div>
       <select
         className="border px-4 py-3"
         id={label}
@@ -194,7 +205,7 @@ const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
   lastName: z.string().nonempty("This field is required"),
   resume: z.any(),
-  track: z.array(z.enum(tracks)),
+  track: z.array(z.enum(tracks)).min(1, "At least one track must be selected"),
   ethnicity: z.enum(ethnicities),
   country: z.enum(countries),
   birthdate: z.coerce.date({
@@ -248,26 +259,27 @@ export default function Register() {
           errors={errors.firstName}
           name="firstName"
           label="First Name"
-          placeholder="First Name"
+          placeholder="John"
         />
         <Input
           register={register}
           name="lastName"
           errors={errors.lastName}
           label="Last Name"
-          placeholder="Last Name"
+          placeholder="Doe"
         />
         <ResumeUpload register={register} />
         <Header>About You</Header>
         <Select
           register={register}
           name="ethnicity"
-          label="ethnicity"
+          label="Ethnicity"
           options={ethnicities}
         />
         <Select
           multiple
           register={register}
+          errors={errors.track}
           name="track"
           label="Track"
           options={tracks}
@@ -291,14 +303,14 @@ export default function Register() {
           errors={errors.phoneNumber}
           name="phoneNumber"
           label="Phone Number"
-          placeholder="Phone Number"
+          placeholder="(123) 456-7890"
         />
         <Input
           register={register}
           errors={errors.email}
           name="email"
           label="Email"
-          placeholder="Email"
+          placeholder="johndoe@knighthacks.com"
         />
         <Header>School</Header>
         <Select
@@ -312,7 +324,7 @@ export default function Register() {
           errors={errors.major}
           name="major"
           label="Major"
-          placeholder="Major"
+          placeholder="Computer Science"
         />
         <Select
           register={register}
@@ -350,14 +362,14 @@ export default function Register() {
           errors={errors.github}
           name="github"
           label="Github"
-          placeholder="Github"
+          placeholder="https://github.com/AwesomeSauce"
         />
         <Input
           register={register}
           errors={errors.linkedin}
           name="linkedin"
           label="LinkedIn"
-          placeholder="LinkedIn"
+          placeholder="https://www.linkedin.com/in/yourname/"
         />
         <Header>Final Steps!</Header>
         <Checkbox
