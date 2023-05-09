@@ -1,7 +1,8 @@
-import Link from "next/link";
-import MobileDropdown from "./MobileDropdown";
-import { useRouter } from "next/router";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import MobileDropdown from "./MobileDropdown";
 
 export default function Navbar() {
   const { pathname } = useRouter();
@@ -21,12 +22,22 @@ export default function Navbar() {
               onClick={() => scrollTo("#main")}
               className="text-left font-bold leading-4"
             >
-              Knight <br /> Hacks
+              <Image
+                width={150}
+                height={150}
+                src="/gold_dragon_full_logo.png"
+                alt="KnightHacks logo"
+              />
             </button>
           </>
         ) : (
           <Link href="/" className="font-bold leading-4">
-            Knight <br /> Hacks
+            <Image
+              width={150}
+              height={150}
+              src="/  gold_dragon_full_logo.png"
+              alt="KnightHacks logo"
+            />
           </Link>
         )}
       </div>

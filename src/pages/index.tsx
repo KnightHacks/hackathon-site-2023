@@ -1,12 +1,14 @@
 import { Header } from "@/components/Header";
+import { scrollTo } from "@/utils";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
   return (
-    <div className="mx-auto mb-10 mt-28 border px-8">
+    <div className="mx-auto my-40 mb-10 px-8">
       <MainSection />
       <AboutSection />
       <FAQSection />
@@ -19,9 +21,13 @@ export default function Home() {
 function MainSection() {
   return (
     <section className="mb-10">
-      <div className="my-12 text-center text-6xl font-bold">
-        Knight <br />
-        Hacks
+      <div className="my-12 flex justify-center text-6xl font-bold">
+        <Image
+          width={500}
+          height={500}
+          src="/gold_dragon_full_logo.png"
+          alt="KnightHacks logo"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Link
@@ -30,9 +36,12 @@ function MainSection() {
         >
           Register
         </Link>
-        <Link href="/" className="border py-4 text-center font-bold">
+        <button
+          onClick={() => scrollTo("#sponsors")}
+          className="border py-4 text-center font-bold"
+        >
           Sponsors
-        </Link>
+        </button>
         <Link
           href="https://discord.gg/Kv5g9vf"
           className="border py-4 text-center font-bold"
