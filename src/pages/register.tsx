@@ -194,7 +194,7 @@ const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
   lastName: z.string().nonempty("This field is required"),
   resume: z.any(),
-  track: z.enum(tracks),
+  track: z.array(z.enum(tracks)),
   ethnicity: z.enum(ethnicities),
   country: z.enum(countries),
   birthdate: z.coerce.date({
@@ -208,8 +208,8 @@ const schema = z.object({
   major: z.string().nonempty("This is field is required"),
   graduationYear: z.enum(graduationYears),
   isComfortableSharingInfo: z.boolean(),
-  whyAttending: z.string(),
-  whatHopingToLearn: z.string(),
+  whyAttending: z.string().optional().or(z.literal("")),
+  whatHopingToLearn: z.string().optional().or(z.literal("")),
   github: z.string().url().optional().or(z.literal("")),
   linkedin: z.string().url().optional().or(z.literal("")),
   hasReadMLHCodeOfConduct: z.literal(true, {
@@ -229,10 +229,14 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Fields>({
     resolver: zodResolver(schema),
   });
+
+  // Watch errors
+  console.log(errors);
 
   const onSubmit: SubmitHandler<Fields> = (data) => console.log(data);
   return (
@@ -256,6 +260,13 @@ export default function Register() {
         <ResumeUpload register={register} />
         <Header>About You</Header>
         <Select
+          register={register}
+          name="ethnicity"
+          label="ethnicity"
+          options={ethnicities}
+        />
+        <Select
+          multiple
           register={register}
           name="track"
           label="Track"
@@ -364,7 +375,7 @@ export default function Register() {
         <Checkbox
           register={register}
           name="isSubscribedToMLHNewsletter"
-          label="I authorize you to share my provided information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
+          label="I authorize Major League Hacking to send me occasional messages about hackathons including pre- and post-event informational emails."
         />
         <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
           Submit
