@@ -188,6 +188,7 @@ const schema = z.object({
   }),
   phoneNumber: z.string().nonempty("This field is required"),
   email: z.string().nonempty("This field is required").email("Invalid email"),
+  discord: z.string().optional().or(z.literal("")),
   school: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This is field is required"),
   graduationYear: z.enum(graduationYears),
@@ -269,6 +270,13 @@ export default function Register() {
           type="date"
         />
         <Header>Contact</Header>
+        <Input
+          register={register}
+          errorMessage={errors.discord?.message}
+          name="discord"
+          label="Discord"
+          placeholder="johndoe#1234"
+        />
         <Input
           register={register}
           errorMessage={errors.phoneNumber?.message}
