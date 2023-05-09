@@ -160,7 +160,9 @@ function Checkbox({
     <label className="mb-2 block" htmlFor={props.id}>
       <input className="mr-3" {...register(name)} {...props} type="checkbox" />
       <span>{label}</span>
-      {errors && <p className="w-full">{errors.message}</p>}
+      {errors && (
+        <p className="text-sm italic text-red-500">{errors.message}</p>
+      )}
     </label>
   );
 }
@@ -189,21 +191,21 @@ type Fields = {
 };
 
 const schema = z.object({
-  firstName: z.string().nonempty("First name is required"),
-  lastName: z.string().nonempty("Last name is required"),
+  firstName: z.string().nonempty("This field is required"),
+  lastName: z.string().nonempty("This field is required"),
   resume: z.any(),
   track: z.enum(tracks),
   ethnicity: z.enum(ethnicities),
   country: z.enum(countries),
   birthdate: z.coerce.date({
     errorMap: () => ({
-      message: "Birthdate is required",
+      message: "This field is required",
     }),
   }),
-  phoneNumber: z.string().nonempty("Phone number is required"),
-  email: z.string().nonempty("Email is required").email("Invalid email"),
-  school: z.string().nonempty("School is required"),
-  major: z.string().nonempty("Major is required"),
+  phoneNumber: z.string().nonempty("This field is required"),
+  email: z.string().nonempty("This field is required").email("Invalid email"),
+  school: z.string().nonempty("This field is required"),
+  major: z.string().nonempty("This is field is required"),
   graduationYear: z.enum(graduationYears),
   isComfortableSharingInfo: z.boolean(),
   whyAttending: z.string(),
@@ -212,12 +214,12 @@ const schema = z.object({
   linkedin: z.string().url().optional().or(z.literal("")),
   hasReadMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({
-      message: "Field must be checked",
+      message: "This field must be checked",
     }),
   }),
   isAuthorizedToShareAppWithMLH: z.literal(true, {
     errorMap: () => ({
-      message: "Field must be checked",
+      message: "This field must be checked",
     }),
   }),
   isSubscribedToMLHNewsletter: z.boolean(),
