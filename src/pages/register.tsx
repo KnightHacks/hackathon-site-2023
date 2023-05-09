@@ -194,8 +194,8 @@ const schema = z.object({
   isComfortableSharingInfo: z.boolean(),
   whyAttending: z.string().optional().or(z.literal("")),
   whatHopingToLearn: z.string().optional().or(z.literal("")),
-  github: z.string().url(),
-  linkedin: z.string().url(),
+  github: z.string().url().optional().or(z.literal("")),
+  linkedin: z.string().url().optional().or(z.literal("")),
   hasReadMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({
       message: "This field must be checked",
