@@ -55,33 +55,32 @@ const Input = ({
   label,
   name,
   register,
-  errors,
+  errorMessage,
   ...props
 }: {
   label: string;
   name: Path<Fields>;
   register: UseFormRegister<Fields>;
-  errors?: FieldError;
+  errorMessage?: string;
 } & HTMLProps<HTMLInputElement>) => {
   return (
     <label
       className={`mb-4 flex flex-col duration-200 ease-in-out  ${
-        errors && "text-red-500"
+        errorMessage && "text-red-500"
       }`}
       htmlFor={label}
     >
       <div>
         {label}
-        {errors && (
-          <span className="text-sm italic text-red-500">
-            {" "}
-            - {errors.message}
-          </span>
+        {errorMessage && (
+          <span className="text-sm italic text-red-500"> - {errorMessage}</span>
         )}
       </div>
       <input
         className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 ${
-          errors ? "border-red-500 focus:ring-red-500" : " focus:ring-blue-500"
+          errorMessage
+            ? "border-red-500 focus:ring-red-500"
+            : " focus:ring-blue-500"
         }`}
         id={label}
         {...register(name)}
@@ -119,24 +118,21 @@ const Select = ({
   name,
   options,
   register,
-  errors,
+  errorMessage,
   ...props
 }: {
   label: string;
   name: Path<Fields>;
   options: readonly string[];
   register: UseFormRegister<Fields>;
-  errors?: FieldError;
+  errorMessage?: string;
 } & HTMLProps<HTMLSelectElement>) => {
   return (
     <label className="mb-4 flex flex-col" htmlFor={props.id}>
       <div>
         {label}
-        {errors && (
-          <span className="text-sm italic text-red-500">
-            {" "}
-            - {errors.message}
-          </span>
+        {errorMessage && (
+          <span className="text-sm italic text-red-500"> - {errorMessage}</span>
         )}
       </div>
       <select
@@ -178,34 +174,11 @@ function Checkbox({
   );
 }
 
-type Fields = {
-  firstName: string;
-  lastName: string;
-  resume: File;
-  track: string;
-  ethnicity: string;
-  country: string;
-  birthdate: Date;
-  phoneNumber: string;
-  email: string;
-  school: string;
-  major: string;
-  graduationYear: string;
-  isComfortableSharingInfo: boolean;
-  whyAttending: string;
-  whatHopingToLearn: string;
-  github: string;
-  linkedin: string;
-  hasReadMLHCodeOfConduct: boolean;
-  isAuthorizedToShareAppWithMLH: boolean;
-  isSubscribedToMLHNewsletter: boolean;
-};
-
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
   lastName: z.string().nonempty("This field is required"),
   resume: z.any(),
-  track: z.array(z.enum(tracks)).min(1, "At least one track must be selected"),
+  tracks: z.array(z.enum(tracks)).min(1, "At least one track must be selected"),
   ethnicity: z.enum(ethnicities),
   country: z.enum(countries),
   birthdate: z.coerce.date({
@@ -221,8 +194,8 @@ const schema = z.object({
   isComfortableSharingInfo: z.boolean(),
   whyAttending: z.string().optional().or(z.literal("")),
   whatHopingToLearn: z.string().optional().or(z.literal("")),
-  github: z.string().url().optional().or(z.literal("")),
-  linkedin: z.string().url().optional().or(z.literal("")),
+  github: z.string().url(),
+  linkedin: z.string().url(),
   hasReadMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({
       message: "This field must be checked",
@@ -236,18 +209,16 @@ const schema = z.object({
   isSubscribedToMLHNewsletter: z.boolean(),
 });
 
+type Fields = z.infer<typeof schema>;
+
 export default function Register() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Fields>({
     resolver: zodResolver(schema),
   });
-
-  // Watch errors
-  console.log(errors);
 
   const onSubmit: SubmitHandler<Fields> = (data) => console.log(data);
   return (
@@ -256,7 +227,7 @@ export default function Register() {
         <Header>Welcome Hacker!</Header>
         <Input
           register={register}
-          errors={errors.firstName}
+          errorMessage={errors.firstName?.message}
           name="firstName"
           label="First Name"
           placeholder="John"
@@ -264,7 +235,7 @@ export default function Register() {
         <Input
           register={register}
           name="lastName"
-          errors={errors.lastName}
+          errorMessage={errors.lastName?.message}
           label="Last Name"
           placeholder="Doe"
         />
@@ -279,8 +250,8 @@ export default function Register() {
         <Select
           multiple
           register={register}
-          errors={errors.track}
-          name="track"
+          errorMessage={errors.tracks?.message}
+          name="tracks"
           label="Track"
           options={tracks}
         />
@@ -292,7 +263,7 @@ export default function Register() {
         />
         <Input
           register={register}
-          errors={errors.birthdate}
+          errorMessage={errors.birthdate?.message}
           name="birthdate"
           label="Birthdate"
           type="date"
@@ -300,14 +271,14 @@ export default function Register() {
         <Header>Contact</Header>
         <Input
           register={register}
-          errors={errors.phoneNumber}
+          errorMessage={errors.phoneNumber?.message}
           name="phoneNumber"
           label="Phone Number"
           placeholder="(123) 456-7890"
         />
         <Input
           register={register}
-          errors={errors.email}
+          errorMessage={errors.email?.message}
           name="email"
           label="Email"
           placeholder="johndoe@knighthacks.com"
@@ -321,7 +292,7 @@ export default function Register() {
         />
         <Input
           register={register}
-          errors={errors.major}
+          errorMessage={errors.major?.message}
           name="major"
           label="Major"
           placeholder="Computer Science"
@@ -359,14 +330,14 @@ export default function Register() {
         </div>
         <Input
           register={register}
-          errors={errors.github}
+          errorMessage={errors.github?.message}
           name="github"
           label="Github"
           placeholder="https://github.com/AwesomeSauce"
         />
         <Input
           register={register}
-          errors={errors.linkedin}
+          errorMessage={errors.linkedin?.message}
           name="linkedin"
           label="LinkedIn"
           placeholder="https://www.linkedin.com/in/yourname/"
