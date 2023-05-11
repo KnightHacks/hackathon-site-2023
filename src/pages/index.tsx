@@ -1,51 +1,58 @@
-import { Header } from "@/components/Header";
 import { scrollTo } from "@/utils";
 import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/20/solid";
+import { Cinzel } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
+const cinzel = Cinzel({ subsets: ["latin"] });
+
 export default function Home() {
   return (
-    <div className="mx-auto px-8">
+    <>
       <MainSection />
       <AboutSection />
       <FAQSection />
+      <HackersGuideSection />
       <ScheduleSection />
       <SponsorsSection />
-    </div>
+    </>
   );
 }
 
 function MainSection() {
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center">
-      <div className="mb-14 flex justify-center text-6xl font-bold">
-        <Image
-          width={500}
-          height={500}
-          src="/gold_dragon_full_logo.svg"
-          alt="KnightHacks logo"
-        />
+    <section
+      id="main"
+      className="mx-auto flex min-h-screen flex-col items-center justify-center"
+    >
+      <Image
+        className="mx-auto mb-4"
+        width={640 * 0.9}
+        height={640 * 0.9}
+        src="/black_dragon_full_logo.svg"
+        alt="KnightHacks logo"
+      />
+      <div className="mb-8 text-2xl" style={cinzel.style}>
+        October 6-8
       </div>
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
           href="/register"
-          className="border border-black bg-black py-4 text-center font-bold text-white"
+          className="border border-black bg-black py-3 text-center font-bold text-white"
         >
           Register
         </Link>
         <button
+          className="border border-black py-3 text-center font-bold"
+          role="link"
           onClick={() => scrollTo("#sponsors")}
-          className="border py-4 text-center font-bold"
         >
           Sponsors
         </button>
         <Link
+          className="border border-black py-3 text-center font-bold"
           href="https://discord.gg/Kv5g9vf"
-          target="_blank"
-          className="border py-4 text-center font-bold"
         >
           Discord
         </Link>
@@ -56,59 +63,117 @@ function MainSection() {
 
 function AboutSection() {
   return (
-    <section className="mb-10">
-      <Header id="about">About Us</Header>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum veritatis
-        libero, voluptatum consectetur distinctio placeat aperiam quaerat
-        corporis quas itaque a, corrupti explicabo eligendi quisquam doloremque
-        suscipit nulla maiores eaque? Expedita nam omnis inventore architecto
-        accusantium. Nemo aliquid ab unde sequi possimus esse temporibus
-        officiis non ipsam ea eius molestiae porro molestias, enim laboriosam
-        voluptatibus quibusdam mollitia voluptates iste soluta! Molestias ullam
-        quidem obcaecati esse fuga, voluptates atque at soluta, sequi omnis
-        eaque nobis sunt possimus sed accusantium. Sapiente nisi beatae dolor
-        omnis ipsum repellendus cupiditate sit tenetur accusamus ex?
-      </p>
+    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
+      <div
+        id="about"
+        className="mb-2 text-left text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
+        About
+      </div>
+      <div className="max-w-screen-md text-lg">
+        <p className="mb-4">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+          veritatis libero, voluptatum consectetur distinctio placeat aperiam
+          quaerat corporis quas itaque a, corrupti explicabo eligendi quisquam
+          doloremque suscipit nulla maiores eaque? Expedita nam omnis inventore
+          architecto accusantium. Nemo aliquid ab unde sequi possimus esse
+          temporibus officiis non ipsam ea eius molestiae porro molestias, enim
+          laboriosam voluptatibus quibusdam mollitia voluptates iste soluta!
+          Molestias ullam quidem obcaecati esse fuga, voluptates atque at
+          soluta, sequi omnis eaque nobis sunt possimus sed accusantium.
+          Sapiente nisi beatae dolor omnis ipsum repellendus cupiditate sit
+          tenetur accusamus ex?
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+          consequatur rerum sint, illo expedita architecto deserunt earum
+          sapiente, facilis, perspiciatis accusantium iste quaerat totam.
+          Repudiandae, aspernatur natus. Minima, et commodi! Soluta veritatis
+          distinctio ab, veniam animi velit perferendis omnis molestias quod
+          vero inventore suscipit in perspiciatis optio a! Officiis, accusantium
+          perferendis? Cupiditate, dignissimos veniam distinctio repellendus
+          perferendis mollitia eligendi consequuntur.
+        </p>
+      </div>
     </section>
   );
 }
 
 function FAQSection() {
   const QAs = Array.from({ length: 5 }, (_, i) => ({
-    question: `Question ${i}`,
-    answer: `Answer ${i}`,
+    question: `Lorem ipsum dolor sit amet?`,
+    answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
   }));
 
   return (
-    <section className="mb-10">
-      <Header id="faq">FAQ</Header>
-      <FAQ QAs={QAs} />
+    <section className="mx-auto mb-24 max-w-screen-lg">
+      <div
+        id="faq"
+        className="mb-2 text-center text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
+        FAQ
+      </div>
+      <div className="grid gap-8 md:grid-cols-2">
+        <div className="flex flex-col items-center">
+          <div
+            className="font mb-1 text-2xl font-medium uppercase"
+            style={cinzel.style}
+          >
+            General
+          </div>
+          <QuestionsAnswers questionsAnswers={QAs} />
+        </div>
+        <div className="flex flex-col items-center">
+          <div
+            className="font mb-1 text-2xl font-medium uppercase"
+            style={cinzel.style}
+          >
+            Tracks & Teams
+          </div>
+          <QuestionsAnswers questionsAnswers={QAs} />
+        </div>
+        <div className="flex flex-col items-center">
+          <div
+            className="font mb-1 text-2xl font-medium uppercase"
+            style={cinzel.style}
+          >
+            Registration
+          </div>
+          <QuestionsAnswers questionsAnswers={QAs} />
+        </div>
+        <div className="flex flex-col items-center">
+          <div
+            className="font mb-1 text-2xl font-medium uppercase"
+            style={cinzel.style}
+          >
+            Logistics
+          </div>
+          <QuestionsAnswers questionsAnswers={QAs} />
+        </div>
+      </div>
     </section>
   );
 }
 
+type QACategory = "General" | "Tracks and Teams" | "Registration" | "Misc.";
+
 interface QA {
+  category?: QACategory;
   question: string;
   answer: string;
 }
 
-function FAQ({ QAs }: { QAs: QA[] }) {
+function QuestionsAnswers({ questionsAnswers }: { questionsAnswers: QA[] }) {
   return (
-    <div className="flex w-full flex-col gap-2 bg-white">
-      {QAs?.map(({ question, answer }, i) => (
+    <div className="flex flex-col gap-2 bg-white text-lg">
+      {questionsAnswers?.map(({ question, answer }, i) => (
         <Disclosure key={i}>
           {({ open }) => (
-            <div>
-              <Disclosure.Button className="flex w-full justify-between bg-black px-6 py-4 text-sm font-medium text-white">
-                <span>{question}</span>
-                <ChevronUpIcon
-                  className={`${
-                    open ? "rotate-180 transform" : ""
-                  } h-5 w-5 text-white`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="border-x border-b px-6 py-4 text-sm">
+            <div className="w-max">
+              <Disclosure.Button>{question}</Disclosure.Button>
+              <Disclosure.Panel className="mb-3 mt-1">
                 {answer}
               </Disclosure.Panel>
             </div>
@@ -122,9 +187,26 @@ function FAQ({ QAs }: { QAs: QA[] }) {
 function Event() {
   return (
     <li>
-      <div className="text-2xl font-extrabold">Lorem Ipsum</div>
+      <div className="text-2xl font-bold" style={cinzel.style}>
+        Lorem Ipsum
+      </div>
       <div className="text-lg">4:00 - 7:00 PM EST</div>
     </li>
+  );
+}
+
+function HackersGuideSection() {
+  return (
+    <section className="mx-auto mb-24 max-w-screen-lg">
+      <div
+        id="schedule"
+        className="mb-2 text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
+        Hackers Guide
+      </div>
+      <p>Coming soon...</p>
+    </section>
   );
 }
 
@@ -139,8 +221,14 @@ function ScheduleSection() {
 
   // TODO: Render out particular schedule based on the selected day
   return (
-    <section className="mb-10">
-      <Header id="schedule">Schedule</Header>
+    <section className="mx-auto mb-24 max-w-screen-lg">
+      <div
+        id="schedule"
+        className="mb-2 text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
+        Schedule
+      </div>
       <div className="mb-8 flex flex-col gap-2 sm:flex-row">
         {days.map((day, i) => (
           <button
@@ -164,16 +252,20 @@ function ScheduleSection() {
 }
 
 function SponsorsSection() {
-  const sponsors = Array.from({ length: 20 });
+  const sponsors = Array.from({ length: 18 });
 
   return (
-    <section className="mb-10">
-      <Header id="sponsors" className="text-center">
+    <section className="mx-auto mb-24 max-w-screen-lg">
+      <div
+        id="sponsors"
+        className="mb-2 text-center text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
         Sponsors
-      </Header>
+      </div>
       <div className="grid gap-4 text-center sm:grid-cols-2 md:grid-cols-3">
         {sponsors.map((_, i) => (
-          <div key={i} className="text-3xl font-extrabold uppercase">
+          <div key={i} className="text-3xl uppercase">
             Lorem Ipsum
           </div>
         ))}

@@ -20,7 +20,7 @@ export default function Footer() {
           </Link>
         </li>
       </ul>
-      <p>Made with ❤️ by KnightHacks</p>
+      <p className="mb-2">Made with ❤️ by KnightHacks</p>
     </footer>
   );
 }

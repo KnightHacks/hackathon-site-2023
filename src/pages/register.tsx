@@ -1,4 +1,3 @@
-import { Header } from "@/components/Header";
 import {
   countries,
   ethnicities,
@@ -7,6 +6,7 @@ import {
   tracks,
 } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Cinzel } from "next/font/google";
 import { HTMLProps, useState } from "react";
 import {
   FieldError,
@@ -16,6 +16,8 @@ import {
   useForm,
 } from "react-hook-form";
 import * as z from "zod";
+
+const cinzel = Cinzel({ subsets: ["latin"] });
 
 const ResumeUpload = ({
   register,
@@ -234,7 +236,9 @@ export default function Register() {
   return (
     <div className="mx-auto mb-10 mt-28 w-full max-w-screen-md px-6">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Header>Welcome Hacker!</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          Welcome Hacker!
+        </div>
         <Input
           register={register}
           errorMessage={errors.firstName?.message}
@@ -250,7 +254,9 @@ export default function Register() {
           placeholder="Doe"
         />
         <ResumeUpload register={register} />
-        <Header>About You</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          About You
+        </div>
         <Select
           register={register}
           name="ethnicity"
@@ -278,7 +284,9 @@ export default function Register() {
           label="Birthdate"
           type="date"
         />
-        <Header>Contact</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          Contact
+        </div>
         <Input
           register={register}
           errorMessage={errors.discord?.message}
@@ -300,7 +308,9 @@ export default function Register() {
           label="Email"
           placeholder="johndoe@knighthacks.com"
         />
-        <Header>School</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          School
+        </div>
         <Select
           register={register}
           name="school"
@@ -320,7 +330,9 @@ export default function Register() {
           label="Graduation Year"
           options={graduationYears}
         />
-        <Header>Hackathon</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          Hackathon
+        </div>
         <p className="mb-1">
           Is it okay if we share your information (name, resume, graduation
           year, etc.) with sponsors?
@@ -340,7 +352,9 @@ export default function Register() {
           name="whyAttending"
           label="What do you hope to learn at KnightHacks?"
         />
-        <Header>External Links</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          External Links
+        </div>
         <div className="mb-2">
           Note: these are optional, but most technical applications ask for
           them! Make a Github/LinkedIn account today if you don’t have one.
@@ -359,7 +373,9 @@ export default function Register() {
           label="LinkedIn"
           placeholder="https://www.linkedin.com/in/yourname/"
         />
-        <Header>Final Steps!</Header>
+        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+          Final Steps
+        </div>
         <Checkbox
           register={register}
           errors={errors.hasReadMLHCodeOfConduct}

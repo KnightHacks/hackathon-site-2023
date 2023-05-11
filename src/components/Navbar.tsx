@@ -1,3 +1,4 @@
+import { scrollTo } from "@/utils";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,11 +7,6 @@ import MobileDropdown from "./MobileDropdown";
 
 export default function Navbar() {
   const { pathname } = useRouter();
-
-  const scrollTo = (id: string) => {
-    const element: HTMLElement = document.querySelector(id)!;
-    window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 100 });
-  };
 
   return (
     <nav className="fixed top-0 flex h-16 w-full items-center justify-between border-b bg-white px-6">
@@ -23,9 +19,9 @@ export default function Navbar() {
               className="text-left font-bold leading-4"
             >
               <Image
-                width={100}
-                height={100}
-                src="/gold_dragon_full_logo.svg"
+                width={35}
+                height={35}
+                src="/black_dragon_logo.svg"
                 alt="KnightHacks logo"
               />
             </button>
