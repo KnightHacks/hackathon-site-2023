@@ -1,4 +1,5 @@
 import {
+  cinzel,
   countries,
   ethnicities,
   graduationYears,
@@ -6,7 +7,6 @@ import {
   tracks,
 } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Cinzel } from "next/font/google";
 import { HTMLProps, useState } from "react";
 import {
   FieldError,
@@ -16,8 +16,6 @@ import {
   useForm,
 } from "react-hook-form";
 import * as z from "zod";
-
-const cinzel = Cinzel({ subsets: ["latin"] });
 
 const ResumeUpload = ({
   register,

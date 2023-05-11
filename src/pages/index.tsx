@@ -1,11 +1,8 @@
-import { scrollTo } from "@/utils";
+import { cinzel, scrollTo } from "@/utils";
 import { Disclosure } from "@headlessui/react";
-import { Cinzel } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
-const cinzel = Cinzel({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -25,6 +22,7 @@ function MainSection() {
     <section
       id="main"
       className="mx-auto flex min-h-screen flex-col items-center justify-center"
+      style={cinzel.style}
     >
       <Image
         className="mx-auto mb-4"
@@ -33,9 +31,7 @@ function MainSection() {
         src="/black_dragon_full_logo.svg"
         alt="KnightHacks logo"
       />
-      <div className="mb-8 text-2xl" style={cinzel.style}>
-        October 6-8
-      </div>
+      <div className="mb-8 text-2xl">October 6-8</div>
       <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
           href="/register"
@@ -147,17 +143,15 @@ function FAQ({
       >
         {category}
       </div>
-      <div className="mx-auto max-w-sm w-full flex flex-col gap-2">
+      <div className="mx-auto flex w-full max-w-sm flex-col gap-1">
         {questionsAnswers.map(({ question, answer }, i) => (
           <Disclosure key={i}>
             {({ open }) => (
               <div>
-                <Disclosure.Button className="mb-1">
+                <Disclosure.Button>
                   {question}
                 </Disclosure.Button>
-                <Disclosure.Panel className="mb-3">
-                  {answer}
-                </Disclosure.Panel>
+                <Disclosure.Panel className="mb-3 mt-1.5">{answer}</Disclosure.Panel>
               </div>
             )}
           </Disclosure>

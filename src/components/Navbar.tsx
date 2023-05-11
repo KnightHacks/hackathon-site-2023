@@ -1,4 +1,4 @@
-import { scrollTo } from "@/utils";
+import { cinzel, scrollTo } from "@/utils";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,10 @@ export default function Navbar() {
   const { pathname } = useRouter();
 
   return (
-    <nav className="fixed top-0 flex h-16 w-full items-center justify-between border-b bg-white px-6">
+    <nav
+      className="fixed top-0 flex h-16 w-full items-center justify-between border-b bg-white px-6"
+      style={cinzel.style}
+    >
       <div className="flex">
         {pathname === "/" ? (
           <>
@@ -38,7 +41,7 @@ export default function Navbar() {
         )}
       </div>
       {pathname === "/" && (
-        <ul className="hidden gap-4 font-bold md:flex">
+        <ul className="hidden gap-4 font-medium md:flex">
           <li>
             <button onClick={() => scrollTo("#main")}>Home</button>
           </li>
