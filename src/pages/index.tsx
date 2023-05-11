@@ -110,7 +110,7 @@ function FAQSection() {
     <section className="mx-auto mb-24 max-w-screen-lg">
       <div
         id="faq"
-        className="mb-2 text-center text-4xl font-bold uppercase"
+        className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
         FAQ
@@ -142,7 +142,7 @@ function FAQ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="font mb-1 text-2xl font-semibold uppercase"
+        className="font mb-2 text-2xl font-semibold uppercase"
         style={cinzel.style}
       >
         {category}
@@ -207,7 +207,7 @@ function ScheduleSection() {
     <section className="mx-auto mb-24 max-w-screen-lg">
       <div
         id="schedule"
-        className="mb-2 text-4xl font-bold uppercase"
+        className="mb-4 text-4xl font-bold uppercase"
         style={cinzel.style}
       >
         Schedule
@@ -241,7 +241,7 @@ function SponsorsSection() {
     <section className="mx-auto mb-24 max-w-screen-lg">
       <div
         id="sponsors"
-        className="mb-2 text-center text-4xl font-bold uppercase"
+        className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
         Sponsors
