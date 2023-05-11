@@ -128,15 +128,24 @@ const Select = ({
   errorMessage?: string;
 } & HTMLProps<HTMLSelectElement>) => {
   return (
-    <label className="mb-4 flex flex-col" htmlFor={props.id}>
+    <label
+      className={`mb-4 flex flex-col duration-200 ease-in-out  ${
+        errorMessage && "text-red-500"
+      }`}
+      htmlFor={props.id}
+    >
       <div>
         {label}
         {errorMessage && (
-          <span className="text-sm italic text-red-500"> - {errorMessage}</span>
+          <span className="text-sm italic"> - {errorMessage}</span>
         )}
       </div>
       <select
-        className="border px-4 py-3"
+        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 ${
+          errorMessage
+            ? "border-red-500 focus:ring-red-500"
+            : " focus:ring-blue-500"
+        }`}
         id={label}
         {...register(name)}
         {...props}
