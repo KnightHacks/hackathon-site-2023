@@ -1,13 +1,13 @@
-import { scrollTo } from '@/utils';
-import { Menu, Transition } from '@headlessui/react'
+import { scrollTo } from "@/utils";
+import { Menu, Transition } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
-import { Fragment } from 'react';
+import { Fragment } from "react";
 
 export default function MobileDropdown() {
   return (
-    <Menu as="div" className="flex relative md:hidden">
+    <Menu as="div" className="relative flex md:hidden">
       <Menu.Button>
-        <Bars3Icon className="w-6 h-6 mr-4" />
+        <Bars3Icon className="mr-4 h-6 w-6" />
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -18,12 +18,13 @@ export default function MobileDropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute border flex flex-col bg-white top-10 w-48 p-2">
+        <Menu.Items className="absolute top-10 flex w-48 flex-col border bg-white p-2">
           <Menu.Item>
             {({ active }) => (
               <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#about")}>
+                onClick={() => scrollTo("#about")}
+              >
                 About
               </button>
             )}
@@ -32,7 +33,8 @@ export default function MobileDropdown() {
             {({ active }) => (
               <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#faq")}>
+                onClick={() => scrollTo("#faq")}
+              >
                 FAQ
               </button>
             )}
@@ -41,15 +43,28 @@ export default function MobileDropdown() {
             {({ active }) => (
               <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#schedule")}>
-                Schedule
+                onClick={() => scrollTo("#guide")}
+              >
+                Guide
               </button>
             )}
-          </Menu.Item>      <Menu.Item>
+          </Menu.Item>
+          <Menu.Item>
             {({ active }) => (
               <button
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#sponsors")}>
+                onClick={() => scrollTo("#schedule")}
+              >
+                Schedule
+              </button>
+            )}
+          </Menu.Item>{" "}
+          <Menu.Item>
+            {({ active }) => (
+              <button
+                className={`${active && "bg-black text-white"} px-4 py-2`}
+                onClick={() => scrollTo("#sponsors")}
+              >
                 Sponsors
               </button>
             )}
@@ -57,6 +72,5 @@ export default function MobileDropdown() {
         </Menu.Items>
       </Transition>
     </Menu>
-
   );
 }

@@ -49,6 +49,9 @@ export default function Navbar() {
             <button onClick={() => scrollTo("#faq")}>FAQ</button>
           </li>
           <li>
+            <button onClick={() => scrollTo("#guide")}>Guide</button>
+          </li>
+          <li>
             <button onClick={() => scrollTo("#schedule")}>Schedule</button>
           </li>
           <li>
