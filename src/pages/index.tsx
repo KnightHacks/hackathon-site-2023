@@ -44,6 +44,7 @@ function MainSection() {
         </button>
         <Link
           href="https://discord.gg/Kv5g9vf"
+          target="_blank"
           className="border py-4 text-center font-bold"
         >
           Discord
@@ -107,7 +108,7 @@ function FAQ({ QAs }: { QAs: QA[] }) {
                   } h-5 w-5 text-white`}
                 />
               </Disclosure.Button>
-              <Disclosure.Panel className="border-x border-b px-6 py-4 text-sm shadow">
+              <Disclosure.Panel className="border-x border-b px-6 py-4 text-sm">
                 {answer}
               </Disclosure.Panel>
             </div>
