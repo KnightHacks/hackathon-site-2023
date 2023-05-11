@@ -6,8 +6,8 @@ import { Fragment } from "react";
 export default function MobileDropdown() {
   return (
     <Menu as="div" className="relative flex md:hidden">
-      <Menu.Button>
-        <Bars3Icon className="mr-4 h-6 w-6" />
+      <Menu.Button className="mr-4">
+        <Bars3Icon className="h-6 w-6" />
       </Menu.Button>
       <Transition
         as={Fragment}

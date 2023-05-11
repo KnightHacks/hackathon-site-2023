@@ -59,11 +59,9 @@ function MainSection() {
 
 function AboutSection() {
   return (
-    <section
-      id="about"
-      className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center"
-    >
+    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
       <div
+        id="about"
         className="mb-2 text-left text-4xl font-bold uppercase"
         style={cinzel.style}
       >
@@ -101,11 +99,9 @@ function FAQSection() {
   }));
 
   return (
-    <section
-      id="faq"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
-    >
+    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
       <div
+        id="faq"
         className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
@@ -138,7 +134,7 @@ function FAQ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="font mb-2 text-2xl font-semibold uppercase m"
+        className="font m mb-2 text-2xl font-semibold uppercase"
         style={cinzel.style}
       >
         {category}
@@ -174,11 +170,12 @@ function Event() {
 
 function HackersGuideSection() {
   return (
-    <section
-      id="guide"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
-    >
-      <div className="mb-2 text-4xl font-bold uppercase" style={cinzel.style}>
+    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+      <div
+        id="guide"
+        className="mb-2 text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
         Hackers Guide
       </div>
       <p className="text-lg">Coming soon...</p>
@@ -197,11 +194,12 @@ function ScheduleSection() {
 
   // TODO: Render out particular schedule based on the selected day
   return (
-    <section
-      id="schedule"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
-    >
-      <div className="mb-4 text-4xl font-bold uppercase" style={cinzel.style}>
+    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+      <div
+        id="schedule"
+        className="mb-4 text-4xl font-bold uppercase"
+        style={cinzel.style}
+      >
         Schedule
       </div>
       <div className="mb-8 flex flex-col gap-2 sm:flex-row">
@@ -230,11 +228,9 @@ function SponsorsSection() {
   const sponsors = Array.from({ length: 18 });
 
   return (
-    <section
-      id="sponsors"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
-    >
+    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
       <div
+        id="sponsors"
         className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
