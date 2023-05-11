@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function Home() {
   return (
-    <div className="mx-auto my-40 mb-10 px-8">
+    <div className="mx-auto px-8">
       <MainSection />
       <AboutSection />
       <FAQSection />
@@ -20,8 +20,8 @@ export default function Home() {
 
 function MainSection() {
   return (
-    <section className="mb-10">
-      <div className="my-12 flex justify-center text-6xl font-bold">
+    <section className="flex min-h-screen flex-col items-center justify-center">
+      <div className="mb-14 flex justify-center text-6xl font-bold">
         <Image
           width={500}
           height={500}
@@ -29,7 +29,7 @@ function MainSection() {
           alt="KnightHacks logo"
         />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
         <Link
           href="/register"
           className="border border-black bg-black py-4 text-center font-bold text-white"
