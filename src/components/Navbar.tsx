@@ -29,9 +29,9 @@ export default function Navbar() {
         ) : (
           <Link href="/" className="font-bold leading-4">
             <Image
-              width={100}
-              height={100}
-              src="/gold_dragon_full_logo.svg"
+              width={35}
+              height={35}
+              src="/black_dragon_logo.svg"
               alt="KnightHacks logo"
             />
           </Link>
