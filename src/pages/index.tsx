@@ -63,7 +63,7 @@ function MainSection() {
 
 function AboutSection() {
   return (
-    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto mb-40 flex max-w-screen-lg flex-col justify-center">
       <div
         id="about"
         className="mb-2 text-left text-4xl font-bold uppercase"
@@ -107,7 +107,7 @@ function FAQSection() {
   }));
 
   return (
-    <section className="mx-auto mb-24 max-w-screen-lg">
+    <section className="mx-auto mb-40 max-w-screen-lg">
       <div
         id="faq"
         className="mb-4 text-center text-4xl font-bold uppercase"
@@ -127,7 +127,7 @@ function FAQSection() {
 
 type FAQCategory = "General" | "Tracks & Teams" | "Registration" | "Logistics";
 
-interface QuestionAnswers {
+interface QuestionAnswer {
   question: string;
   answer: string;
 }
@@ -137,7 +137,7 @@ function FAQ({
   questionsAnswers,
 }: {
   category: FAQCategory;
-  questionsAnswers: QuestionAnswers[];
+  questionsAnswers: QuestionAnswer[];
 }) {
   return (
     <div className="flex flex-col items-center">
@@ -148,7 +148,7 @@ function FAQ({
         {category}
       </div>
       <div className="mx-auto max-w-sm text-lg">
-        {questionsAnswers?.map(({ question, answer }, i) => (
+        {questionsAnswers.map(({ question, answer }, i) => (
           <Disclosure key={i}>
             {({ open }) => (
               <>
@@ -180,7 +180,7 @@ function Event() {
 
 function HackersGuideSection() {
   return (
-    <section className="mx-auto mb-24 max-w-screen-lg">
+    <section className="mx-auto mb-40 max-w-screen-lg">
       <div
         id="schedule"
         className="mb-2 text-4xl font-bold uppercase"
@@ -204,7 +204,7 @@ function ScheduleSection() {
 
   // TODO: Render out particular schedule based on the selected day
   return (
-    <section className="mx-auto mb-24 max-w-screen-lg">
+    <section className="mx-auto mb-40 max-w-screen-lg">
       <div
         id="schedule"
         className="mb-4 text-4xl font-bold uppercase"
@@ -238,7 +238,7 @@ function SponsorsSection() {
   const sponsors = Array.from({ length: 18 });
 
   return (
-    <section className="mx-auto mb-24 max-w-screen-lg">
+    <section className="mx-auto mb-40 max-w-screen-lg">
       <div
         id="sponsors"
         className="mb-4 text-center text-4xl font-bold uppercase"
