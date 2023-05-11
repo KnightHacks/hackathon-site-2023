@@ -102,7 +102,7 @@ function AboutSection() {
 
 function FAQSection() {
   const QAs = Array.from({ length: 4 }, (_, i) => ({
-    question: `Lorem ipsum dolor sit amet consectetur adipisicing elit?`,
+    question: `Lorem ipsum dolor sit amet consectetur?`,
     answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
   }));
 
@@ -147,18 +147,18 @@ function FAQ({
       >
         {category}
       </div>
-      <div className="mx-auto max-w-sm text-lg">
+      <div className="mx-auto max-w-sm w-full flex flex-col gap-2">
         {questionsAnswers.map(({ question, answer }, i) => (
           <Disclosure key={i}>
             {({ open }) => (
-              <>
-                <Disclosure.Button className="text-left">
+              <div>
+                <Disclosure.Button className="mb-1">
                   {question}
                 </Disclosure.Button>
-                <Disclosure.Panel className="mb-3 mt-2">
+                <Disclosure.Panel className="mb-3">
                   {answer}
                 </Disclosure.Panel>
-              </>
+              </div>
             )}
           </Disclosure>
         ))}

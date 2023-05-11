@@ -27,27 +27,27 @@ const ResumeUpload = ({
 }) => {
   const [file, setFile] = useState<File | null>(null);
   return (
-    <div className="mb-4 flex flex-col">
+    <div className="mb-8 flex flex-col">
       <label
-        className="w-min cursor-pointer whitespace-nowrap border px-4 py-3"
+        className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
+        tabIndex={0}
         placeholder="Resume"
         htmlFor="resume"
       >
         Upload Resume
+        <input
+          {...props}
+          {...register("resume", {
+            onChange: (e) => {
+              const file = e.target.files?.[0];
+              if (file) setFile(file);
+            },
+          })}
+          className="hidden"
+          id="resume"
+          type="file"
+        />
       </label>
-      <input
-        {...props}
-        {...register("resume", {
-          onChange: (e) => {
-            const file = e.target.files?.[0];
-            if (file) setFile(file);
-          },
-        })}
-        className="hidden"
-        id="resume"
-        type="file"
-      />
-
       {file && <p>{file.name}</p>}
     </div>
   );
@@ -106,7 +106,7 @@ const TextArea = ({
     <div className="mb-4 flex flex-col">
       <label htmlFor={label}>{label}</label>
       <textarea
-        className="border px-4 py-3"
+        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500`}
         id={label}
         {...register(name)}
         {...props}
@@ -236,8 +236,8 @@ export default function Register() {
   return (
     <div className="mx-auto mb-10 mt-28 w-full max-w-screen-md px-6">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
-          Welcome Hacker!
+        <div className="mb-2 text-xl font-bold" style={cinzel.style}>
+          Welcome Hacker
         </div>
         <Input
           register={register}
@@ -254,7 +254,7 @@ export default function Register() {
           placeholder="Doe"
         />
         <ResumeUpload register={register} />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 text-xl font-bold" style={cinzel.style}>
           About You
         </div>
         <Select
@@ -284,7 +284,7 @@ export default function Register() {
           label="Birthdate"
           type="date"
         />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
           Contact
         </div>
         <Input
@@ -308,7 +308,7 @@ export default function Register() {
           label="Email"
           placeholder="johndoe@knighthacks.com"
         />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
           School
         </div>
         <Select
@@ -330,7 +330,7 @@ export default function Register() {
           label="Graduation Year"
           options={graduationYears}
         />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
           Hackathon
         </div>
         <p className="mb-1">
@@ -352,7 +352,7 @@ export default function Register() {
           name="whyAttending"
           label="What do you hope to learn at KnightHacks?"
         />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
           External Links
         </div>
         <div className="mb-2">
@@ -373,7 +373,7 @@ export default function Register() {
           label="LinkedIn"
           placeholder="https://www.linkedin.com/in/yourname/"
         />
-        <div className="mb-2 text-xl font-bold uppercase" style={cinzel.style}>
+        <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
           Final Steps
         </div>
         <Checkbox
@@ -393,7 +393,7 @@ export default function Register() {
           name="isSubscribedToMLHNewsletter"
           label="I authorize Major League Hacking to send me occasional messages about hackathons including pre- and post-event informational emails."
         />
-        <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
+        <button className="mt-6  w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
           Submit
         </button>
       </form>
