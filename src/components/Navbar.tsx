@@ -71,7 +71,7 @@ export default function Navbar() {
         </Link>
       ) : (
         <Link className="flex items-center font-bold" href="/">
-          <span className="mr-1">Back to live site</span>
+          <span className="mr-1">Back</span>
           <ArrowRightIcon className="h-4 w-4" />
         </Link>
       )}
