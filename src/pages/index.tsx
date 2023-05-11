@@ -61,7 +61,7 @@ function AboutSection() {
   return (
     <section
       id="about"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+      className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center"
     >
       <div
         className="mb-2 text-left text-4xl font-bold uppercase"
@@ -103,7 +103,7 @@ function FAQSection() {
   return (
     <section
       id="faq"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
     >
       <div
         className="mb-4 text-center text-4xl font-bold uppercase"
@@ -138,7 +138,7 @@ function FAQ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="font mb-2 text-2xl font-semibold uppercase"
+        className="font mb-2 text-2xl font-semibold uppercase m"
         style={cinzel.style}
       >
         {category}
@@ -176,7 +176,7 @@ function HackersGuideSection() {
   return (
     <section
       id="guide"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
     >
       <div className="mb-2 text-4xl font-bold uppercase" style={cinzel.style}>
         Hackers Guide
@@ -199,7 +199,7 @@ function ScheduleSection() {
   return (
     <section
       id="schedule"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
     >
       <div className="mb-4 text-4xl font-bold uppercase" style={cinzel.style}>
         Schedule
@@ -232,7 +232,7 @@ function SponsorsSection() {
   return (
     <section
       id="sponsors"
-      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center mb-40"
     >
       <div
         className="mb-4 text-center text-4xl font-bold uppercase"
