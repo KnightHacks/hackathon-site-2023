@@ -38,7 +38,7 @@ export default function Navbar() {
         )}
       </div>
       {pathname === "/" && (
-        <ul className="hidden gap-4 font-bold sm:flex">
+        <ul className="hidden gap-4 font-bold md:flex">
           <li>
             <button onClick={() => scrollTo("#main")}>Home</button>
           </li>
