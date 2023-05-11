@@ -21,7 +21,7 @@ function MainSection() {
   return (
     <section
       id="main"
-      className="mx-auto flex min-h-screen flex-col items-center justify-center"
+      className="mx-auto flex flex-col items-center justify-center min-h-screen"
       style={cinzel.style}
     >
       <Image
@@ -59,7 +59,7 @@ function MainSection() {
 
 function AboutSection() {
   return (
-    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="about"
         className="mb-2 text-left text-4xl font-bold uppercase"
@@ -99,7 +99,7 @@ function FAQSection() {
   }));
 
   return (
-    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="faq"
         className="mb-4 text-center text-4xl font-bold uppercase"
@@ -170,7 +170,7 @@ function Event() {
 
 function HackersGuideSection() {
   return (
-    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="guide"
         className="mb-2 text-4xl font-bold uppercase"
@@ -194,7 +194,7 @@ function ScheduleSection() {
 
   // TODO: Render out particular schedule based on the selected day
   return (
-    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="schedule"
         className="mb-4 text-4xl font-bold uppercase"
@@ -228,7 +228,7 @@ function SponsorsSection() {
   const sponsors = Array.from({ length: 18 });
 
   return (
-    <section className="mx-auto mb-40 flex min-h-screen max-w-screen-lg flex-col justify-center">
+    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="sponsors"
         className="mb-4 text-center text-4xl font-bold uppercase"
