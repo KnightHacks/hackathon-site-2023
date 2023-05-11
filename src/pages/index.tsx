@@ -101,8 +101,8 @@ function AboutSection() {
 }
 
 function FAQSection() {
-  const QAs = Array.from({ length: 5 }, (_, i) => ({
-    question: `Lorem ipsum dolor sit amet?`,
+  const QAs = Array.from({ length: 4 }, (_, i) => ({
+    question: `Lorem ipsum dolor sit amet consectetur adipisicing elit?`,
     answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
   }));
 
@@ -116,70 +116,53 @@ function FAQSection() {
         FAQ
       </div>
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="flex flex-col items-center">
-          <div
-            className="font mb-1 text-2xl font-medium uppercase"
-            style={cinzel.style}
-          >
-            General
-          </div>
-          <QuestionsAnswers questionsAnswers={QAs} />
-        </div>
-        <div className="flex flex-col items-center">
-          <div
-            className="font mb-1 text-2xl font-medium uppercase"
-            style={cinzel.style}
-          >
-            Tracks & Teams
-          </div>
-          <QuestionsAnswers questionsAnswers={QAs} />
-        </div>
-        <div className="flex flex-col items-center">
-          <div
-            className="font mb-1 text-2xl font-medium uppercase"
-            style={cinzel.style}
-          >
-            Registration
-          </div>
-          <QuestionsAnswers questionsAnswers={QAs} />
-        </div>
-        <div className="flex flex-col items-center">
-          <div
-            className="font mb-1 text-2xl font-medium uppercase"
-            style={cinzel.style}
-          >
-            Logistics
-          </div>
-          <QuestionsAnswers questionsAnswers={QAs} />
-        </div>
+        <FAQ category="General" questionsAnswers={QAs} />
+        <FAQ category="Tracks & Teams" questionsAnswers={QAs} />
+        <FAQ category="Registration" questionsAnswers={QAs} />
+        <FAQ category="Logistics" questionsAnswers={QAs} />
       </div>
     </section>
   );
 }
 
-type QACategory = "General" | "Tracks and Teams" | "Registration" | "Misc.";
+type FAQCategory = "General" | "Tracks & Teams" | "Registration" | "Logistics";
 
-interface QA {
-  category?: QACategory;
+interface QuestionAnswers {
   question: string;
   answer: string;
 }
 
-function QuestionsAnswers({ questionsAnswers }: { questionsAnswers: QA[] }) {
+function FAQ({
+  category,
+  questionsAnswers,
+}: {
+  category: FAQCategory;
+  questionsAnswers: QuestionAnswers[];
+}) {
   return (
-    <div className="flex flex-col gap-2 bg-white text-lg">
-      {questionsAnswers?.map(({ question, answer }, i) => (
-        <Disclosure key={i}>
-          {({ open }) => (
-            <div className="w-max">
-              <Disclosure.Button>{question}</Disclosure.Button>
-              <Disclosure.Panel className="mb-3 mt-1">
-                {answer}
-              </Disclosure.Panel>
-            </div>
-          )}
-        </Disclosure>
-      ))}
+    <div className="flex flex-col items-center">
+      <div
+        className="font mb-1 text-2xl font-semibold uppercase"
+        style={cinzel.style}
+      >
+        {category}
+      </div>
+      <div className="mx-auto max-w-sm text-lg">
+        {questionsAnswers?.map(({ question, answer }, i) => (
+          <Disclosure key={i}>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="text-left">
+                  {question}
+                </Disclosure.Button>
+                <Disclosure.Panel className="mb-3 mt-2">
+                  {answer}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        ))}
+      </div>
     </div>
   );
 }
