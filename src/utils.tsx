@@ -2,7 +2,7 @@ import { Cinzel } from "next/font/google";
 
 export const scrollTo = (id: string) => {
   const element: HTMLElement = document.querySelector(id)!;
-  window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 110 });
+  window?.scrollTo({ behavior: "smooth", top: element.offsetTop });
 };
 
 export const cinzel = Cinzel({ subsets: ["latin"] });

@@ -59,9 +59,11 @@ function MainSection() {
 
 function AboutSection() {
   return (
-    <section className="mx-auto mb-40 flex max-w-screen-lg flex-col justify-center">
+    <section
+      id="about"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+    >
       <div
-        id="about"
         className="mb-2 text-left text-4xl font-bold uppercase"
         style={cinzel.style}
       >
@@ -75,11 +77,7 @@ function AboutSection() {
           doloremque suscipit nulla maiores eaque? Expedita nam omnis inventore
           architecto accusantium. Nemo aliquid ab unde sequi possimus esse
           temporibus officiis non ipsam ea eius molestiae porro molestias, enim
-          laboriosam voluptatibus quibusdam mollitia voluptates iste soluta!
-          Molestias ullam quidem obcaecati esse fuga, voluptates atque at
-          soluta, sequi omnis eaque nobis sunt possimus sed accusantium.
-          Sapiente nisi beatae dolor omnis ipsum repellendus cupiditate sit
-          tenetur accusamus ex?
+          laboriosam voluptatibus
         </p>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
@@ -103,9 +101,11 @@ function FAQSection() {
   }));
 
   return (
-    <section className="mx-auto mb-40 max-w-screen-lg">
+    <section
+      id="faq"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+    >
       <div
-        id="faq"
         className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
@@ -148,10 +148,10 @@ function FAQ({
           <Disclosure key={i}>
             {({ open }) => (
               <div>
-                <Disclosure.Button>
-                  {question}
-                </Disclosure.Button>
-                <Disclosure.Panel className="mb-3 mt-1.5">{answer}</Disclosure.Panel>
+                <Disclosure.Button>{question}</Disclosure.Button>
+                <Disclosure.Panel className="mb-3 mt-1.5">
+                  {answer}
+                </Disclosure.Panel>
               </div>
             )}
           </Disclosure>
@@ -174,12 +174,11 @@ function Event() {
 
 function HackersGuideSection() {
   return (
-    <section className="mx-auto mb-40 max-w-screen-lg">
-      <div
-        id="schedule"
-        className="mb-2 text-4xl font-bold uppercase"
-        style={cinzel.style}
-      >
+    <section
+      id="guide"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+    >
+      <div className="mb-2 text-4xl font-bold uppercase" style={cinzel.style}>
         Hackers Guide
       </div>
       <p className="text-lg">Coming soon...</p>
@@ -198,12 +197,11 @@ function ScheduleSection() {
 
   // TODO: Render out particular schedule based on the selected day
   return (
-    <section className="mx-auto mb-40 max-w-screen-lg">
-      <div
-        id="schedule"
-        className="mb-4 text-4xl font-bold uppercase"
-        style={cinzel.style}
-      >
+    <section
+      id="schedule"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+    >
+      <div className="mb-4 text-4xl font-bold uppercase" style={cinzel.style}>
         Schedule
       </div>
       <div className="mb-8 flex flex-col gap-2 sm:flex-row">
@@ -232,9 +230,11 @@ function SponsorsSection() {
   const sponsors = Array.from({ length: 18 });
 
   return (
-    <section className="mx-auto mb-40 max-w-screen-lg">
+    <section
+      id="sponsors"
+      className="mx-auto flex min-h-screen max-w-screen-lg flex-col justify-center"
+    >
       <div
-        id="sponsors"
         className="mb-4 text-center text-4xl font-bold uppercase"
         style={cinzel.style}
       >
