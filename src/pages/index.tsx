@@ -143,7 +143,7 @@ function FAQ({
       >
         {category}
       </div>
-      <div className="mx-auto flex w-full max-w-sm flex-col gap-1">
+      <div className="mx-auto flex w-full max-w-sm flex-col gap-1 text-lg">
         {questionsAnswers.map(({ question, answer }, i) => (
           <Disclosure key={i}>
             {({ open }) => (
@@ -182,7 +182,7 @@ function HackersGuideSection() {
       >
         Hackers Guide
       </div>
-      <p>Coming soon...</p>
+      <p className="text-lg">Coming soon...</p>
     </section>
   );
 }
