@@ -1,12 +1,14 @@
-import { cinzel, scrollTo } from "@/utils";
+"use client";
+
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import { cinzel, scrollTo } from "../lib/utils";
 import MobileDropdown from "./MobileDropdown";
 
 export default function Navbar() {
-  const { pathname } = useRouter();
+  const pathname = usePathname();
 
   return (
     <nav
@@ -53,9 +55,6 @@ export default function Navbar() {
           </li>
           <li>
             <button onClick={() => scrollTo("#guide")}>Guide</button>
-          </li>
-          <li>
-            <button onClick={() => scrollTo("#schedule")}>Schedule</button>
           </li>
           <li>
             <button onClick={() => scrollTo("#sponsors")}>Sponsors</button>

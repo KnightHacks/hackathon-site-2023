@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { DiscordIcon, GitHubIcon, InstagramIcon } from "./icons";
+import { DiscordIcon, GitHubIcon, InstagramIcon } from "../lib/icons";
 
 export default function Footer() {
   return (
-    <footer className="mb-4 flex flex-col items-center mt-auto">
+    <footer className="mb-4 mt-auto flex flex-col items-center">
       <ul className="mb-2 flex gap-3">
         <li>
           <Link href="https://github.com/KnightHacks" target="_blank">

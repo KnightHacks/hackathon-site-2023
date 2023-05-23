@@ -5,7 +5,7 @@ export const scrollTo = (id: string) => {
   window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 90 });
 };
 
-export const cinzel = Cinzel({ subsets: ["latin"] });
+export const cinzel = Cinzel({ subsets: ["latin"], style: "normal"});
 
 export const ethnicities = [
   "American Indian or Alaska Native",

@@ -1,11 +1,13 @@
-import { scrollTo } from "@/utils";
+"use client";
+
 import { Menu, Transition } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
+import { scrollTo } from "../lib/utils";
 
 export default function MobileDropdown() {
   return (
-    <Menu as="div" className="relative flex md:hidden font-medium">
+    <Menu as="div" className="relative flex font-medium md:hidden">
       <Menu.Button className="mr-4">
         <Bars3Icon className="h-6 w-6" />
       </Menu.Button>
