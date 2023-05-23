@@ -2,7 +2,6 @@ import { cinzel, scrollTo } from "@/utils";
 import { Disclosure } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
       <AboutSection />
       <FAQSection />
       <HackersGuideSection />
-      <ScheduleSection />
       <SponsorsSection />
     </>
   );
@@ -21,7 +19,7 @@ function MainSection() {
   return (
     <section
       id="main"
-      className="mx-auto flex flex-col items-center justify-center min-h-screen"
+      className="mx-auto flex min-h-screen flex-col items-center justify-center"
       style={cinzel.style}
     >
       <Image
@@ -134,7 +132,7 @@ function FAQ({
   return (
     <div className="flex flex-col items-center">
       <div
-        className="font m mb-2 text-2xl font-semibold uppercase"
+        className="font mb-2 text-2xl font-semibold uppercase"
         style={cinzel.style}
       >
         {category}
@@ -144,7 +142,7 @@ function FAQ({
           <Disclosure key={i}>
             {({ open }) => (
               <div>
-                <Disclosure.Button>{question}</Disclosure.Button>
+                <Disclosure.Button className="text-left">{question}</Disclosure.Button>
                 <Disclosure.Panel className="mb-3 mt-1.5">
                   {answer}
                 </Disclosure.Panel>
@@ -179,47 +177,6 @@ function HackersGuideSection() {
         Hackers Guide
       </div>
       <p className="text-lg">Coming soon...</p>
-    </section>
-  );
-}
-
-function ScheduleSection() {
-  const [selectedDay, setSelectedDay] = useState(0);
-  const days = ["Fri, Oct 6", "Sat, Oct 7", "Sun, Oct 8"];
-
-  const selectedDayStyles =
-    "border border-black px-6 py-2 font-bold text-white bg-black";
-  const unselectedDayStyles =
-    "border border-black px-6 py-2 font-bold text-black";
-
-  // TODO: Render out particular schedule based on the selected day
-  return (
-    <section className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
-      <div
-        id="schedule"
-        className="mb-4 text-4xl font-bold uppercase"
-        style={cinzel.style}
-      >
-        Schedule
-      </div>
-      <div className="mb-8 flex flex-col gap-2 sm:flex-row">
-        {days.map((day, i) => (
-          <button
-            key={i}
-            onClick={() => setSelectedDay(i)}
-            className={
-              i === selectedDay ? selectedDayStyles : unselectedDayStyles
-            }
-          >
-            {day}
-          </button>
-        ))}
-      </div>
-      <ul className="flex flex-col gap-4">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Event key={i} />
-        ))}
-      </ul>
     </section>
   );
 }
