@@ -64,10 +64,10 @@ export default function Navbar() {
       )}
       {pathname === "/" ? (
         <Link
-          href="/register"
+          href="/signin"
           className=" border-black bg-black px-4 py-2 font-bold text-white"
         >
-          Register
+          Sign In
         </Link>
       ) : (
         <Link className="flex items-center font-bold" href="/">
