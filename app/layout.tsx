@@ -2,6 +2,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Footer from "./layout/Footer";
 import Navbar from "./layout/Navbar";
+import { ApolloWrapper } from "./lib/apollo-provider";
 
 const monteserrat = Montserrat({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body style={monteserrat.style} className="flex min-h-screen flex-col">
         <Navbar />
-        <div className="px-6">{children}</div>
+        <ApolloWrapper>
+          <div className="px-6">{children}</div>
+        </ApolloWrapper>
         <Footer />
       </body>
     </html>

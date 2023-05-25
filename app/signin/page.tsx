@@ -1,5 +1,7 @@
 "use client";
 
+import { } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useRouter } from "next/navigation";
 import { DiscordIcon, GitHubIcon, GoogleIcon } from "../lib/icons";
 import { cinzel } from "../lib/utils";
 
@@ -23,8 +25,35 @@ export default function SignIn() {
 }
 
 function GithubSignIn() {
+  const router = useRouter();
+
   return (
-    <button className="flex gap-3 whitespace-nowrap border border-transparent bg-[#333] px-4 py-3 text-white">
+    <button
+      className="flex gap-3 whitespace-nowrap border border-transparent bg-[#333] px-4 py-3 text-white"
+      onClick={async () => {
+        const { data } = await fetch("http://localhost:4000/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            query: `
+              query Query($provider: Provider!, $redirect: String) {
+                getAuthRedirectLink(provider: $provider, redirect: $redirect)
+              }
+            `,
+            variables: {
+              provider: "GITHUB",
+            },
+          }),
+        }).then((res) => {
+          return res.json();
+        });
+
+        router.push(data.getAuthRedirectLink);
+      }}
+    >
       <GitHubIcon />
       <span className="mx-auto">Sign in with GitHub</span>
     </button>
