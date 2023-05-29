@@ -1,12 +1,3 @@
-import { Cinzel } from "next/font/google";
-
-export const scrollTo = (id: string) => {
-  const element: HTMLElement = document.querySelector(id)!;
-  window?.scrollTo({ behavior: "smooth", top: element.offsetTop - 90 });
-};
-
-export const cinzel = Cinzel({ subsets: ["latin"], style: "normal"});
-
 export const ethnicities = [
   "American Indian or Alaska Native",
   "Asian",

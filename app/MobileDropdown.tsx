@@ -3,7 +3,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
-import { scrollTo } from "../lib/utils";
+import ScrollToButton from "./ScrollToButton";
 
 export default function MobileDropdown() {
   return (
@@ -23,52 +23,42 @@ export default function MobileDropdown() {
         <Menu.Items className="absolute top-10 flex w-48 flex-col border bg-white p-2">
           <Menu.Item>
             {({ active }) => (
-              <button
+              <ScrollToButton
+                elementId="#about"
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#about")}
               >
                 About
-              </button>
+              </ScrollToButton>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <button
+              <ScrollToButton
+                elementId="#faq"
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#faq")}
               >
                 FAQ
-              </button>
+              </ScrollToButton>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <button
+              <ScrollToButton
+                elementId="#guide"
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#guide")}
               >
                 Guide
-              </button>
+              </ScrollToButton>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <button
+              <ScrollToButton
+                elementId="#sponsors"
                 className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#schedule")}
-              >
-                Schedule
-              </button>
-            )}
-          </Menu.Item>{" "}
-          <Menu.Item>
-            {({ active }) => (
-              <button
-                className={`${active && "bg-black text-white"} px-4 py-2`}
-                onClick={() => scrollTo("#sponsors")}
               >
                 Sponsors
-              </button>
+              </ScrollToButton>
             )}
           </Menu.Item>
         </Menu.Items>

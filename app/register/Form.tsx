@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { HTMLProps, useState } from "react";
 import {
   FieldError,
@@ -11,15 +12,20 @@ import {
 } from "react-hook-form";
 import { z } from "zod";
 import {
-  cinzel,
   countries,
   ethnicities,
   graduationYears,
   schools,
   tracks,
-} from "../lib/utils";
+} from "./options";
 
-export default function RegistrationForm() {
+export default function RegistrationForm({
+  encryptedOAuthAccessToken,
+}: {
+  encryptedOAuthAccessToken: string;
+}) {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -28,16 +34,28 @@ export default function RegistrationForm() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Fields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Fields> = async (data) => {
+    const res = await fetch("http://localhost:3000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        input: data,
+        encryptedOAuthAccessToken,
+        provider: "GITHUB"
+      }),
+    });
 
-    // TODO: Implement
+    if (!res.ok) {
+      return;
+    }
+
+    router.push("/dashboard");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-2 text-xl font-bold" style={cinzel.style}>
-        Welcome Hacker
-      </div>
+      <div className="mb-2 font-serif text-xl font-bold">Welcome Hacker</div>
       <Input
         register={register}
         errorMessage={errors.firstName?.message}
@@ -52,10 +70,7 @@ export default function RegistrationForm() {
         label="Last Name"
         placeholder="Doe"
       />
-      <ResumeUpload register={register} />
-      <div className="mb-2 text-xl font-bold" style={cinzel.style}>
-        About You
-      </div>
+      <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Select
         register={register}
         name="ethnicity"
@@ -83,9 +98,7 @@ export default function RegistrationForm() {
         label="Birthdate"
         type="date"
       />
-      <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
-        Contact
-      </div>
+      <div className="mb-2 pt-4 font-serif text-xl font-bold">Contact</div>
       <Input
         register={register}
         errorMessage={errors.discord?.message}
@@ -107,9 +120,7 @@ export default function RegistrationForm() {
         label="Email"
         placeholder="johndoe@knighthacks.com"
       />
-      <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
-        School
-      </div>
+      <div className="mb-2 pt-4 font-serif text-xl font-bold">School</div>
       <Select
         register={register}
         name="school"
@@ -129,9 +140,7 @@ export default function RegistrationForm() {
         label="Graduation Year"
         options={graduationYears}
       />
-      <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
-        Hackathon
-      </div>
+      <div className="mb-2 pt-4 font-serif text-xl font-bold">Hackathon</div>
       <p className="mb-1">
         Is it okay if we share your information (name, resume, graduation year,
         etc.) with sponsors?
@@ -151,7 +160,7 @@ export default function RegistrationForm() {
         name="whyAttending"
         label="What do you hope to learn at KnightHacks?"
       />
-      <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
+      <div className="mb-2 pt-4 font-serif text-xl font-bold">
         External Links
       </div>
       <div className="mb-2">
@@ -172,9 +181,7 @@ export default function RegistrationForm() {
         label="LinkedIn"
         placeholder="https://www.linkedin.com/in/yourname/"
       />
-      <div className="mb-2 pt-4 text-xl font-bold" style={cinzel.style}>
-        Final Steps
-      </div>
+      <div className="mb-2 pt-4 font-serif text-xl font-bold">Final Steps</div>
       <Checkbox
         register={register}
         errors={errors.hasReadMLHCodeOfConduct}
@@ -199,39 +206,39 @@ export default function RegistrationForm() {
   );
 }
 
-const ResumeUpload = ({
-  register,
-  ...props
-}: {
-  register: UseFormRegister<Fields>;
-}) => {
-  const [file, setFile] = useState<File | null>(null);
-  return (
-    <div className="mb-8 flex flex-col">
-      <label
-        className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
-        tabIndex={0}
-        placeholder="Resume"
-        htmlFor="resume"
-      >
-        Upload Resume
-        <input
-          {...props}
-          {...register("resume", {
-            onChange: (e) => {
-              const file = e.target.files?.[0];
-              if (file) setFile(file);
-            },
-          })}
-          className="hidden"
-          id="resume"
-          type="file"
-        />
-      </label>
-      {file && <p>{file.name}</p>}
-    </div>
-  );
-};
+// const ResumeUpload = ({
+//   register,
+//   ...props
+// }: {
+//   register: UseFormRegister<Fields>;
+// }) => {
+//   const [file, setFile] = useState<File | null>(null);
+//   return (
+//     <div className="mb-8 flex flex-col">
+//       <label
+//         className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
+//         tabIndex={0}
+//         placeholder="Resume"
+//         htmlFor="resume"
+//       >
+//         Upload Resume
+//         <input
+//           {...props}
+//           {...register("resume", {
+//             onChange: (e) => {
+//               const file = e.target.files?.[0];
+//               if (file) setFile(file);
+//             },
+//           })}
+//           className="hidden"
+//           id="resume"
+//           type="file"
+//         />
+//       </label>
+//       {file && <p>{file.name}</p>}
+//     </div>
+//   );
+// };
 
 const Input = ({
   label,
@@ -368,7 +375,7 @@ function Checkbox({
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
   lastName: z.string().nonempty("This field is required"),
-  resume: z.any(),
+  // resume: z.any(),
   tracks: z.array(z.enum(tracks)).min(1, "At least one track must be selected"),
   ethnicity: z.enum(ethnicities),
   country: z.enum(countries),
@@ -401,4 +408,4 @@ const schema = z.object({
   isSubscribedToMLHNewsletter: z.boolean(),
 });
 
-type Fields = z.infer<typeof schema>;
+export type Fields = z.infer<typeof schema>;

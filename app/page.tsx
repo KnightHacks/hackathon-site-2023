@@ -1,17 +1,23 @@
-import { AboutSection } from "./sections/AboutSection";
-import { FAQSection } from "./sections/FAQSection";
-import { HackersGuideSection } from "./sections/HackersGuideSection";
-import { MainSection } from "./sections/MainSection";
-import { SponsorsSection } from "./sections/SponsorsSection";
+import {
+  AboutSection,
+  FAQSection,
+  HackersGuideSection,
+  MainSection,
+  SponsorsSection,
+} from "./Sections";
+import Navbar from "./Navbar";
 
 export default function Home() {
   return (
     <>
-      <MainSection />
-      <AboutSection />
-      <HackersGuideSection />
-      <FAQSection />
-      <SponsorsSection />
+      <Navbar />
+      <div className="px-8">
+        <MainSection />
+        <AboutSection />
+        <HackersGuideSection />
+        <FAQSection />
+        <SponsorsSection />
+      </div>
     </>
   );
 }

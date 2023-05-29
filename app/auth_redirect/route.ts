@@ -1,4 +1,4 @@
-import { cookies } from "next/dist/client/components/headers";
+import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,13 +15,15 @@ export async function GET(request: Request) {
   }
 
   const { data, errors } = await login(code, state);
+  console.log(data);
+
   if (errors || !data) {
     return new Response("Error logging in", {
       status: 500,
     });
   }
 
-  if (data.login.accountExists) {
+  if (!data.login.accountExists) {
     cookies().set(
       "encryptedOAuthAccessToken",
       data.login.encryptedOAuthAccessToken
@@ -30,13 +32,25 @@ export async function GET(request: Request) {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "http://localhost:3000/",
+        Location: "http://localhost:3000/register",
       },
     });
   }
 
-  cookies().set("accessToken", data.login.accessToken);
-  cookies().set("refreshToken", data.login.refreshToken);
+  cookies().set({
+    name: "accessToken",
+    value: data.login.accessToken,
+    // @ts-ignore
+    httpOnly: true,
+    path: "/",
+  });
+  cookies().set({
+    name: "refreshToken",
+    value: data.login.refreshToken,
+    // @ts-ignore
+    httpOnly: true,
+    path: "/",
+  });
 
   return new Response(null, {
     status: 302,
