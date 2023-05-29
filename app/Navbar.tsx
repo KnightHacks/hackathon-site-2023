@@ -36,6 +36,7 @@ export default function Navbar() {
           <ScrollToButton elementId="#sponsors">Sponsors</ScrollToButton>
         </li>
       </ul>
+      {/* @ts-expect-error Async Server Component */}
       <NavButton />
     </nav>
   );
