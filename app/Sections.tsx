@@ -21,10 +21,10 @@ export function MainSection() {
       <div className="mb-8 text-2xl">October 6-8</div>
       <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
-          href="/register"
+          href="/apply"
           className="border border-black bg-black py-3 text-center font-bold text-white"
         >
-          Register
+          Apply
         </Link>
         <ScrollToButton
           elementId="#sponsors"

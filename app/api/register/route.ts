@@ -12,6 +12,8 @@ export async function POST(req: Request) {
     });
   }
 
+  console.log(encryptedOAuthAccessToken);
+
   const registrationPayload = JSON.parse(await req.text());
   const { data, errors } = await register({
     encryptedOAuthAccessToken,
@@ -60,38 +62,6 @@ async function register({
   input: FieldValues;
   provider: string;
 }) {
-  console.log(
-    JSON.stringify(
-      {
-        shirtSize: input.shirtSize,
-        mlh: {
-          shareInfo: true,
-          codeOfConduct: true,
-          sendMessages: true,
-        },
-        phoneNumber: input.phoneNumber,
-        mailingAddress: {
-          addressLines: [input.addressLine1, input.addressLine2],
-          city: input.city,
-          state: input.state,
-          postalCode: input.zipCode,
-          country: input.country,
-        },
-        firstName: input.firstName,
-        lastName: input.lastName,
-        email: input.email,
-        educationInfo: {
-          name: input.schoolName,
-          major: input.major,
-          graduationDate: new Date(0),
-        },
-        age: input.age,
-      },
-      null,
-      2
-    )
-  );
-
   const res = await fetch("http://localhost:4000/", {
     method: "POST",
     headers: {
