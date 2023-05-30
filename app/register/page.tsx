@@ -6,7 +6,7 @@ export default function KnightHacksAccountRegistration() {
   const encryptedOAuthAccessToken = cookies().get("encryptedOAuthAccessToken");
 
   if (!encryptedOAuthAccessToken) {
-    // return redirect("/signin");
+    return redirect("/signin");
   }
 
   return (

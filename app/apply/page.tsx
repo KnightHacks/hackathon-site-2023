@@ -10,7 +10,7 @@ export default function KnightHacksRegistration() {
 
   return (
     <div className="mx-auto my-10 w-full max-w-screen-md px-6">
-      <KnightHacksRegistrationForm accessToken={accessToken} />
+      <KnightHacksRegistrationForm />
     </div>
   );
 }
