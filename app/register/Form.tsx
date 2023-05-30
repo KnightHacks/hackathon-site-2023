@@ -1,29 +1,52 @@
 "use client";
 
+import { Checkbox, Input, Select } from "@/lib/Fields";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { HTMLProps, useState } from "react";
-import {
-  FieldError,
-  Path,
-  SubmitHandler,
-  UseFormRegister,
-  useForm,
-} from "react-hook-form";
-import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 import {
   countries,
   ethnicities,
+  genders,
   graduationYears,
-  schools,
-  tracks,
+  shirtSizes,
+  states,
 } from "./options";
 
-export default function RegistrationForm({
-  encryptedOAuthAccessToken,
-}: {
-  encryptedOAuthAccessToken: string;
-}) {
+const schema = z.object({
+  firstName: z.string().nonempty("This field is required"),
+  lastName: z.string().nonempty("This field is required"),
+  age: z
+    .number({
+      errorMap: () => ({ message: "This field is required" }),
+    })
+    .int("Age must be a positive integer")
+    .positive("Age must be a positive integer")
+    .min(18, "You must be 18 or older"),
+  gender: z.enum(genders),
+  shirtSize: z.enum(shirtSizes),
+  ethnicity: z.enum(ethnicities),
+  email: z.string().email("Invalid email address"),
+  phoneNumber: z.string().nonempty("This field is required"),
+  country: z.enum(countries),
+  addressLine1: z.string().nonempty("This field is required"),
+  addressLine2: z.string().optional(),
+  city: z.string().nonempty("This field is required"),
+  state: z.enum(states),
+  zipCode: z.string().nonempty("This field is required"),
+  schoolName: z.string().nonempty("This field is required"),
+  major: z.string().nonempty("This field is required"),
+  graduationYear: z.enum(graduationYears),
+  shareResume: z.boolean(),
+  agreesToMLHCodeOfConduct: z.literal(true, {
+    errorMap: () => ({ message: "You must agree to the MLH Code of Conduct" }),
+  }),
+});
+
+type Fields = z.infer<typeof schema>;
+
+export default function KnightHacksAccountRegistrationForm() {
   const router = useRouter();
 
   const {
@@ -35,377 +58,145 @@ export default function RegistrationForm({
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    const res = await fetch("http://localhost:3000/api/register", {
+    const res = await fetch("/api/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: data,
-        encryptedOAuthAccessToken,
-        provider: "GITHUB"
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    if (!res.ok) {
-      return;
-    }
-
-    router.push("/dashboard");
+    if (res.ok) router.push("/dashboard");
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="font-serif text-4xl font-bold">Register</div>
+      <p className="mb-4">
+        Create a KnightHacks account once and use it for all KnightHacks
+        hackathons!
+      </p>
       <div className="mb-2 font-serif text-xl font-bold">Welcome Hacker</div>
       <Input
-        register={register}
-        errorMessage={errors.firstName?.message}
-        name="firstName"
         label="First Name"
-        placeholder="John"
+        placeholder="Eric"
+        error={errors.firstName}
+        {...register("firstName")}
       />
       <Input
-        register={register}
-        name="lastName"
-        errorMessage={errors.lastName?.message}
         label="Last Name"
-        placeholder="Doe"
+        placeholder="Farmer"
+        error={errors.lastName}
+        {...register("lastName")}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
+      <Input
+        label="Age"
+        placeholder="18"
+        error={errors.age}
+        {...register("age", {
+          valueAsNumber: true,
+        })}
+      />
       <Select
-        register={register}
-        name="ethnicity"
+        label="Shirt Size"
+        error={errors.shirtSize}
+        options={shirtSizes}
+        {...register("shirtSize")}
+      />
+      <Select
+        label="Gender"
+        error={errors.gender}
+        options={genders}
+        {...register("gender")}
+      />
+      <Select
         label="Ethnicity"
+        error={errors.ethnicity}
         options={ethnicities}
+        {...register("ethnicity")}
       />
-      <Select
-        multiple
-        register={register}
-        errorMessage={errors.tracks?.message}
-        name="tracks"
-        label="Track"
-        options={tracks}
-      />
-      <Select
-        register={register}
-        name="country"
-        label="Country"
-        options={countries}
+      <div className="mb-2 font-serif text-xl font-bold">Contact</div>
+      <Input
+        label="Email"
+        placeholder="eric.farmer@knighthacks.org"
+        error={errors.email}
+        {...register("email")}
       />
       <Input
-        register={register}
-        errorMessage={errors.birthdate?.message}
-        name="birthdate"
-        label="Birthdate"
-        type="date"
-      />
-      <div className="mb-2 pt-4 font-serif text-xl font-bold">Contact</div>
-      <Input
-        register={register}
-        errorMessage={errors.discord?.message}
-        name="discord"
-        label="Discord"
-        placeholder="johndoe#1234"
-      />
-      <Input
-        register={register}
-        errorMessage={errors.phoneNumber?.message}
-        name="phoneNumber"
         label="Phone Number"
         placeholder="(123) 456-7890"
+        error={errors.phoneNumber}
+        {...register("phoneNumber")}
+      />
+      <div className="mb-2 font-serif text-xl font-bold">Address</div>
+      <Input
+        label="Address Line 1"
+        placeholder="4000 Central Florida Blvd"
+        error={errors.addressLine1}
+        {...register("addressLine1")}
       />
       <Input
-        register={register}
-        errorMessage={errors.email?.message}
-        name="email"
-        label="Email"
-        placeholder="johndoe@knighthacks.com"
+        label="Address Line 2"
+        placeholder="11200 SW 8th St"
+        error={errors.addressLine2}
+        {...register("addressLine2")}
       />
-      <div className="mb-2 pt-4 font-serif text-xl font-bold">School</div>
       <Select
-        register={register}
-        name="school"
-        label="School"
-        options={schools}
+        label="Country"
+        error={errors.country}
+        options={countries}
+        {...register("country")}
       />
       <Input
-        register={register}
-        errorMessage={errors.major?.message}
-        name="major"
+        label="City"
+        placeholder="Orlando"
+        error={errors.city}
+        {...register("city")}
+      />
+      <Select
+        label="State"
+        error={errors.state}
+        options={states}
+        {...register("state")}
+      />
+      <Input
+        label="Zip Code"
+        placeholder="32816"
+        error={errors.zipCode}
+        {...register("zipCode")}
+      />
+      <div className="mb-2 font-serif text-xl font-bold">School</div>
+      <Input
+        label="School Name"
+        placeholder="University of Central Florida"
+        error={errors.schoolName}
+        {...register("schoolName")}
+      />
+      <Input
         label="Major"
         placeholder="Computer Science"
+        error={errors.major}
+        {...register("major")}
       />
       <Select
-        register={register}
-        name="graduationYear"
         label="Graduation Year"
+        error={errors.graduationYear}
         options={graduationYears}
+        {...register("graduationYear")}
       />
-      <div className="mb-2 pt-4 font-serif text-xl font-bold">Hackathon</div>
-      <p className="mb-1">
-        Is it okay if we share your information (name, resume, graduation year,
-        etc.) with sponsors?
-      </p>
+      <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
-        register={register}
-        name="isComfortableSharingInfo"
-        label="I am comfortable with sharing my information with sponsors"
-      />
-      <TextArea
-        register={register}
-        name="whyAttending"
-        label="Why are you attending KnightHacks?"
-      />
-      <TextArea
-        register={register}
-        name="whyAttending"
-        label="What do you hope to learn at KnightHacks?"
-      />
-      <div className="mb-2 pt-4 font-serif text-xl font-bold">
-        External Links
-      </div>
-      <div className="mb-2">
-        Note: these are optional, but most technical applications ask for them!
-        Make a Github/LinkedIn account today if you don’t have one.
-      </div>
-      <Input
-        register={register}
-        errorMessage={errors.github?.message}
-        name="github"
-        label="Github"
-        placeholder="https://github.com/AwesomeSauce"
-      />
-      <Input
-        register={register}
-        errorMessage={errors.linkedin?.message}
-        name="linkedin"
-        label="LinkedIn"
-        placeholder="https://www.linkedin.com/in/yourname/"
-      />
-      <div className="mb-2 pt-4 font-serif text-xl font-bold">Final Steps</div>
-      <Checkbox
-        register={register}
-        errors={errors.hasReadMLHCodeOfConduct}
-        name="hasReadMLHCodeOfConduct"
-        label="I have read and agree to the MLH Code of Conduct"
+        label="I would like to share my resume with sponsors"
+        error={errors.shareResume}
+        {...register("shareResume")}
       />
       <Checkbox
-        register={register}
-        errors={errors.isAuthorizedToShareAppWithMLH}
-        name="isAuthorizedToShareAppWithMLH"
-        label="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational emails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy."
+        label="I agree to the MLH Code of Conduct"
+        error={errors.agreesToMLHCodeOfConduct}
+        {...register("agreesToMLHCodeOfConduct")}
       />
-      <Checkbox
-        register={register}
-        name="isSubscribedToMLHNewsletter"
-        label="I authorize Major League Hacking to send me occasional messages about hackathons including pre- and post-event informational emails."
-      />
-      <button className="mt-6  w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
+      <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
         Submit
       </button>
     </form>
   );
 }
-
-// const ResumeUpload = ({
-//   register,
-//   ...props
-// }: {
-//   register: UseFormRegister<Fields>;
-// }) => {
-//   const [file, setFile] = useState<File | null>(null);
-//   return (
-//     <div className="mb-8 flex flex-col">
-//       <label
-//         className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
-//         tabIndex={0}
-//         placeholder="Resume"
-//         htmlFor="resume"
-//       >
-//         Upload Resume
-//         <input
-//           {...props}
-//           {...register("resume", {
-//             onChange: (e) => {
-//               const file = e.target.files?.[0];
-//               if (file) setFile(file);
-//             },
-//           })}
-//           className="hidden"
-//           id="resume"
-//           type="file"
-//         />
-//       </label>
-//       {file && <p>{file.name}</p>}
-//     </div>
-//   );
-// };
-
-const Input = ({
-  label,
-  name,
-  register,
-  errorMessage,
-  ...props
-}: {
-  label: string;
-  name: Path<Fields>;
-  register: UseFormRegister<Fields>;
-  errorMessage?: string;
-} & HTMLProps<HTMLInputElement>) => {
-  return (
-    <label
-      className={`mb-4 flex flex-col duration-200 ease-in-out  ${
-        errorMessage && "text-red-500"
-      }`}
-      htmlFor={label}
-    >
-      <div>
-        {label}
-        {errorMessage && (
-          <span className="text-sm italic text-red-500"> - {errorMessage}</span>
-        )}
-      </div>
-      <input
-        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 ${
-          errorMessage
-            ? "border-red-500 focus:ring-red-500"
-            : " focus:ring-blue-500"
-        }`}
-        id={label}
-        {...register(name)}
-        {...props}
-      />
-    </label>
-  );
-};
-
-const TextArea = ({
-  label,
-  name,
-  register,
-  ...props
-}: {
-  label: string;
-  name: Path<Fields>;
-  register: UseFormRegister<Fields>;
-} & HTMLProps<HTMLTextAreaElement>) => {
-  return (
-    <div className="mb-4 flex flex-col">
-      <label htmlFor={label}>{label}</label>
-      <textarea
-        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500`}
-        id={label}
-        {...register(name)}
-        {...props}
-      />
-    </div>
-  );
-};
-
-const Select = ({
-  label,
-  name,
-  options,
-  register,
-  errorMessage,
-  ...props
-}: {
-  label: string;
-  name: Path<Fields>;
-  options: readonly string[];
-  register: UseFormRegister<Fields>;
-  errorMessage?: string;
-} & HTMLProps<HTMLSelectElement>) => {
-  return (
-    <label
-      className={`mb-4 flex flex-col duration-200 ease-in-out  ${
-        errorMessage && "text-red-500"
-      }`}
-      htmlFor={props.id}
-    >
-      <div>
-        {label}
-        {errorMessage && (
-          <span className="text-sm italic"> - {errorMessage}</span>
-        )}
-      </div>
-      <select
-        className={`border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 ${
-          errorMessage
-            ? "border-red-500 focus:ring-red-500"
-            : " focus:ring-blue-500"
-        }`}
-        id={label}
-        {...register(name)}
-        {...props}
-      >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-};
-
-function Checkbox({
-  label,
-  register,
-  errors,
-  name,
-  ...props
-}: {
-  label: string;
-  register: UseFormRegister<Fields>;
-  errors?: FieldError;
-  name: Path<Fields>;
-} & HTMLProps<HTMLInputElement>) {
-  return (
-    <label className="mb-2 block" htmlFor={props.id}>
-      <input className="mr-3" {...register(name)} {...props} type="checkbox" />
-      <span>{label}</span>
-      {errors && (
-        <p className="text-sm italic text-red-500">{errors.message}</p>
-      )}
-    </label>
-  );
-}
-
-const schema = z.object({
-  firstName: z.string().nonempty("This field is required"),
-  lastName: z.string().nonempty("This field is required"),
-  // resume: z.any(),
-  tracks: z.array(z.enum(tracks)).min(1, "At least one track must be selected"),
-  ethnicity: z.enum(ethnicities),
-  country: z.enum(countries),
-  birthdate: z.coerce.date({
-    errorMap: () => ({
-      message: "This field is required",
-    }),
-  }),
-  phoneNumber: z.string().nonempty("This field is required"),
-  email: z.string().nonempty("This field is required").email("Invalid email"),
-  discord: z.string().optional().or(z.literal("")),
-  school: z.string().nonempty("This field is required"),
-  major: z.string().nonempty("This is field is required"),
-  graduationYear: z.enum(graduationYears),
-  isComfortableSharingInfo: z.boolean(),
-  whyAttending: z.string().optional().or(z.literal("")),
-  whatHopingToLearn: z.string().optional().or(z.literal("")),
-  github: z.string().url().optional().or(z.literal("")),
-  linkedin: z.string().url().optional().or(z.literal("")),
-  hasReadMLHCodeOfConduct: z.literal(true, {
-    errorMap: () => ({
-      message: "This field must be checked",
-    }),
-  }),
-  isAuthorizedToShareAppWithMLH: z.literal(true, {
-    errorMap: () => ({
-      message: "This field must be checked",
-    }),
-  }),
-  isSubscribedToMLHNewsletter: z.boolean(),
-});
-
-export type Fields = z.infer<typeof schema>;

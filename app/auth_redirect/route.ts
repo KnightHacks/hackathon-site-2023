@@ -15,6 +15,7 @@ export async function GET(request: Request) {
   }
 
   const { data, errors } = await login(code, state);
+
   console.log(data);
 
   if (errors || !data) {
@@ -40,14 +41,23 @@ export async function GET(request: Request) {
   cookies().set({
     name: "accessToken",
     value: data.login.accessToken,
-    // @ts-ignore
+    expires: new Date(Date.now() + 1000 * 60 * 30),
     httpOnly: true,
     path: "/",
   });
+
   cookies().set({
     name: "refreshToken",
     value: data.login.refreshToken,
-    // @ts-ignore
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+    httpOnly: true,
+    path: "/",
+  });
+
+  cookies().set({
+    name: "oauthstate",
+    value: "",
+    expires: new Date(0),
     httpOnly: true,
     path: "/",
   });
@@ -61,11 +71,19 @@ export async function GET(request: Request) {
 }
 
 async function login(code: string, state: string) {
+  const oAuthState = cookies().get("oauthstate");
+
+  if (!oAuthState) {
+    return new Response("No oauthstate cookie", {
+      status: 500,
+    });
+  }
+
   const res = await fetch("http://localhost:4000/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Cookie: `oauthstate=${cookies().get("oauthstate")?.value}`,
+      Cookie: `oauthstate=${oAuthState.value}`,
     },
     credentials: "include",
 
@@ -88,5 +106,5 @@ async function login(code: string, state: string) {
     }),
   });
 
-  return await res.json();
+  return res.json();
 }

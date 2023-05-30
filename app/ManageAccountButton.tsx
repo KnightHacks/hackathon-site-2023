@@ -11,7 +11,7 @@ export default function ManageAccountButton({
 }) {
   return (
     <Popover.Root>
-      <Popover.Trigger>Welcome {userFirstName}</Popover.Trigger>
+      <Popover.Trigger>Welcome, {userFirstName}</Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="mr-6 mt-2 flex w-48 flex-col border bg-white p-2 font-serif">
           <Link

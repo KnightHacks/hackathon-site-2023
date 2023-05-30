@@ -5,7 +5,6 @@ export async function POST() {
   cookies().set({
     name: "accessToken",
     value: "",
-    // @ts-ignore
     expires: new Date(0),
     httpOnly: true,
     path: "/",
@@ -13,7 +12,6 @@ export async function POST() {
   cookies().set({
     name: "refreshToken",
     value: "",
-    // @ts-ignore
     expires: new Date(0),
     httpOnly: true,
     path: "/",

@@ -1,15 +1,25 @@
-import { Fields } from "@/register/Form";
 import { cookies } from "next/headers";
+import { FieldValues } from "react-hook-form";
 
 export async function POST(req: Request) {
-  const registerPayload = JSON.parse(await req.text());
-  console.log(registerPayload);
-  const { data, errors } = await register(registerPayload);
+  const encryptedOAuthAccessToken = cookies().get(
+    "encryptedOAuthAccessToken"
+  )?.value;
 
-  console.log({
-    data,
-    errors,
+  if (!encryptedOAuthAccessToken) {
+    return new Response("No OAuth access token", {
+      status: 400,
+    });
+  }
+
+  const registrationPayload = JSON.parse(await req.text());
+  const { data, errors } = await register({
+    encryptedOAuthAccessToken,
+    input: registrationPayload,
+    provider: "GITHUB",
   });
+
+  console.log(errors);
 
   if (errors || !data) {
     return new Response("Error registering", {
@@ -20,7 +30,7 @@ export async function POST(req: Request) {
   cookies().set({
     name: "accessToken",
     value: data.register.accessToken,
-    // @ts-ignore
+    expires: new Date(Date.now() + 1000 * 60 * 30),
     httpOnly: true,
     path: "/",
   });
@@ -28,7 +38,7 @@ export async function POST(req: Request) {
   cookies().set({
     name: "refreshToken",
     value: data.register.refreshToken,
-    // @ts-ignore
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     httpOnly: true,
     path: "/",
   });
@@ -36,7 +46,7 @@ export async function POST(req: Request) {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "http://localhost:3000/dashboard",
+      Location: "/dashboard",
     },
   });
 }
@@ -47,9 +57,41 @@ async function register({
   provider,
 }: {
   encryptedOAuthAccessToken: string;
-  input: Fields;
+  input: FieldValues;
   provider: string;
 }) {
+  console.log(
+    JSON.stringify(
+      {
+        shirtSize: input.shirtSize,
+        mlh: {
+          shareInfo: true,
+          codeOfConduct: true,
+          sendMessages: true,
+        },
+        phoneNumber: input.phoneNumber,
+        mailingAddress: {
+          addressLines: [input.addressLine1, input.addressLine2],
+          city: input.city,
+          state: input.state,
+          postalCode: input.zipCode,
+          country: input.country,
+        },
+        firstName: input.firstName,
+        lastName: input.lastName,
+        email: input.email,
+        educationInfo: {
+          name: input.schoolName,
+          major: input.major,
+          graduationDate: new Date(0),
+        },
+        age: input.age,
+      },
+      null,
+      2
+    )
+  );
+
   const res = await fetch("http://localhost:4000/", {
     method: "POST",
     headers: {
@@ -67,20 +109,29 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
       variables: {
         encryptedOAuthAccessToken,
         input: {
-          educationInfo: {
-            name: input.school,
-            major: input.major,
-          },
-          email: input.email,
-          firstName: input.firstName,
-          lastName: input.lastName,
+          shirtSize: input.shirtSize,
           mlh: {
-            codeOfConduct: input.hasReadMLHCodeOfConduct,
-            sendMessages: input.isSubscribedToMLHNewsletter,
-            shareInfo: input.isComfortableSharingInfo,
+            shareInfo: true,
+            codeOfConduct: true,
+            sendMessages: true,
           },
           phoneNumber: input.phoneNumber,
-          yearsOfExperience: 0,
+          mailingAddress: {
+            addressLines: [input.addressLine1, input.addressLine2],
+            city: input.city,
+            state: input.state,
+            postalCode: input.zipCode,
+            country: input.country,
+          },
+          firstName: input.firstName,
+          lastName: input.lastName,
+          email: input.email,
+          educationInfo: {
+            name: input.schoolName,
+            major: input.major,
+            graduationDate: new Date(0),
+          },
+          age: input.age,
         },
         provider,
       },

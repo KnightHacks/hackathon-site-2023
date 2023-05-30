@@ -43,14 +43,15 @@ export default function Navbar() {
 }
 
 async function NavButton() {
-  if (cookies().get("accessToken")) {
-    console.log(cookies().get("accessToken")?.value);
+  const accessToken = cookies().get("accessToken")?.value;
+
+  if (accessToken) {
     const getUserInfo = async () => {
       const res = await fetch("http://localhost:4000/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies().get("accessToken")?.value}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           query: `
@@ -67,10 +68,11 @@ query Query {
       return await res.json();
     };
 
-    const userInfoPayload = await getUserInfo();
+    const userPayload = await getUserInfo();
+    console.log(userPayload);
 
     return (
-      <ManageAccountButton userFirstName={userInfoPayload.data.me.firstName} />
+      <ManageAccountButton userFirstName={userPayload.data.me.firstName} />
     );
   } else if (cookies().get("encryptedOAuthAccessToken")) {
     return (
