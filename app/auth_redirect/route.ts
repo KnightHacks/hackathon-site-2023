@@ -16,6 +16,14 @@ export async function GET(request: Request) {
 
   const { data, errors } = await login(code, state);
 
+  cookies().set({
+    name: "oauthstate",
+    value: "",
+    expires: new Date(0),
+    httpOnly: true,
+    path: "/",
+  });
+
   console.log(data);
 
   if (errors || !data) {
@@ -50,14 +58,6 @@ export async function GET(request: Request) {
     name: "refreshToken",
     value: data.login.refreshToken,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-    httpOnly: true,
-    path: "/",
-  });
-
-  cookies().set({
-    name: "oauthstate",
-    value: "",
-    expires: new Date(0),
     httpOnly: true,
     path: "/",
   });
