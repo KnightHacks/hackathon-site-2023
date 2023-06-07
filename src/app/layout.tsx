@@ -1,6 +1,5 @@
 import { Cinzel, Montserrat } from "next/font/google";
-import { cookies } from "next/headers";
-import Footer from "./Footer";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
 const cinzel = Cinzel({
@@ -25,9 +24,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const accessToken = cookies().get("accessToken")?.value;
-  console.log(accessToken);
-
   return (
     <html lang="en" className={`${monteserrat.variable} ${cinzel.variable}`}>
       <body className="flex min-h-screen flex-col font-sans">

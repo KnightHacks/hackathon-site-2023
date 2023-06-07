@@ -1,35 +1,11 @@
 "use client";
 import { GearIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
-// async function NavButton() {
-//   const accessToken = cookies().get("accessToken")?.value;
-
-//   if (accessToken) {
-//     return <ManageAccountButton />;
-//   } else if (cookies().get("encryptedOAuthAccessToken")) {
-//     return (
-//       <Link
-//         href="/register"
-//         className="border-black bg-black px-4 py-2 font-bold text-white"
-//       >
-//         Register
-//       </Link>
-//     );
-//   }
-//   return (
-//     <Link
-//       href="/signin"
-//       className="border-black bg-black px-4 py-2 font-bold text-white"
-//     >
-//       Sign In
-//     </Link>
-//   );
-// }
 
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { match } from "ts-pattern";
-import { BlackDragonLogo } from "../components/SVGs";
-import { UserState, scrollToElementById } from "../utils";
+import { UserState, scrollToElementById } from "../../utils";
+import { BlackDragonLogo } from "../assets/Logos";
 
 export default function Navbar({ userState }: { userState: UserState }) {
   return (
@@ -162,14 +138,26 @@ export default function Navbar({ userState }: { userState: UserState }) {
                 <NavMenu.Content className="absolute right-0 top-10 w-[200px] border bg-white p-2">
                   <ul>
                     <li>
+                      <NavMenu.Link
+                        className="block w-full px-4 py-2 text-center hover:bg-black hover:text-white"
+                        asChild
+                      >
+                        <Link href="/dashboard">Dashboard</Link>
+                      </NavMenu.Link>
+                    </li>
+                    <li>
                       <NavMenu.Link asChild>
                         <button
-                          className="w-full px-4 py-2 text-center hover:bg-black hover:text-white"
-                          onClick={() => {
-                            scrollToElementById("dashboard");
+                          onClick={async () => {
+                            await fetch("/api/logout", {
+                              method: "POST",
+                            });
+
+                            location.reload();
                           }}
+                          className="w-full px-4 py-2 text-center hover:bg-black hover:text-white"
                         >
-                          Dashboard
+                          Logout
                         </button>
                       </NavMenu.Link>
                     </li>
@@ -177,7 +165,14 @@ export default function Navbar({ userState }: { userState: UserState }) {
                 </NavMenu.Content>
               </>
             ))
-            .with("OAuth", () => <Link href="/register">Register</Link>)
+            .with("OAuth", () => (
+              <NavMenu.Link
+                className="border border-black bg-black px-3 py-2 font-bold text-white"
+                asChild
+              >
+                <Link href="/register">Register</Link>
+              </NavMenu.Link>
+            ))
             .otherwise(() => (
               <NavMenu.Link
                 className="border border-black bg-black px-3 py-2 font-bold text-white"

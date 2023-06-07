@@ -1,4 +1,5 @@
 import { decodeJwt } from "jose";
+import { cache } from "react";
 
 export const scrollToElementById = (id: string) => {
   if (typeof window === "undefined") return;
@@ -17,18 +18,10 @@ export const scrollToElementById = (id: string) => {
 */
 export type UserState = "OAuth" | "Guest" | "User";
 
-export const parseToken = (token: string) => {
-  console.log("Token: ", token);
-  if (!token) return null;
-  return decodeJwt(token);
-};
-
-export const isTokenExpired = (token?: string) => {
+export const isTokenExpired = (token: string) => {
   if (!token) return true;
 
-  const parsedToken = parseToken(token);
-
-  if (!parsedToken) return true;
+  const parsedToken = decodeJwt(token);
 
   const now = Date.now() / 1000;
 
@@ -37,17 +30,36 @@ export const isTokenExpired = (token?: string) => {
   return parsedToken.exp < now;
 };
 
-export const getRefreshToken = async (refreshToken: string) => {
-  const res = await fetch("http://localhost:3000/api/refresh_token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      refreshToken,
-    }),
-    credentials: "include",
-  });
+// export const makeQuery = async ({
+//   query,
+//   variables,
+//   cookies,
+// }: {
+//   query: string;
+//   variables?: Record<string, string>;
+//   cookies?: Record<string, string>;
+// }) => {
+//   const headers: Record<string, string> = {
+//     "Content-Type": "application/json",
+//   };
 
-  return res.json();
-};
+//   if (cookies) {
+//     const cookieString = Object.entries(cookies)
+//       .map(([key, value]) => `${key}=${value}`)
+//       .join("; ");
+
+//     headers["Cookie"] = cookieString;
+//   }
+
+//   const res = await fetch("http://localhost:4000/", {
+//     method: "POST",
+//     headers,
+//     body: JSON.stringify({
+//       query,
+//       variables,
+//     }),
+//     credentials: "include",
+//   });
+
+//   return res.json();
+// };

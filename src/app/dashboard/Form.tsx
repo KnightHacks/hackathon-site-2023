@@ -1,18 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
-  countries,
-  ethnicities,
   genders,
-  graduationYears,
   shirtSizes,
+  ethnicities,
+  countries,
   states,
-} from "./options";
-import { Select, Checkbox, Input } from "../../components/form/Fields";
+  graduationYears,
+} from "../register/options";
+import { Select, Checkbox, Input } from "@/components/form/Fields";
+import { data } from "autoprefixer";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
@@ -39,16 +39,11 @@ const schema = z.object({
   major: z.string().nonempty("This field is required"),
   graduationYear: z.enum(graduationYears),
   shareResume: z.boolean(),
-  agreesToMLHCodeOfConduct: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to the MLH Code of Conduct" }),
-  }),
 });
 
 type Fields = z.infer<typeof schema>;
 
-export default function KnightHacksAccountRegistrationForm() {
-  const router = useRouter();
-
+export default function EditInfoForm({ user }: { user: any }) {
   const {
     register,
     handleSubmit,
@@ -58,34 +53,42 @@ export default function KnightHacksAccountRegistrationForm() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    const res = await fetch("/api/register", {
+    await fetch("/api/update_user", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, userId: user.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-
-    if (res.ok) router.push("/dashboard");
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="font-serif text-4xl font-bold">Register</div>
+      <div className="font-serif text-4xl font-bold">Dashboard</div>
       <p className="mb-4">
-        Create a KnightHacks account once and use it for all KnightHacks
-        hackathons!
+        Here you&apos;ll be able to edit your information and view your
+        application status!
+      </p>
+      <div className="font-serif text-xl font-bold">Application Status</div>
+      <p className="mb-4">
+        {user.applications.length === 0 && "You have not applied :("}
       </p>
       <div className="mb-2 font-serif text-xl font-bold">Welcome Hacker</div>
       <Input
         label="First Name"
         placeholder="Eric"
         error={errors.firstName}
-        {...register("firstName")}
+        {...register("firstName", {
+          value: user.firstName,
+        })}
       />
       <Input
         label="Last Name"
         placeholder="Farmer"
         error={errors.lastName}
-        {...register("lastName")}
+        {...register("lastName", {
+          value: user.lastName,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input
@@ -94,63 +97,83 @@ export default function KnightHacksAccountRegistrationForm() {
         error={errors.age}
         {...register("age", {
           valueAsNumber: true,
+          value: user.age,
         })}
       />
       <Select
         label="Shirt Size"
         error={errors.shirtSize}
         options={shirtSizes}
-        {...register("shirtSize")}
+        {...register("shirtSize", {
+          value: user.shirtSize,
+        })}
       />
       <Select
         label="Gender"
         error={errors.gender}
         options={genders}
-        {...register("gender")}
+        {...register("gender", {
+          value: user.gender ?? "Prefer not to say",
+        })}
       />
       <Select
         label="Ethnicity"
         error={errors.ethnicity}
         options={ethnicities}
-        {...register("ethnicity")}
+        {...register("ethnicity", {
+          // @ts-ignore
+          value: data.race,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Contact</div>
       <Input
         label="Email"
         placeholder="eric.farmer@knighthacks.org"
         error={errors.email}
-        {...register("email")}
+        {...register("email", {
+          value: user.email,
+        })}
       />
       <Input
         label="Phone Number"
         placeholder="(123) 456-7890"
         error={errors.phoneNumber}
-        {...register("phoneNumber")}
+        {...register("phoneNumber", {
+          value: user.phoneNumber,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Address</div>
       <Input
         label="Address Line 1"
         placeholder="4000 Central Florida Blvd"
         error={errors.addressLine1}
-        {...register("addressLine1")}
+        {...register("addressLine1", {
+          value: user.mailingAddress.addressLines[0],
+        })}
       />
       <Input
         label="Address Line 2"
         placeholder="11200 SW 8th St"
         error={errors.addressLine2}
-        {...register("addressLine2")}
+        {...register("addressLine2", {
+          value: user.mailingAddress.addressLines[1],
+        })}
       />
       <Select
         label="Country"
         error={errors.country}
         options={countries}
-        {...register("country")}
+        {...register("country", {
+          value: user.mailingAddress.country,
+        })}
       />
       <Input
         label="City"
         placeholder="Orlando"
         error={errors.city}
-        {...register("city")}
+        {...register("city", {
+          value: user.mailingAddress.city,
+        })}
       />
       <Select
         label="State"
@@ -162,20 +185,26 @@ export default function KnightHacksAccountRegistrationForm() {
         label="Zip Code"
         placeholder="32816"
         error={errors.zipCode}
-        {...register("zipCode")}
+        {...register("zipCode", {
+          value: user.mailingAddress.zipCode,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">School</div>
       <Input
         label="School Name"
         placeholder="University of Central Florida"
         error={errors.schoolName}
-        {...register("schoolName")}
+        {...register("schoolName", {
+          value: user.educationInfo.schoolName,
+        })}
       />
       <Input
         label="Major"
         placeholder="Computer Science"
         error={errors.major}
-        {...register("major")}
+        {...register("major", {
+          value: user.educationInfo.major,
+        })}
       />
       <Select
         label="Graduation Year"
@@ -188,11 +217,6 @@ export default function KnightHacksAccountRegistrationForm() {
         label="I would like to share my resume with sponsors"
         error={errors.shareResume}
         {...register("shareResume")}
-      />
-      <Checkbox
-        label="I agree to the MLH Code of Conduct"
-        error={errors.agreesToMLHCodeOfConduct}
-        {...register("agreesToMLHCodeOfConduct")}
       />
       <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
         Submit

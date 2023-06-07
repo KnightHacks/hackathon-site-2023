@@ -2,38 +2,52 @@ import { NextRequest, NextResponse } from "next/server";
 import { isTokenExpired } from "./utils";
 
 export async function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get("accessToken");
-  const refreshToken = req.cookies.get("refreshToken");
+  const accessToken = req.cookies.get("accessToken")?.value;
+  const refreshToken = req.cookies.get("refreshToken")?.value;
   const encryptedOAuthAccessToken = req.cookies.get(
     "encryptedOAuthAccessToken"
   );
 
-  if ((!accessToken || isTokenExpired(accessToken.value)) && refreshToken) {
-    const res = await fetch("http://localhost:4000/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-query Query($refreshToken: String!) {
-  refreshJWT(refreshToken: $refreshToken)
-}
-  `,
-        variables: {
-          refreshToken: refreshToken.value,
-        },
-      }),
-      credentials: "include",
+  // No refresh token -> invaldiate access token
+  if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
+    const response = NextResponse.redirect(new URL(req.url, req.url));
+
+    response.cookies.set({
+      name: "accessToken",
+      value: "",
+      expires: new Date(Date.now()),
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      path: "/",
+    });
+    response.cookies.set({
+      name: "refreshToken",
+      value: "",
+      expires: new Date(Date.now()),
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      path: "/",
     });
 
-    const { data, errors } = await res.json();
+    return response;
+  }
+
+  // Access token expired -> get new access token
+  if (
+    (!accessToken || isTokenExpired(accessToken)) &&
+    refreshToken &&
+    !isTokenExpired(refreshToken)
+  ) {
+    console.log(refreshToken ?? "no refresh token");
+    const { data, errors } = await getNewAccessToken(refreshToken);
 
     if (errors) {
       return NextResponse.redirect(new URL("/signin", req.url));
     }
 
-    const response = NextResponse.next();
+    const response = NextResponse.redirect(new URL(req.url, req.url));
     response.cookies.set({
       name: "accessToken",
       value: data.refreshJWT,
@@ -86,4 +100,30 @@ export const config = {
      */
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
+};
+
+const getNewAccessToken = async (refreshToken: string) => {
+  const query = `
+query Query($refreshToken: String!) {
+  refreshJWT(refreshToken: $refreshToken)
+}
+  `;
+
+  const variables = {
+    refreshToken,
+  };
+
+  const res = await fetch("http://localhost:4000/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables,
+    }),
+    credentials: "include",
+  });
+
+  return res.json();
 };

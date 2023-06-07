@@ -1,16 +1,40 @@
+import { Input } from "@/components/form/Fields";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import EditInfoForm from "./Form";
 
 const getUser = async (accessToken: string) => {
   const query = `
-query Query {
+query Me {
   me {
-    applications {
-      status
-      id
-    }
+    id
     firstName
     lastName
+    age
+    gender
+    shirtSize
+    race
+    phoneNumber
+    mailingAddress {
+      state
+      postalCode
+      country
+      city
+      addressLines
+    }
+    educationInfo {
+      major
+      name
+      level
+      graduationDate
+    }
+    email
+    applications {
+      whyAttend
+      whatDoYouWantToLearn
+      status
+    }
   }
 }
   `;
@@ -30,12 +54,21 @@ query Query {
   return res.json();
 };
 
-
-
 export default async function Dashboard() {
   const accessToken = cookies().get("accessToken")?.value;
 
-  // const { data } = await getUser(accessToken);
+  if (!accessToken) redirect("/login");
 
-  return <div>Dashboard</div>;
+  const { data, errors } = await getUser(accessToken);
+  console.log(data);
+
+  if (errors) {
+    redirect("/");
+  }
+
+  return (
+    <div className="mx-auto my-10 w-full max-w-screen-md px-6">
+      <EditInfoForm user={data.me} />
+    </div>
+  );
 }

@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { FieldValues } from "react-hook-form";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const encryptedOAuthAccessToken = cookies().get(
     "encryptedOAuthAccessToken"
   )?.value;
@@ -13,14 +13,12 @@ export async function POST(req: Request) {
     });
   }
 
-  const registrationPayload = JSON.parse(await req.text());
+  const registrationPayload = await req.json();
   const { data, errors } = await register({
     encryptedOAuthAccessToken,
-    input: registrationPayload,
+    data: registrationPayload,
     provider: "GITHUB",
   });
-
-  console.log(data, errors)
 
   if (errors) {
     return new NextResponse("Error registering", {
@@ -57,60 +55,64 @@ export async function POST(req: Request) {
 
 async function register({
   encryptedOAuthAccessToken,
-  input,
+  data,
   provider,
 }: {
   encryptedOAuthAccessToken: string;
-  input: FieldValues;
+  data: FieldValues;
   provider: string;
 }) {
-  const res = await fetch("http://localhost:4000/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
+  const query = `
 mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provider: Provider!) {
   register(encryptedOAuthAccessToken: $encryptedOAuthAccessToken, input: $input, provider: $provider) {
     accessToken
     refreshToken
   }
 }
-      `,
-      variables: {
-        encryptedOAuthAccessToken,
-        input: {
-          shirtSize: input.shirtSize,
-          mlh: {
-            shareInfo: true,
-            codeOfConduct: true,
-            sendMessages: true,
-          },
-          phoneNumber: input.phoneNumber,
-          mailingAddress: {
-            addressLines: [input.addressLine1, input.addressLine2],
-            city: input.city,
-            state: input.state,
-            postalCode: input.zipCode,
-            country: input.country,
-          },
-          pronouns: {
-            subjective: "",
-            objective: "",
-          },
-          firstName: input.firstName,
-          lastName: input.lastName,
-          email: input.email,
-          educationInfo: {
-            name: input.schoolName,
-            major: input.major,
-            graduationDate: new Date(0),
-          },
-          age: input.age,
-        },
-        provider,
+`;
+
+  const variables = {
+    encryptedOAuthAccessToken,
+    input: {
+      shirtSize: data.shirtSize,
+      mlh: {
+        shareInfo: true,
+        codeOfConduct: true,
+        sendMessages: true,
       },
+      phoneNumber: data.phoneNumber,
+      mailingAddress: {
+        addressLines: [data.addressLine1, data.addressLine2],
+        city: data.city,
+        state: data.state,
+        postalCode: data.zipCode,
+        country: data.country,
+      },
+      pronouns: {
+        subjective: "",
+        objective: "",
+      },
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      educationInfo: {
+        name: data.schoolName,
+        major: data.major,
+        graduationDate: new Date(0),
+      },
+      age: data.age,
+    },
+    provider,
+  };
+
+  const res = await fetch("http://localhost:4000/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables,
     }),
   });
 

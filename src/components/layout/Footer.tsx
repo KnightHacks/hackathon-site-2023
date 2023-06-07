@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DiscordIcon, GitHubIcon, InstagramIcon } from "../components/Icons";
+import { DiscordIcon, GitHubIcon, InstagramIcon } from "../assets/Icons";
 
 export default function Footer() {
   return (

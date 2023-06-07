@@ -4,8 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { Checkbox, TextArea } from "../../components/form/Fields";
 
-const schema = z.object({});
+const schema = z.object({
+  whyAttend: z.string().nonempty("This field is required"),
+  whatLearn: z.string().nonempty("This field is required"),
+  shareInfo: z.boolean(),
+});
 
 type Fields = z.infer<typeof schema>;
 
@@ -20,9 +25,38 @@ export default function KnightHacksRegistrationForm() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Fields> = async (data) => {};
+  const onSubmit: SubmitHandler<Fields> = async (data) => {
+ 
+  };
 
-  return <form onSubmit={handleSubmit(onSubmit)}></form>;
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="font-serif text-4xl font-bold">Apply!</div>
+      <p className="mb-4">
+        October 6-8 | UCF Main Campus | Open to all students
+      </p>
+      <TextArea
+        label="Why do you want to attend KnightHacks?"
+        placeholder="I love hackathons because..."
+        error={errors.whyAttend}
+        {...register("whyAttend")}
+      />
+      <TextArea
+        label="What do you hope to learn?"
+        placeholder="I want to learn about..."
+        error={errors.whatLearn}
+        {...register("whatLearn")}
+      />
+      <Checkbox
+        label="I would like to share my information with sponsors"
+        error={errors.shareInfo}
+        {...register("shareInfo")}
+      />
+      <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
+        Submit
+      </button>
+    </form>
+  );
 }
 
 // const ResumeUpload = ({

@@ -1,7 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { DiscordIcon, GitHubIcon, GoogleIcon } from "../../components/Icons";
+import {
+  DiscordIcon,
+  GitHubIcon,
+  GoogleIcon,
+} from "../../components/assets/Icons";
 
 export function GithubSignIn() {
   const router = useRouter();
@@ -32,7 +36,6 @@ export function GithubSignIn() {
           alert("Something went wrong!");
           return;
         }
-
 
         const { data } = await res.json();
 
