@@ -60,7 +60,6 @@ export default async function Dashboard() {
   if (!accessToken) redirect("/login");
 
   const { data, errors } = await getUser(accessToken);
-  console.log(data, errors);
 
   if (errors) {
     redirect("/");

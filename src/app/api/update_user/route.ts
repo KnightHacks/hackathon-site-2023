@@ -11,13 +11,10 @@ export async function POST(req: NextRequest) {
   }
 
   const updateUserPayload = await req.json();
-  console.log(updateUserPayload)
   const { errors } = await updateUser({
     accessToken,
     data: updateUserPayload,
   });
-
-  console.log(errors)
 
   if (errors) {
     return new NextResponse("Error updating user", {
@@ -77,8 +74,6 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
       age: data.age,
     },
   };
-
-  console.log(JSON.stringify(variables))
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
     method: "POST",

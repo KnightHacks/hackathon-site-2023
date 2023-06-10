@@ -8,11 +8,6 @@ export async function middleware(req: NextRequest) {
     "encryptedOAuthAccessToken"
   );
 
-  if (req.nextUrl.pathname.startsWith("/auth_redirect")) {
-    console.log("processing auth redirect");
-    return NextResponse.next();
-  }
-
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.redirect(new URL(req.url, req.url));
@@ -45,7 +40,6 @@ export async function middleware(req: NextRequest) {
     refreshToken &&
     !isTokenExpired(refreshToken)
   ) {
-    console.log(refreshToken ?? "no refresh token");
     const { data, errors } = await getNewAccessToken(refreshToken);
 
     if (errors) {
