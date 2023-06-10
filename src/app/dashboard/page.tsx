@@ -1,4 +1,4 @@
-import { Input } from "@/components/form/Fields";
+import { Input } from "@/components/Fields";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -60,7 +60,7 @@ export default async function Dashboard() {
   if (!accessToken) redirect("/login");
 
   const { data, errors } = await getUser(accessToken);
-  console.log(data);
+  console.log(data, errors);
 
   if (errors) {
     redirect("/");

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { SuccessToast } from "@/components/Toast";
 
 const schema = z.object({
+  tracks: z.enum(["Beginner", "Intermediate", "Advanced"]),
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),

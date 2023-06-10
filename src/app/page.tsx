@@ -1,4 +1,4 @@
-import NavMenu from "@/components/layout/Navbar";
+import NavMenu from "@/components/Navbar";
 import { cookies } from "next/headers";
 import {
   AboutSection,

@@ -1,11 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  DiscordIcon,
-  GitHubIcon,
-  GoogleIcon,
-} from "../../components/Icons";
+import { DiscordIcon, GitHubIcon, GoogleIcon } from "../../components/Icons";
 
 export function GithubSignIn() {
   const router = useRouter();
@@ -28,6 +24,7 @@ export function GithubSignIn() {
             `,
             variables: {
               provider: "GITHUB",
+              redirect: "http://localhost:3000/auth_redirect",
             },
           }),
         });

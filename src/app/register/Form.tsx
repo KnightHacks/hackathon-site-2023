@@ -11,7 +11,7 @@ import {
   graduationYears,
   shirtSizes,
   states,
-} from "./options";
+} from "../../constants";
 import { Select, Checkbox, Input } from "../../components/Fields";
 
 const schema = z.object({

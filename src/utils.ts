@@ -1,5 +1,4 @@
 import { decodeJwt } from "jose";
-import { cache } from "react";
 
 export const scrollToElementById = (id: string) => {
   if (typeof window === "undefined") return;

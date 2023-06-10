@@ -1,5 +1,5 @@
 import { Cinzel, Montserrat } from "next/font/google";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const cinzel = Cinzel({

@@ -1,8 +1,7 @@
 "use client";
 
-import { Checkbox, Input, Select } from "@/components/form/Fields";
+import { Checkbox, Input, Select } from "@/components/Fields";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { data } from "autoprefixer";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -12,7 +11,7 @@ import {
   graduationYears,
   shirtSizes,
   states,
-} from "../register/options";
+} from "../../constants";
 import { useState } from "react";
 import { SuccessToast } from "@/components/Toast";
 
@@ -54,18 +53,18 @@ export default function EditInfoForm({ user }: { user: any }) {
     resolver: zodResolver(schema),
   });
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    // await fetch("/api/update_user", {
-    //   method: "POST",
-    //   body: JSON.stringify({ ...data, userId: user.id }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
+    await fetch("/api/update_user", {
+      method: "POST",
+      body: JSON.stringify({ ...data, userId: user.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    setOpen(true)
+    setOpen(true);
   };
 
   return (
@@ -129,7 +128,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         options={ethnicities}
         {...register("ethnicity", {
           // @ts-ignore
-          value: data.race,
+          value: user.race,
         })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Contact</div>
