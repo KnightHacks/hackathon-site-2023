@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Checkbox, TextArea } from "../../components/form/Fields";
+import { Checkbox, TextArea } from "../../components/Fields";
 import { useState } from "react";
 import { SuccessToast } from "@/components/Toast";
 

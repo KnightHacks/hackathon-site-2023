@@ -5,7 +5,7 @@ import {
   DiscordIcon,
   GitHubIcon,
   GoogleIcon,
-} from "../../components/assets/Icons";
+} from "../../components/Icons";
 
 export function GithubSignIn() {
   const router = useRouter();

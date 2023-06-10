@@ -12,7 +12,7 @@ import {
   shirtSizes,
   states,
 } from "./options";
-import { Select, Checkbox, Input } from "../../components/form/Fields";
+import { Select, Checkbox, Input } from "../../components/Fields";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),

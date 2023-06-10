@@ -4,8 +4,8 @@ import { GearIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { match } from "ts-pattern";
-import { UserState, scrollToElementById } from "../../utils";
-import { BlackDragonLogo } from "../assets/Logos";
+import { UserState, scrollToElementById } from "../utils";
+import { BlackDragonLogo } from "./Logos";
 
 export default function Navbar({ userState }: { userState: UserState }) {
   return (

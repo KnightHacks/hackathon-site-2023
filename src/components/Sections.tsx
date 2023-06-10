@@ -3,7 +3,7 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import Link from "next/link";
 import { scrollToElementById } from "../utils";
-import { BlackDragonFullLogo } from "./assets/Logos";
+import { BlackDragonFullLogo } from "./Logos";
 
 export function MainSection() {
   return (
