@@ -24,6 +24,14 @@ const apply = async ({
   accessToken: string;
   data: FieldValues;
 }) => {
+  const { data: {currentHackathon}, errors } = await getCurrentHackathon();
+
+  if (errors) {
+    return new NextResponse("Error getting current hackathon", {
+      status: 500,
+    });
+  }
+
   const query = `
 mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!) {
   applyToHackathon(hackathonId: $hackathonId, input: $input)
@@ -31,7 +39,7 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
     `;
 
   const variables = {
-    hackathonId: 1,
+    hackathonId: currentHackathon.id,
     input: {
       whyAttend: data.whyAttend,
       whatLearn: data.whatLearn,
@@ -39,7 +47,7 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
     },
   };
 
-  const res = await fetch("http://localhost:4000/", {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,3 +58,23 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
 
   return res.json();
 };
+
+const getCurrentHackathon = async () => {
+  const query = `
+query CurrentHackathon {
+  currentHackathon {
+    id
+  }
+}
+`;
+
+  const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  return res.json();
+}

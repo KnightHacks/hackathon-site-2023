@@ -1,13 +1,13 @@
-import { cookies } from "next/headers";
 import NavMenu from "@/components/layout/Navbar";
-import { UserState } from "../utils";
+import { cookies } from "next/headers";
 import {
   AboutSection,
   FAQSection,
   HackersGuideSection,
   MainSection,
   SponsorsSection,
-} from "../components/layout/Sections";
+} from "../components/Sections";
+import { UserState } from "../utils";
 
 export default function Home() {
   let userState: UserState;

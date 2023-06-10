@@ -14,7 +14,7 @@ export function GithubSignIn() {
     <button
       className="flex gap-3 whitespace-nowrap border border-transparent bg-[#333] px-4 py-3 text-white"
       onClick={async () => {
-        const res = await fetch("http://localhost:4000/", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

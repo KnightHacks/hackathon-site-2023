@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/form/Fields";
+import { useState } from "react";
+import { SuccessToast } from "@/components/Toast";
 
 const schema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
@@ -15,7 +17,7 @@ const schema = z.object({
 type Fields = z.infer<typeof schema>;
 
 export default function KnightHacksRegistrationForm() {
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const {
     register,
@@ -26,7 +28,14 @@ export default function KnightHacksRegistrationForm() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
- 
+    await fetch("/api/apply", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
   };
 
   return (

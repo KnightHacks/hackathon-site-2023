@@ -2,8 +2,8 @@
 
 import * as Collapsible from "@radix-ui/react-collapsible";
 import Link from "next/link";
-import { BlackDragonFullLogo } from "../assets/Logos";
-import { scrollToElementById } from "../../utils";
+import { scrollToElementById } from "../utils";
+import { BlackDragonFullLogo } from "./assets/Logos";
 
 export function MainSection() {
   return (
@@ -31,8 +31,8 @@ export function MainSection() {
           href="https://discord.gg/Kv5g9vf"
         >
           Discord
-        </Link>
-      </div>
+          </Link>
+        </div>
     </section>
   );
 }

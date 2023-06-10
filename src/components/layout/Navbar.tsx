@@ -10,7 +10,7 @@ import { BlackDragonLogo } from "../assets/Logos";
 export default function Navbar({ userState }: { userState: UserState }) {
   return (
     <NavMenu.Root>
-      <NavMenu.List className="fixed top-0 flex h-16 w-full items-center justify-between bg-white px-6 font-serif shadow">
+      <NavMenu.List className="fixed top-0 flex h-16 w-full items-center justify-between bg-white px-6 font-serif shadow text-lg">
         <div className="flex items-center">
           <NavMenu.Item className="relative md:hidden">
             <NavMenu.Trigger className="mr-3 flex items-center justify-between p-1.5 ">

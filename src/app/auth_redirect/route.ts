@@ -88,7 +88,7 @@ async function login(code: string, state: string) {
     });
   }
 
-  const res = await fetch("http://localhost:4000/", {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

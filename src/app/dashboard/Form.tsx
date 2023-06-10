@@ -1,18 +1,20 @@
 "use client";
 
+import { Checkbox, Input, Select } from "@/components/form/Fields";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { data } from "autoprefixer";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
-  genders,
-  shirtSizes,
-  ethnicities,
   countries,
-  states,
+  ethnicities,
+  genders,
   graduationYears,
+  shirtSizes,
+  states,
 } from "../register/options";
-import { Select, Checkbox, Input } from "@/components/form/Fields";
-import { data } from "autoprefixer";
+import { useState } from "react";
+import { SuccessToast } from "@/components/Toast";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
@@ -52,18 +54,23 @@ export default function EditInfoForm({ user }: { user: any }) {
     resolver: zodResolver(schema),
   });
 
+  const [open, setOpen] = useState(false)
+
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    await fetch("/api/update_user", {
-      method: "POST",
-      body: JSON.stringify({ ...data, userId: user.id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // await fetch("/api/update_user", {
+    //   method: "POST",
+    //   body: JSON.stringify({ ...data, userId: user.id }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    setOpen(true)
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <SuccessToast open={open} setOpen={setOpen} />
       <div className="font-serif text-4xl font-bold">Dashboard</div>
       <p className="mb-4">
         Here you&apos;ll be able to edit your information and view your
@@ -179,14 +186,16 @@ export default function EditInfoForm({ user }: { user: any }) {
         label="State"
         error={errors.state}
         options={states}
-        {...register("state")}
+        {...register("state", {
+          value: user.mailingAddress.state,
+        })}
       />
       <Input
         label="Zip Code"
         placeholder="32816"
         error={errors.zipCode}
         {...register("zipCode", {
-          value: user.mailingAddress.zipCode,
+          value: user.mailingAddress.postalCode,
         })}
       />
       <div className="mb-2 font-serif text-xl font-bold">School</div>
@@ -195,7 +204,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="University of Central Florida"
         error={errors.schoolName}
         {...register("schoolName", {
-          value: user.educationInfo.schoolName,
+          value: user.educationInfo.name,
         })}
       />
       <Input
@@ -216,7 +225,9 @@ export default function EditInfoForm({ user }: { user: any }) {
       <Checkbox
         label="I would like to share my resume with sponsors"
         error={errors.shareResume}
-        {...register("shareResume")}
+        {...register("shareResume", {
+          value: user.shareResume,
+        })}
       />
       <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
         Submit
