@@ -1,6 +1,8 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import HackathonRegistrationForm from "./Form";
+
+export const metadata = {
+  title: "Register",
+};
 
 export default function KnightHacksAccountRegistration() {
   return (

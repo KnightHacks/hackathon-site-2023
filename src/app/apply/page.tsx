@@ -2,6 +2,10 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import KnightHacksRegistrationForm from "./Form";
 
+export const metadata = {
+  title: "Registration",
+};
+
 export default function KnightHacksRegistration() {
   const accessToken = cookies().get("accessToken")?.value;
 

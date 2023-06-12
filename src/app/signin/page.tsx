@@ -1,5 +1,9 @@
 import { DiscordSignIn, GithubSignIn, GoogleSignIn } from "./OAuthButtons";
 
+export const metadata = {
+  title: "Sign In",
+}
+
 export default function SignIn() {
   return (
     <div className="mx-auto mb-10 mt-24 w-full max-w-screen-md px-6">

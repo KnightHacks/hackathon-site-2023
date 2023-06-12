@@ -16,18 +16,18 @@ export function MainSection() {
       <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
           href="/apply"
-          className="border border-black bg-black py-3 text-center font-bold text-white transition hover:bg-white hover:text-black"
+          className="border border-black bg-black py-3 text-center font-medium uppercase text-white transition hover:bg-white hover:text-black"
         >
           Apply
         </Link>
         <button
           onClick={() => scrollToElementById("#sponsors")}
-          className="border border-black py-3 text-center font-bold transition hover:bg-black hover:text-white"
+          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
         >
           Sponsors
         </button>
         <Link
-          className="border border-black py-3 text-center font-bold transition hover:bg-black hover:text-white"
+          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
           href="https://discord.gg/Kv5g9vf"
         >
           Discord
@@ -126,7 +126,7 @@ export function FAQSection() {
         {questionAndAnswers.map(({ question, answer }, i) => (
           <li key={i}>
             <Collapsible.Root>
-              <Collapsible.Trigger className="font-serif text-xl leading-tight">
+              <Collapsible.Trigger className="font-serif text-xl uppercase leading-tight">
                 {question}
               </Collapsible.Trigger>
               <Collapsible.Content className="mb-3 mt-1.5">
@@ -155,7 +155,7 @@ export function SponsorsSection() {
   const sponsors = Array.from({ length: 18 });
 
   return (
-    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
+    <section className="lex mx-auto mb-52 max-w-screen-lg flex-col justify-center">
       <div
         id="sponsors"
         className="mb-4 text-center font-serif text-4xl font-bold uppercase"

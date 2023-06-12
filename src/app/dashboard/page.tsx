@@ -4,6 +4,10 @@ import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import EditInfoForm from "./Form";
 
+export const metadata = {
+  title: "Dashboard",
+}
+
 const getUser = async (accessToken: string) => {
   const query = `
 query Me {

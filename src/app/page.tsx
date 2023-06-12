@@ -9,6 +9,10 @@ import {
 } from "../components/Sections";
 import { UserState } from "../utils";
 
+export const metadata = {
+  title: "KnightHacks",
+};
+
 export default function Home() {
   let userState: UserState;
 
