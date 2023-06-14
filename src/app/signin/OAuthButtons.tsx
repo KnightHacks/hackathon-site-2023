@@ -2,12 +2,63 @@
 
 import { useRouter } from "next/navigation";
 import { DiscordIcon, GitHubIcon, GoogleIcon } from "../../components/Icons";
+import { Toast } from "../../components/Toast";
+import { HTMLAttributes, use, useState } from "react";
 
-export function GithubSignIn() {
+export function OAuthButtons() {
+  const [toastState, setToastState] = useState({
+    open: false,
+    title: "",
+    description: "",
+  });
+
+  return (
+    <>
+      <div className="flex max-w-fit flex-col gap-2">
+        <GithubSignIn />
+        <DiscordSignIn
+          onClick={() => {
+            setToastState({
+              open: true,
+              title: "Coming Soon",
+              description: "Discord sign in is coming soon!",
+            });
+          }}
+        />
+        <GoogleSignIn
+          onClick={() => {
+            setToastState({
+              open: true,
+              title: "Coming Soon",
+              description: "Google sign in is coming soon!",
+            });
+          }}
+        />
+      </div>
+      <Toast
+        open={toastState.open}
+        setOpen={() =>
+          setToastState((toastState) => {
+            return {
+              ...toastState,
+              open: !toastState.open,
+            };
+          })
+        }
+        title={toastState.title}
+        description={toastState.description}
+      />
+    </>
+  );
+}
+
+interface OAuthButtonProps extends HTMLAttributes<HTMLButtonElement> {}
+function GithubSignIn(props: OAuthButtonProps) {
   const router = useRouter();
 
   return (
     <button
+      {...props}
       className="flex gap-3 whitespace-nowrap border border-transparent bg-[#333] px-4 py-3 text-white"
       onClick={async () => {
         const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
@@ -45,18 +96,24 @@ export function GithubSignIn() {
   );
 }
 
-export function DiscordSignIn() {
+function DiscordSignIn(props: OAuthButtonProps) {
   return (
-    <button className="flex gap-3 whitespace-nowrap border border-transparent bg-[#5865F2] px-4 py-3 text-white">
+    <button
+      {...props}
+      className="flex gap-3 whitespace-nowrap border border-transparent bg-[#5865F2] px-4 py-3 text-white"
+    >
       <DiscordIcon />
       <span className="mx-auto">Sign in with Discord</span>
     </button>
   );
 }
 
-export function GoogleSignIn() {
+function GoogleSignIn(props: OAuthButtonProps) {
   return (
-    <button className="flex gap-3 whitespace-nowrap border border-transparent bg-red-500 px-4 py-3 text-white">
+    <button
+      {...props}
+      className="flex gap-3 whitespace-nowrap border border-transparent bg-red-500 px-4 py-3 text-white"
+    >
       <GoogleIcon />
       <span className="mx-auto">Sign in with Google</span>
     </button>

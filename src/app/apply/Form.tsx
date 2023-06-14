@@ -6,16 +6,16 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useState } from "react";
-import { SuccessToast } from "@/components/Toast";
+import { Toast } from "@/components/Toast";
 
-const schema = z.object({
-  tracks: z.enum(["Beginner", "Intermediate", "Advanced"]),
+const applySchema = z.object({
+  tracks: z.enum(["Beginner", "Regular", "Cybersecurity"]),
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
 });
 
-type Fields = z.infer<typeof schema>;
+type Fields = z.infer<typeof applySchema>;
 
 export default function KnightHacksRegistrationForm() {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function KnightHacksRegistrationForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<Fields>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(applySchema),
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
@@ -36,7 +36,6 @@ export default function KnightHacksRegistrationForm() {
         "Content-Type": "application/json",
       },
     });
-
   };
 
   return (

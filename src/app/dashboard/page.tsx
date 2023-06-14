@@ -6,7 +6,7 @@ import EditInfoForm from "./Form";
 
 export const metadata = {
   title: "Dashboard",
-}
+};
 
 const getUser = async (accessToken: string) => {
   const query = `
@@ -63,9 +63,10 @@ export default async function Dashboard() {
 
   if (!accessToken) redirect("/login");
 
-  const { data, errors } = await getUser(accessToken);
+  const { data } = await getUser(accessToken);
+  console.log(data);
 
-  if (errors) {
+  if (!data) {
     redirect("/");
   }
 

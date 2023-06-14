@@ -1,8 +1,9 @@
-import { DiscordSignIn, GithubSignIn, GoogleSignIn } from "./OAuthButtons";
+import { Toast } from "@/components/Toast";
+import { OAuthButtons } from "./OAuthButtons";
 
 export const metadata = {
   title: "Sign In",
-}
+};
 
 export default function SignIn() {
   return (
@@ -11,11 +12,7 @@ export default function SignIn() {
         Sign In
       </div>
       <p className="mb-4">Sign in using any of the services below</p>
-      <div className="flex max-w-fit flex-col gap-2">
-        <GithubSignIn />
-        <DiscordSignIn />
-        <GoogleSignIn />
-      </div>
+      <OAuthButtons />
     </div>
   );
 }

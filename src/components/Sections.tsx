@@ -27,8 +27,8 @@ export function MainSection() {
           Sponsors
         </button>
         <Link
-          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
           href="https://discord.gg/Kv5g9vf"
+          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
         >
           Discord
         </Link>

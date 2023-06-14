@@ -2,6 +2,8 @@ import Link from "next/link";
 import { DiscordIcon, GitHubIcon, InstagramIcon } from "./Icons";
 
 export default function Footer() {
+
+    
   return (
     <footer className="mb-4 mt-auto flex flex-col items-center">
       <ul className="mb-2 flex gap-3">

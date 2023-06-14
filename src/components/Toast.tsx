@@ -1,26 +1,29 @@
-"use client"
+"use client";
 
-import * as Toast from "@radix-ui/react-toast"
-import { useEffect } from "react"
+import * as T from "@radix-ui/react-toast";
 
-export const SuccessToast = ({ open, setOpen }: {
-  open: boolean,
-  setOpen: (open: boolean) => void
+export const Toast = ({
+  open,
+  setOpen,
+  title,
+  description,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  title: string;
+  description: string;
 }) => {
-
-  useEffect(() => {
-
-  }, [])
-
   return (
-    <Toast.Provider>
-      <Toast.Root open={open} onOpenChange={setOpen} className="bg-white border p-2">
-        <Toast.Title className="text-sxl font-bold font-serif ">Lorem Ipsum</Toast.Title>
-        <Toast.Description >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </Toast.Description>
-      </Toast.Root>
-      <Toast.Viewport className="fixed bottom-0 right-0 w-[400px] p-6" />
-    </Toast.Provider>
-  )
-}
+    <T.Provider>
+      <T.Root
+        open={open}
+        onOpenChange={setOpen}
+        className="border bg-white p-3 shadow-lg"
+      >
+        <T.Title className="text-xl font-serif font-bold ">{title}</T.Title>
+        <T.Description>{description}</T.Description>
+      </T.Root>
+      <T.Viewport className="fixed bottom-0 right-0 w-[400px] p-6" />
+    </T.Provider>
+  );
+};

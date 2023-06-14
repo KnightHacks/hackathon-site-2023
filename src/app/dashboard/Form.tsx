@@ -13,7 +13,7 @@ import {
   states,
 } from "../../constants";
 import { useState } from "react";
-import { SuccessToast } from "@/components/Toast";
+import { Toast } from "@/components/Toast";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
@@ -56,20 +56,19 @@ export default function EditInfoForm({ user }: { user: any }) {
   const [open, setOpen] = useState(false);
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    await fetch("/api/update_user", {
-      method: "POST",
-      body: JSON.stringify({ ...data, userId: user.id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // await fetch("/api/update_user", {
+    //   method: "POST",
+    //   body: JSON.stringify({ ...data, userId: user.id }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
 
     setOpen(true);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <SuccessToast open={open} setOpen={setOpen} />
       <div className="font-serif text-4xl font-bold">Dashboard</div>
       <p className="mb-4">
         Here you&apos;ll be able to edit your information and view your
@@ -154,7 +153,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="4000 Central Florida Blvd"
         error={errors.addressLine1}
         {...register("addressLine1", {
-          value: user.mailingAddress.addressLines[0],
+          value: user.mailingAddress?.addressLines[0],
         })}
       />
       <Input
@@ -162,7 +161,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="11200 SW 8th St"
         error={errors.addressLine2}
         {...register("addressLine2", {
-          value: user.mailingAddress.addressLines[1],
+          value: user.mailingAddress?.addressLines[1],
         })}
       />
       <Select
@@ -170,7 +169,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         error={errors.country}
         options={countries}
         {...register("country", {
-          value: user.mailingAddress.country,
+          value: user.mailingAddress?.country,
         })}
       />
       <Input
@@ -178,7 +177,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="Orlando"
         error={errors.city}
         {...register("city", {
-          value: user.mailingAddress.city,
+          value: user.mailingAddress?.city,
         })}
       />
       <Select
@@ -186,7 +185,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         error={errors.state}
         options={states}
         {...register("state", {
-          value: user.mailingAddress.state,
+          value: user.mailingAddress?.state,
         })}
       />
       <Input
@@ -194,7 +193,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="32816"
         error={errors.zipCode}
         {...register("zipCode", {
-          value: user.mailingAddress.postalCode,
+          value: user.mailingAddress?.postalCode,
         })}
       />
       <div className="mb-2 font-serif text-xl font-bold">School</div>
@@ -203,7 +202,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="University of Central Florida"
         error={errors.schoolName}
         {...register("schoolName", {
-          value: user.educationInfo.name,
+          value: user.educationInfo?.name,
         })}
       />
       <Input
@@ -211,7 +210,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         placeholder="Computer Science"
         error={errors.major}
         {...register("major", {
-          value: user.educationInfo.major,
+          value: user.educationInfo?.major,
         })}
       />
       <Select
