@@ -10,6 +10,9 @@ export async function middleware(req: NextRequest) {
 
   console.log("processing: ", req.url);
 
+  // Print all headers
+  console.log(req.headers);
+
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.redirect(new URL(req.url, req.url));
