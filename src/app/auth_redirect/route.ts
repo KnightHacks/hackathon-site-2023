@@ -54,6 +54,7 @@ export async function GET(request: NextRequest) {
       value: data.login.encryptedOAuthAccessToken,
       expires: new Date(Date.now() + 1000 * 60 * 5),
       httpOnly: true,
+      secure: true,
       path: "/",
     });
 
@@ -75,6 +76,7 @@ export async function GET(request: NextRequest) {
     value: data.login.accessToken,
     expires: new Date(Date.now() + 1000 * 60 * 30),
     httpOnly: true,
+    secure: true,
     path: "/",
   });
 
@@ -83,6 +85,7 @@ export async function GET(request: NextRequest) {
     value: data.login.refreshToken,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     httpOnly: true,
+    secure: true,
     path: "/",
   });
 

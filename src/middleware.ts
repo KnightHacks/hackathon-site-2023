@@ -22,7 +22,6 @@ export async function middleware(req: NextRequest) {
       value: "",
       expires: new Date(Date.now()),
       httpOnly: true,
-      sameSite: "strict",
       secure: true,
       path: "/",
     });
@@ -31,7 +30,6 @@ export async function middleware(req: NextRequest) {
       value: "",
       expires: new Date(Date.now()),
       httpOnly: true,
-      sameSite: "strict",
       secure: true,
       path: "/",
     });
@@ -57,7 +55,6 @@ export async function middleware(req: NextRequest) {
       value: data.refreshJWT,
       expires: new Date(Date.now() + 1000 * 60 * 30),
       httpOnly: true,
-      sameSite: "strict",
       secure: true,
       path: "/",
     });
