@@ -84,10 +84,11 @@ function GithubSignIn(props: OAuthButtonProps) {
           alert("Something went wrong!");
           return;
         }
-        
-        const { data } = await res.json();
 
-        router.replace(data.getAuthRedirectLink);
+        const { data } = await res.json();
+        console.log(data);
+
+        router.push(data.getAuthRedirectLink);  
       }}
     >
       <GitHubIcon />

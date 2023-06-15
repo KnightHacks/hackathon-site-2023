@@ -1,31 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isTokenExpired } from "./utils";
 
-export const runtime = "experimental-edge";
-
 export async function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone();
-
-  const isProduction = process.env.NODE_ENV === "production"; // redirect only in production
-  const requestedHost = req.headers.get("X-Forwarded-Host");
-
-  if (
-    isProduction &&
-    requestedHost &&
-    !requestedHost.match(/2023.knighthacks.org/)
-  ) {
-    const host = `2023.knighthacks.org`; // set your main domain
-
-    const requestedPort = req.headers.get("X-Forwarded-Port");
-    const requestedProto = req.headers.get("X-Forwarded-Proto");
-
-    url.host = host;
-    url.protocol = requestedProto || url.protocol;
-    url.port = requestedPort || url.port;
-
-    return NextResponse.redirect(url);
-  }
-
   const accessToken = req.cookies.get("accessToken")?.value;
   const refreshToken = req.cookies.get("refreshToken")?.value;
   const encryptedOAuthAccessToken = req.cookies.get(
@@ -35,7 +11,7 @@ export async function middleware(req: NextRequest) {
   console.log("processing: ", req.url);
 
   // Print all headers
-  console.log(req.headers);
+  // console.log(req.headers);
 
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
@@ -113,8 +89,6 @@ export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/signin") && encryptedOAuthAccessToken) {
     return NextResponse.redirect(new URL("/register", req.url));
   }
-
-  return NextResponse.next();
 }
 
 export const config = {

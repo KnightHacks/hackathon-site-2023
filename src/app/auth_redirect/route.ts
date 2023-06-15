@@ -5,15 +5,15 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const oAuthState = request.cookies.get("oauthstate");
-  console.log("oauthstate: ", oAuthState);
-  if (!oAuthState) {
-    return new NextResponse(null, {
-      status: 302,
-      headers: {
-        Location: "/",
-      },
-    });
-  }
+  // console.log("oauthstate: ", oAuthState);
+  // if (!oAuthState) {
+  //   return new NextResponse(null, {
+  //     status: 302,
+  //     headers: {
+  //       Location: "/",
+  //     },
+  //   });
+  // }
 
   console.log("This is happening! ");
 
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const { data, errors } = await login(code, state, oAuthState.value);
+  const { data, errors } = await login(code, state, oAuthState!.value);
 
   if (errors) {
     const response = new NextResponse("Error logging in", {
