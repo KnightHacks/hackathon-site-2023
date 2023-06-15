@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isTokenExpired } from "./utils";
 
+export const runtime = "edge";
+
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
 
