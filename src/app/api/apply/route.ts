@@ -15,6 +15,16 @@ export async function POST(req: NextRequest) {
     accessToken,
     data: applicationPayload,
   });
+
+  if (errors) {
+    return new NextResponse("Error applying to hackathon", {
+      status: 500,
+    });
+  }
+
+  return new NextResponse(JSON.stringify(data), {
+    status: 200,
+  });
 }
 
 const apply = async ({
@@ -24,7 +34,10 @@ const apply = async ({
   accessToken: string;
   data: FieldValues;
 }) => {
-  const { data: {currentHackathon}, errors } = await getCurrentHackathon();
+  const {
+    data: { currentHackathon },
+    errors,
+  } = await getCurrentHackathon();
 
   if (errors) {
     return new NextResponse("Error getting current hackathon", {
@@ -77,4 +90,4 @@ query CurrentHackathon {
   });
 
   return res.json();
-}
+};

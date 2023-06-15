@@ -1,12 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useState } from "react";
-import { Toast } from "@/components/Toast";
+import { redirect } from "next/navigation";
 
 const applySchema = z.object({
   tracks: z.enum(["Beginner", "Regular", "Cybersecurity"]),
@@ -18,8 +17,6 @@ const applySchema = z.object({
 type Fields = z.infer<typeof applySchema>;
 
 export default function KnightHacksRegistrationForm() {
-  const [open, setOpen] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -29,13 +26,17 @@ export default function KnightHacksRegistrationForm() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    await fetch("/api/apply", {
+    const res = await fetch("/api/apply", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    if (res.ok) {
+      redirect("/");
+    }
   };
 
   return (

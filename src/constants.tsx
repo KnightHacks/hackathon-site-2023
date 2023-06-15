@@ -271,7 +271,7 @@ export const graduationYears = [
 
 export const tracks = [
   "Beginner",
-  "Intermediate/Advanced",
+  "Regular",
   "Cybersecurity",
 ] as const;
 

@@ -18,7 +18,7 @@ export const Toast = ({
       <T.Root
         open={open}
         onOpenChange={setOpen}
-        className="border bg-white p-3 shadow-lg"
+        className="border bg-white p-2 shadow-lg"
       >
         <T.Title className="text-xl font-serif font-bold ">{title}</T.Title>
         <T.Description>{description}</T.Description>

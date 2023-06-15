@@ -27,6 +27,8 @@ export async function GET(request: NextRequest) {
     return response;
   }
 
+  console.log(data);
+
   if (!data.login.accountExists) {
     const response = new NextResponse(null, {
       status: 302,
@@ -35,9 +37,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    response.cookies.delete("oauthstate");
+    cookies().delete("oauthstate");
 
-    response.cookies.set({
+    cookies().set({
       name: "encryptedOAuthAccessToken",
       value: data.login.encryptedOAuthAccessToken,
       expires: new Date(Date.now() + 1000 * 60 * 5),
