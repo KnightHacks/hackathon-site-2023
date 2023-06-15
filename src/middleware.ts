@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
 
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
-    const response = NextResponse.rewrite(new URL(req.url, req.url));
+    const response = NextResponse.redirect(new URL(req.url, req.url));
 
     response.cookies.set({
       name: "accessToken",
@@ -45,10 +45,10 @@ export async function middleware(req: NextRequest) {
     const { data, errors } = await getNewAccessToken(refreshToken);
 
     if (errors) {
-      return NextResponse.rewrite(new URL("/signin", req.url));
+      return NextResponse.redirect(new URL("/ ", req.url));
     }
 
-    const response = NextResponse.rewrite(new URL(req.url, req.url));
+    const response = NextResponse.redirect(new URL(req.url, req.url));
     response.cookies.set({
       name: "accessToken",
       value: data.refreshJWT,
@@ -67,7 +67,7 @@ export async function middleware(req: NextRequest) {
       req.nextUrl.pathname.startsWith("/register")) &&
     accessToken
   ) {
-    return NextResponse.rewrite(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (
@@ -75,7 +75,7 @@ export async function middleware(req: NextRequest) {
       req.nextUrl.pathname.startsWith("/apply")) &&
     !refreshToken
   ) {
-    return NextResponse.rewrite(new URL("/signin", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (
@@ -83,11 +83,11 @@ export async function middleware(req: NextRequest) {
     !encryptedOAuthAccessToken
   ) {
     console.log("This stupid shit is happening");
-    return NextResponse.rewrite(new URL("/signin", req.url));
+    return NextResponse.redirect(new URL("/signin", req.url));
   }
 
   if (req.nextUrl.pathname.startsWith("/signin") && encryptedOAuthAccessToken) {
-    return NextResponse.rewrite(new URL("/register", req.url));
+    return NextResponse.redirect(new URL("/register", req.url));
   }
 }
 

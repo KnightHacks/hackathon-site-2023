@@ -2,6 +2,17 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
+  const oAuthState = cookies().get("oauthstate");
+
+  if (!oAuthState) {
+    return new NextResponse(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+      },
+    });
+  }
+
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const state = searchParams.get("state");
@@ -15,22 +26,13 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const { data, errors } = await login(code, state);
-
-  if (!data && !errors) {
-    return new NextResponse("Error logging in", {
-      status: 302,
-      headers: {
-        Location: "/",
-      },
-    });
-  }
+  const { data, errors } = await login(code, state, oAuthState.value);
 
   if (errors) {
     const response = new NextResponse("Error logging in", {
       status: 302,
       headers: {
-        Location: "/  ",
+        Location: "/",
       },
     });
 
@@ -89,25 +91,12 @@ export async function GET(request: NextRequest) {
   return response;
 }
 
-async function login(code: string, state: string) {
-  const oAuthState = cookies().get("oauthstate");
-
-  console.log(oAuthState);
-
-  if (!oAuthState) {
-    return new NextResponse("No oauthstate cookie", {
-      status: 302,
-      headers: {
-        Location: "/",
-      },
-    });
-  }
-
+async function login(code: string, state: string, oAuthState: string) {
   const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Cookie: `oauthstate=${oAuthState.value}`,
+      Cookie: `oauthstate=${oAuthState}`,
     },
     credentials: "include",
     body: JSON.stringify({

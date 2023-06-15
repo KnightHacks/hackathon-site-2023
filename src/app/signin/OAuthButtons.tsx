@@ -87,7 +87,7 @@ function GithubSignIn(props: OAuthButtonProps) {
         console.log(res);
         const { data } = await res.json();
 
-        router.push(data.getAuthRedirectLink);
+        router.replace(data.getAuthRedirectLink);
       }}
     >
       <GitHubIcon />
