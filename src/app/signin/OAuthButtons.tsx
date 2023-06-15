@@ -75,7 +75,7 @@ function GithubSignIn(props: OAuthButtonProps) {
             `,
             variables: {
               provider: "GITHUB",
-              redirect: "http://localhost:3000/auth_redirect",
+              redirect: process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL,
             },
           }),
         });
