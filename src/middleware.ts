@@ -8,6 +8,8 @@ export async function middleware(req: NextRequest) {
     "encryptedOAuthAccessToken"
   );
 
+  console.log("processing: ", req.url);
+
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.rewrite(new URL(req.url, req.url));
@@ -80,6 +82,7 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/register") &&
     !encryptedOAuthAccessToken
   ) {
+    console.log("This stupid shit is happening");
     return NextResponse.rewrite(new URL("/signin", req.url));
   }
 

@@ -64,7 +64,7 @@ export default function KnightHacksAccountRegistrationForm() {
       body: JSON.stringify(data),
     });
 
-    if (res.ok) router.push("/dashboard");
+    if (res.ok) router.push("/");
   };
 
   return (

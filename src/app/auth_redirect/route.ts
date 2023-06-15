@@ -17,11 +17,21 @@ export async function GET(request: NextRequest) {
 
   const { data, errors } = await login(code, state);
 
-  console.log(data, errors);
+  if (!data && !errors) {
+    return new NextResponse("Error logging in", {
+      status: 302,
+      headers: {
+        Location: "/",
+      },
+    });
+  }
 
   if (errors) {
     const response = new NextResponse("Error logging in", {
-      status: 500,
+      status: 302,
+      headers: {
+        Location: "/  ",
+      },
     });
 
     response.cookies.delete("oauthstate");
@@ -33,13 +43,11 @@ export async function GET(request: NextRequest) {
     const response = new NextResponse(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/register",
       },
     });
 
-    cookies().delete("oauthstate");
-
-    cookies().set({
+    response.cookies.set({
       name: "encryptedOAuthAccessToken",
       value: data.login.encryptedOAuthAccessToken,
       expires: new Date(Date.now() + 1000 * 60 * 5),
@@ -47,6 +55,9 @@ export async function GET(request: NextRequest) {
       path: "/",
     });
 
+    response.cookies.delete("oauthstate");
+
+    console.log("success! redirecting to register");
     return response;
   }
 
