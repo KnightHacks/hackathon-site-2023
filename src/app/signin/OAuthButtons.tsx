@@ -84,7 +84,7 @@ function GithubSignIn(props: OAuthButtonProps) {
           alert("Something went wrong!");
           return;
         }
-
+        console.log(res);
         const { data } = await res.json();
 
         router.push(data.getAuthRedirectLink);

@@ -8,8 +8,6 @@ export async function middleware(req: NextRequest) {
     "encryptedOAuthAccessToken"
   );
 
-  console.log("Hitting middleware...")
-
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.rewrite(new URL(req.url, req.url));

@@ -17,6 +17,8 @@ export async function GET(request: NextRequest) {
 
   const { data, errors } = await login(code, state);
 
+  console.log(data, errors);
+
   if (errors) {
     const response = new NextResponse("Error logging in", {
       status: 500,
@@ -27,13 +29,11 @@ export async function GET(request: NextRequest) {
     return response;
   }
 
-  console.log(data);
-
   if (!data.login.accountExists) {
     const response = new NextResponse(null, {
       status: 302,
       headers: {
-        Location: "/register",
+        Location: "/",
       },
     });
 
@@ -80,6 +80,8 @@ export async function GET(request: NextRequest) {
 
 async function login(code: string, state: string) {
   const oAuthState = cookies().get("oauthstate");
+
+  console.log(oAuthState);
 
   if (!oAuthState) {
     return new NextResponse("No oauthstate cookie", {
