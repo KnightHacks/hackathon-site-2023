@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
-  const oAuthState = cookies().get("oauthstate");
-
+  const oAuthState = request.cookies.get("oauthstate");
+  console.log("oauthstate: ", oAuthState);
   if (!oAuthState) {
     return new NextResponse(null, {
       status: 302,
@@ -14,6 +14,8 @@ export async function GET(request: NextRequest) {
       },
     });
   }
+
+  console.log("This is happening! ");
 
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
@@ -103,7 +105,6 @@ async function login(code: string, state: string, oAuthState: string) {
       "Content-Type": "application/json",
       Cookie: `oauthstate=${oAuthState}`,
     },
-    credentials: "include",
     body: JSON.stringify({
       query: `
     query Login($code: String!, $provider: Provider!, $state: String!) {
