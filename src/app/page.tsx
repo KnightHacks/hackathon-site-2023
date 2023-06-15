@@ -13,6 +13,8 @@ export const metadata = {
   title: "KnightHacks",
 };
 
+export const runtime = "edge";
+
 export default function Home() {
   let userState: UserState;
 
