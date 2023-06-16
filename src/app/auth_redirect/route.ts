@@ -97,6 +97,8 @@ export async function GET(request: NextRequest) {
 
   cookies().delete("oauthstate");
 
+  console.log("logging in user:   ", data.login.accessToken);
+
   return response;
 }
 
