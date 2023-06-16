@@ -13,17 +13,6 @@ export async function middleware(req: NextRequest) {
   // Print all headers
   // console.log(req.headers);
 
-  // No refresh token -> invaldiate access token
-  if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
-    console.log("No refresh token -> invaldiate access token");
-    const response = NextResponse.redirect(new URL(req.url, req.url));
-
-    req.cookies.delete("accessToken");
-    req.cookies.delete("refreshToken");
-
-    return response;
-  }
-
   // Access token expired -> get new access token
   if (
     (!accessToken || isTokenExpired(accessToken)) &&
