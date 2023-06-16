@@ -54,7 +54,6 @@ query Me {
     body: JSON.stringify({
       query,
     }),
-    credentials: "include",
   });
 
   return res.json();
