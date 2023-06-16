@@ -63,7 +63,7 @@ query Me {
 export default async function Dashboard() {
   const accessToken = cookies().get("accessToken")?.value;
 
-  if (!accessToken) redirect("/login");
+  if (!accessToken) redirect("/sigin");
 
   const { data } = await getUser(accessToken);
   console.log(data);

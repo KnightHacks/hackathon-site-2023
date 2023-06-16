@@ -162,12 +162,8 @@ export function SponsorsSection() {
       >
         Sponsors
       </div>
-      <div className="grid gap-4 text-center sm:grid-cols-2 md:grid-cols-3">
-        {sponsors.map((_, i) => (
-          <div key={i} className="text-3xl uppercase">
-            Lorem Ipsum
-          </div>
-        ))}
+      <div className="grid gap-4 text-center">
+        <div className="text-3xl uppercase">Coming soon</div>
       </div>
     </section>
   );

@@ -5,17 +5,17 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const oAuthState = request.cookies.get("oauthstate");
-  // console.log("oauthstate: ", oAuthState);
-  // if (!oAuthState) {
-  //   return new NextResponse(null, {
-  //     status: 302,
-  //     headers: {
-  //       Location: "/",
-  //     },
-  //   });
-  // }
+  if (!oAuthState) {
+    console.log("No auth state found");
+    return new NextResponse(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+      },
+    });
+  }
 
-  console.log("This is happening! ");
+  console.log(oAuthState);
 
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
@@ -31,6 +31,8 @@ export async function GET(request: NextRequest) {
   }
 
   const { data, errors } = await login(code, state, oAuthState!.value);
+
+  console.log("login data: ", data);
 
   if (errors) {
     const response = new NextResponse("Error logging in", {
@@ -53,7 +55,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    response.cookies.set({
+    cookies().set({
       name: "encryptedOAuthAccessToken",
       value: data.login.encryptedOAuthAccessToken,
       expires: new Date(Date.now() + 1000 * 60 * 5),
@@ -62,7 +64,7 @@ export async function GET(request: NextRequest) {
       path: "/",
     });
 
-    response.cookies.delete("oauthstate");
+    cookies().delete("oauthstate");
 
     console.log("success! redirecting to register");
     return response;
