@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   cookies().set({
     name: "accessToken",
     value: "",
-    maxAge: 0,
+    expires: new Date(Date.now() - 1000 * 60 * 300),
     httpOnly: true,
     secure: true,
     path: "/",
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
   cookies().set({
     name: "refreshToken",
     value: "",
-    maxAge: 0,
+    expires: new Date(Date.now() - 1000 * 60 * 300),
     httpOnly: true,
     secure: true,
     path: "/",
