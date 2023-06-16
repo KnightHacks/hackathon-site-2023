@@ -50,7 +50,12 @@ export async function POST(req: NextRequest) {
     secure: true,
   });
 
-  cookies().delete("encryptedOAuthAccessToken");
+  cookies().set({
+    name: "encryptedOAuthAccessToken",
+    value: "",
+    expires: new Date("2016-10-05"),
+    path: "/",
+  });
 
   return response;
 }

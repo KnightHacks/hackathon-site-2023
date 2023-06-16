@@ -42,7 +42,12 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    cookies().delete("oauthstate");
+    cookies().set({
+      name: "oauthstate",
+      value: "",
+      expires: new Date("2016-10-05"),
+      path: "/",
+    });
 
     return response;
   }
@@ -64,7 +69,12 @@ export async function GET(request: NextRequest) {
       path: "/",
     });
 
-    cookies().delete("oauthstate");
+    cookies().set({
+      name: "oauthstate",
+      value: "",
+      expires: new Date("2016-10-05"),
+      path: "/",
+    });
 
     console.log("success! redirecting to register");
     return response;
@@ -95,7 +105,12 @@ export async function GET(request: NextRequest) {
     path: "/",
   });
 
-  cookies().delete("oauthstate");
+  cookies().set({
+    name: "oauthstate",
+    value: "",
+    expires: new Date("2016-10-05"),
+    path: "/",
+  });
 
   console.log("logging in user:   ", data.login.accessToken);
 

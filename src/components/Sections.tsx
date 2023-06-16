@@ -16,6 +16,7 @@ export function MainSection() {
       <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
           href="/apply"
+          prefetch={false}
           className="border border-black bg-black py-3 text-center font-medium uppercase text-white transition hover:bg-white hover:text-black"
         >
           Apply

@@ -17,8 +17,19 @@ export async function POST(req: NextRequest) {
     status: 200,
   });
 
-  response.cookies.delete("accessToken");
-  response.cookies.delete("refreshToken");
+  cookies().set({
+    name: "accessToken",
+    value: "",
+    expires: new Date("2016-10-05"),
+    path: "/",
+  });
+
+  cookies().set({
+    name: "refreshToken",
+    value: "",
+    expires: new Date("2016-10-05"),
+    path: "/",
+  });
 
   return response;
 }
