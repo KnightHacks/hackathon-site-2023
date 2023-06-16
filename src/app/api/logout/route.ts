@@ -13,10 +13,6 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const response = new NextResponse("Logged out", {
-    status: 200,
-  });
-
   cookies().set({
     name: "refreshToken",
     value: "",
@@ -32,7 +28,9 @@ export async function POST(req: NextRequest) {
     httpOnly: true,
     secure: true,
     path: "/",
-  });
+  }); 
 
-  return response;
+  return new NextResponse("Logged out", {
+    status: 200,
+  });
 }
