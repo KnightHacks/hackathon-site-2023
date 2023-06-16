@@ -18,16 +18,15 @@ export async function POST(req: NextRequest) {
   });
 
   cookies().set({
-    name: "accessToken",
+    name: "refreshToken",
     value: "",
     expires: new Date(Date.now() - 1000 * 60 * 300),
     httpOnly: true,
     secure: true,
     path: "/",
   });
-
   cookies().set({
-    name: "refreshToken",
+    name: "accessToken",
     value: "",
     expires: new Date(Date.now() - 1000 * 60 * 300),
     httpOnly: true,
