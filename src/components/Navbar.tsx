@@ -171,8 +171,8 @@ export default function Navbar({ userState }: { userState: UserState }) {
                           onClick={async () => {
                             await fetch("/api/logout", {
                               method: "POST",
+                              credentials: "include",
                             });
-
                             location.reload();
                           }}
                           className="w-full px-4 py-2 text-center uppercase transition hover:bg-black hover:text-white"
