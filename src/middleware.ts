@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isTokenExpired } from "./utils";
-import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
-  const accessToken = cookies().get("accessToken")?.value;
-  const refreshToken = cookies().get("refreshToken")?.value;
-  const encryptedOAuthAccessToken = cookies().get(
+  const accessToken = req.cookies.get("accessToken")?.value;
+  const refreshToken = req.cookies.get("refreshToken")?.value;
+  const encryptedOAuthAccessToken = req.cookies.get(
     "encryptedOAuthAccessToken"
   );
 
@@ -18,7 +17,7 @@ export async function middleware(req: NextRequest) {
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.redirect(new URL(req.url, req.url));
 
-    cookies().set({
+    response.cookies.set({
       name: "accessToken",
       value: "",
       expires: new Date(Date.now()),
@@ -26,7 +25,7 @@ export async function middleware(req: NextRequest) {
       secure: true,
       path: "/",
     });
-    cookies().set({
+    response.cookies.set({
       name: "refreshToken",
       value: "",
       expires: new Date(Date.now()),
@@ -51,7 +50,7 @@ export async function middleware(req: NextRequest) {
     }
 
     const response = NextResponse.redirect(new URL(req.url, req.url));
-    cookies().set({
+    response.cookies.set({
       name: "accessToken",
       value: data.refreshJWT,
       expires: new Date(Date.now() + 1000 * 60 * 30),
