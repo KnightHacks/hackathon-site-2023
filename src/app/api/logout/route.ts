@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
     name: "accessToken",
     value: "",
     expires: new Date("2016-10-05"),
+    httpOnly: true,
+    secure: true,
     path: "/",
   });
 
@@ -28,6 +30,8 @@ export async function POST(req: NextRequest) {
     name: "refreshToken",
     value: "",
     expires: new Date("2016-10-05"),
+    httpOnly: true,
+    secure: true,
     path: "/",
   });
 
