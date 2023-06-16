@@ -15,6 +15,7 @@ export async function middleware(req: NextRequest) {
 
   // No refresh token -> invaldiate access token
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
+    console.log("No refresh token -> invaldiate access token");
     const response = NextResponse.redirect(new URL(req.url, req.url));
 
     response.cookies.set({
