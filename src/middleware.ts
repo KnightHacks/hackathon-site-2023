@@ -18,22 +18,8 @@ export async function middleware(req: NextRequest) {
     console.log("No refresh token -> invaldiate access token");
     const response = NextResponse.redirect(new URL(req.url, req.url));
 
-    response.cookies.set({
-      name: "accessToken",
-      value: "",
-      expires: new Date(Date.now()),
-      httpOnly: true,
-      secure: true,
-      path: "/",
-    });
-    response.cookies.set({
-      name: "refreshToken",
-      value: "",
-      expires: new Date(Date.now()),
-      httpOnly: true,
-      secure: true,
-      path: "/",
-    });
+    req.cookies.delete("accessToken");
+    req.cookies.delete("refreshToken");
 
     return response;
   }
