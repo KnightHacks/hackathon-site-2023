@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  console.log("Successfully applied to hackathon");
+
   return new NextResponse(JSON.stringify(data), {
     status: 200,
   });
@@ -41,6 +43,8 @@ const apply = async ({
     data: { currentHackathon },
     errors,
   } = await getCurrentHackathon();
+
+  console.log("current hackathon id: ", currentHackathon.id);
 
   if (errors) {
     return new NextResponse("Error getting current hackathon", {
