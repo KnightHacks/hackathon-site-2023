@@ -6,11 +6,19 @@ import Link from "next/link";
 import { match } from "ts-pattern";
 import { UserState, scrollToElementById } from "../utils";
 import { BlackDragonLogo } from "./Logos";
+import Image from "next/image";
 
 export default function Navbar({ userState }: { userState: UserState }) {
   return (
     <NavMenu.Root>
       <NavMenu.List className="fixed top-0 flex h-16 w-full items-center justify-between bg-white px-6 font-serif text-lg shadow">
+        <Image
+          src="/mlh.png"
+          width={60}
+          height={60}
+          alt="MLH 2024 banner"
+          className="absolute top-16 "
+        />
         <div className="flex items-center">
           <NavMenu.Item className="relative md:hidden">
             <NavMenu.Trigger className="mr-3 flex items-center justify-between p-1.5 transition hover:bg-gray-100">
