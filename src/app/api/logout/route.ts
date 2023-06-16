@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
     status: 200,
   });
 
-  cookies().delete("accessToken");
-  cookies().delete("refreshToken");
+  req.cookies.delete("accessToken");
+  req.cookies.delete("refreshToken");
 
   return response;
 }
