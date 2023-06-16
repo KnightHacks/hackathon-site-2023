@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const applySchema = z.object({
   // tracks: z.enum(["Beginner", "Regular", "Cybersecurity"]),
@@ -17,6 +17,8 @@ const applySchema = z.object({
 type Fields = z.infer<typeof applySchema>;
 
 export default function KnightHacksRegistrationForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -35,7 +37,7 @@ export default function KnightHacksRegistrationForm() {
     });
 
     if (res.ok) {
-      redirect("/");
+      router.push("/dashboard");    
     }
   };
 
@@ -62,7 +64,10 @@ export default function KnightHacksRegistrationForm() {
         error={errors.shareInfo}
         {...register("shareInfo")}
       />
-      <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
+      <button
+        type="submit"
+        className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white"
+      >
         Submit
       </button>
     </form>
