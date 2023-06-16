@@ -125,7 +125,6 @@ query Query($refreshToken: String!) {
       query,
       variables,
     }),
-    credentials: "include",
   });
 
   return res.json();
