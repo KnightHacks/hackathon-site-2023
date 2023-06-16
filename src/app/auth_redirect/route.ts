@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
   cookies().set({
     name: "oauthstate",
     value: "",
-    expires: new Date("2016-10-05"),
+    expires: new Date(Date.now()),
     path: "/",
   });
 

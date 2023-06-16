@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   cookies().set({
     name: "refreshToken",
     value: "",
-    expires: new Date(Date.now() - 1000 * 60 * 300),
+    expires: new Date(Date.now()),
     httpOnly: true,
     secure: true,
     path: "/",
@@ -24,11 +24,11 @@ export async function POST(req: NextRequest) {
   cookies().set({
     name: "accessToken",
     value: "",
-    expires: new Date(Date.now() - 1000 * 60 * 300),
+    expires: new Date(Date.now()),
     httpOnly: true,
     secure: true,
     path: "/",
-  }); 
+  });
 
   return new NextResponse("Logged out", {
     status: 200,
