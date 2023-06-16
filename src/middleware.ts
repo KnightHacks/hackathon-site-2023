@@ -3,9 +3,9 @@ import { isTokenExpired } from "./utils";
 import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get("accessToken")?.value;
-  const refreshToken = req.cookies.get("refreshToken")?.value;
-  const encryptedOAuthAccessToken = req.cookies.get(
+  const accessToken = cookies().get("accessToken")?.value;
+  const refreshToken = cookies().get("refreshToken")?.value;
+  const encryptedOAuthAccessToken = cookies().get(
     "encryptedOAuthAccessToken"
   );
 
