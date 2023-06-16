@@ -1,10 +1,11 @@
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValues } from "react-hook-form";
 
 export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
-  const accessToken = req.cookies.get("accessToken")?.value;
+  const accessToken = cookies().get("accessToken")?.value;
 
   if (!accessToken) {
     return new NextResponse("No access token", {

@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     status: 200,
   });
 
-  response.cookies.set({
+  cookies().set({
     name: "accessToken",
     value: data.register.accessToken,
     expires: new Date(Date.now() + 1000 * 60 * 30),
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     secure: true,
   });
 
-  response.cookies.set({
+  cookies().set({
     name: "refreshToken",
     value: data.register.refreshToken,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     secure: true,
   });
 
-  response.cookies.delete("encryptedOAuthAccessToken");
+  cookies().delete("encryptedOAuthAccessToken");
 
   return response;
 }

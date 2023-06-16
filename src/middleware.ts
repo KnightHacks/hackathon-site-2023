@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isTokenExpired } from "./utils";
+import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken")?.value;
@@ -17,7 +18,7 @@ export async function middleware(req: NextRequest) {
   if ((!refreshToken || isTokenExpired(refreshToken)) && accessToken) {
     const response = NextResponse.redirect(new URL(req.url, req.url));
 
-    response.cookies.set({
+    cookies().set({
       name: "accessToken",
       value: "",
       expires: new Date(Date.now()),
@@ -25,7 +26,7 @@ export async function middleware(req: NextRequest) {
       secure: true,
       path: "/",
     });
-    response.cookies.set({
+    cookies().set({
       name: "refreshToken",
       value: "",
       expires: new Date(Date.now()),
@@ -50,7 +51,7 @@ export async function middleware(req: NextRequest) {
     }
 
     const response = NextResponse.redirect(new URL(req.url, req.url));
-    response.cookies.set({
+    cookies().set({
       name: "accessToken",
       value: data.refreshJWT,
       expires: new Date(Date.now() + 1000 * 60 * 30),

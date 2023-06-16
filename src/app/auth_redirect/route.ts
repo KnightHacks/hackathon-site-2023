@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
-  const oAuthState = request.cookies.get("oauthstate");
+  const oAuthState = cookies().get("oauthstate");
   if (!oAuthState) {
     console.log("No auth state found");
     return new NextResponse(null, {
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    response.cookies.delete("oauthstate");
+    cookies().delete("oauthstate");
 
     return response;
   }
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  response.cookies.set({
+  cookies().set({
     name: "accessToken",
     value: data.login.accessToken,
     expires: new Date(Date.now() + 1000 * 60 * 30),
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
     path: "/",
   });
 
-  response.cookies.set({
+  cookies().set({
     name: "refreshToken",
     value: data.login.refreshToken,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
     path: "/",
   });
 
-  response.cookies.delete("oauthstate");
+  cookies().delete("oauthstate");
 
   return response;
 }

@@ -1,10 +1,11 @@
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
-  const accessToken = req.cookies.get("accessToken")?.value;
-  const refreshToken = req.cookies.get("refreshToken")?.value;
+  const accessToken = cookies().get("accessToken")?.value;
+  const refreshToken = cookies().get("refreshToken")?.value;
 
   if (!accessToken && !refreshToken) {
     return new NextResponse("Already logged out", {
@@ -16,8 +17,8 @@ export async function POST(req: NextRequest) {
     status: 200,
   });
 
-  response.cookies.delete("accessToken");
-  response.cookies.delete("refreshToken");
+  cookies().delete("accessToken");
+  cookies().delete("refreshToken");
 
   return response;
 }
