@@ -18,19 +18,19 @@ export function MainSection() {
         <Link
           href="/apply"
           prefetch={false}
-          className="border border-black bg-black py-3 text-center font-medium uppercase text-white transition hover:bg-white hover:text-black"
+          className="border border-black bg-black py-3 text-center font-medium uppercase text-white transition"
         >
           Apply
         </Link>
         <button
           onClick={() => scrollToElementById("#sponsors")}
-          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
+          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-[#f5f5f5]"
         >
           Sponsors
         </button>
         <Link
           href="https://discord.gg/Kv5g9vf"
-          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-black hover:text-white"
+          className="border border-black py-3 text-center font-medium uppercase transition hover:bg-[#f5f5f5]"
         >
           Discord
         </Link>
