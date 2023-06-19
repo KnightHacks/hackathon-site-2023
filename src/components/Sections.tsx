@@ -124,20 +124,6 @@ export function FAQSection() {
       >
         FAQ
       </div>
-      {/* <ul className="mx-auto flex max-w-screen-md flex-col gap-3 text-center">
-        {questionAndAnswers.map(({ question, answer }, i) => (
-          <li key={i}>
-            <Accordion.Root>
-              <Accordion.Trigger className="font-serif text-xl uppercase leading-tight">
-                {question}
-              </Accordion.Trigger.Trigger>
-              <Collapsible.Content className="mb-3 mt-1.5 data-[state=closed]:animate-menu-hide data-[state=open]:animate-menu-show">
-                {answer}
-              </Collapsible.Content>
-            </Collapsible.Root>
-          </li>
-        ))}
-      </ul> */}
       <Accordion.Root
         className="mx-auto flex max-w-screen-md flex-col gap-3 text-center"
         type="single"
