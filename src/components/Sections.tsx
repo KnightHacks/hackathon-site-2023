@@ -125,12 +125,13 @@ export function FAQSection() {
         FAQ
       </div>
       <Accordion.Root
+        defaultValue={questionAndAnswers[0].question}
         className="mx-auto flex max-w-screen-md flex-col gap-3 text-center"
         type="single"
       >
         {questionAndAnswers.map(({ question, answer }, i) => (
           <Accordion.Item
-            value={answer}
+            value={question}
             key={i}
             className="overflow-hidden text-center"
           >
