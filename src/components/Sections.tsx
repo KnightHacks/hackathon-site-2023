@@ -1,15 +1,16 @@
 "use client";
 
-import * as Collapsible from "@radix-ui/react-collapsible";
+import * as Accordion from "@radix-ui/react-accordion";
 import Link from "next/link";
 import { scrollToElementById } from "../utils";
 import { BlackDragonFullLogo } from "./Logos";
+import { FadeInSection } from "./FadeInSection";
 
 export function MainSection() {
   return (
-    <section
+    <FadeInSection
       id="main"
-      className="mx-auto flex min-h-screen flex-col items-center justify-center font-serif"
+      className="mx-auto mb-24 flex min-h-screen flex-col items-center justify-center font-serif"
     >
       <BlackDragonFullLogo className="mb-4 max-w-xl" />
       <div className="mb-8 text-2xl uppercase">October 6-8</div>
@@ -34,17 +35,17 @@ export function MainSection() {
           Discord
         </Link>
       </div>
-    </section>
+    </FadeInSection>
   );
 }
 
 export function AboutSection() {
   return (
-    <section className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center">
-      <div
-        id="about"
-        className="mb-2 text-left font-serif text-4xl font-bold uppercase"
-      >
+    <FadeInSection
+      id="about"
+      className="mx-auto mb-24 flex max-w-screen-lg flex-col justify-center"
+    >
+      <div className="mb-2 text-left font-serif text-4xl font-bold uppercase">
         About
       </div>
       <div className="max-w-screen-md text-lg">
@@ -62,7 +63,7 @@ export function AboutSection() {
           fun!
         </p>
       </div>
-    </section>
+    </FadeInSection>
   );
 }
 
@@ -116,47 +117,64 @@ export function FAQSection() {
   ];
 
   return (
-    <section className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
+    <FadeInSection className="mx-auto my-24 flex max-w-screen-lg flex-col justify-center">
       <div
         id="faq"
         className="mb-4 text-center font-serif text-4xl font-bold uppercase"
       >
         FAQ
       </div>
-      <ul className="mx-auto flex max-w-screen-md flex-col gap-3 text-center">
+      {/* <ul className="mx-auto flex max-w-screen-md flex-col gap-3 text-center">
         {questionAndAnswers.map(({ question, answer }, i) => (
           <li key={i}>
-            <Collapsible.Root>
-              <Collapsible.Trigger className="font-serif text-xl uppercase leading-tight">
+            <Accordion.Root>
+              <Accordion.Trigger className="font-serif text-xl uppercase leading-tight">
                 {question}
-              </Collapsible.Trigger>
-              <Collapsible.Content className="mb-3 mt-1.5">
+              </Accordion.Trigger.Trigger>
+              <Collapsible.Content className="mb-3 mt-1.5 data-[state=closed]:animate-menu-hide data-[state=open]:animate-menu-show">
                 {answer}
               </Collapsible.Content>
             </Collapsible.Root>
           </li>
         ))}
-      </ul>
-    </section>
+      </ul> */}
+      <Accordion.Root
+        className="mx-auto flex max-w-screen-md flex-col gap-3 text-center"
+        type="single"
+      >
+        {questionAndAnswers.map(({ question, answer }, i) => (
+          <Accordion.Item
+            value={answer}
+            key={i}
+            className="overflow-hidden text-center"
+          >
+            <Accordion.Trigger className="font-serif text-xl uppercase leading-tight">
+              {question}
+            </Accordion.Trigger>
+            <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-hide data-[state=open]:animate-accordion-show">
+              <div className="pb-3 pt-1.5">{answer}</div>
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>
+    </FadeInSection>
   );
 }
 
 export function HackersGuideSection() {
   return (
-    <section className="mx-auto my-24 max-w-screen-lg">
+    <FadeInSection className="mx-auto my-24 max-w-screen-lg">
       <div id="guide" className="mb-2 font-serif text-4xl font-bold uppercase">
         Hackers Guide
       </div>
       <p className="text-lg">Coming soon...</p>
-    </section>
+    </FadeInSection>
   );
 }
 
 export function SponsorsSection() {
-  const sponsors = Array.from({ length: 18 });
-
   return (
-    <section className="lex mx-auto mb-52 max-w-screen-lg flex-col justify-center">
+    <FadeInSection className="lex mx-auto mb-52 max-w-screen-lg flex-col justify-center">
       <div
         id="sponsors"
         className="mb-4 text-center font-serif text-4xl font-bold uppercase"
@@ -164,8 +182,8 @@ export function SponsorsSection() {
         Sponsors
       </div>
       <div className="grid gap-4 text-center">
-        <div className="text-3xl uppercase">Coming soon</div>
+        <div className="text-lg">Coming soon...</div>
       </div>
-    </section>
+    </FadeInSection>
   );
 }

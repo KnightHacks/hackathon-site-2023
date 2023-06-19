@@ -7,24 +7,32 @@ import { match } from "ts-pattern";
 import { UserState, scrollToElementById } from "../utils";
 import { BlackDragonLogo } from "./Logos";
 import Image from "next/image";
+import { FadeInSection } from "./FadeInSection";
 
 export default function Navbar({ userState }: { userState: UserState }) {
   return (
     <NavMenu.Root>
-      <NavMenu.List className="fixed top-0 flex h-16 w-full items-center justify-between bg-white px-6 font-serif text-lg shadow">
+      <NavMenu.List className="fixed top-0 flex h-16 w-full items-center justify-between bg-white px-6 font-serif text-lg shadow z-50">
         <Image
           src="/mlh.png"
           width={60}
           height={60}
           alt="MLH 2024 banner"
-          className="absolute top-16 "
+          className="absolute top-16"
         />
         <div className="flex items-center">
           <NavMenu.Item className="relative md:hidden">
-            <NavMenu.Trigger className="mr-3 flex items-center justify-between p-1.5 transition hover:bg-gray-100">
+            <NavMenu.Trigger
+              onPointerMove={(event) => event.preventDefault()}
+              onPointerLeave={(event) => event.preventDefault()}
+              className="mr-3 flex items-center justify-between p-1.5 transition hover:bg-gray-100"
+            >
               <HamburgerMenuIcon className="h-6 w-6" />
             </NavMenu.Trigger>
-            <NavMenu.Content className="absolute top-10 w-[200px] border bg-white p-2">
+            <NavMenu.Content
+              onPointerLeave={(event) => event.preventDefault()}
+              className="absolute top-10 w-[200px] border bg-white p-2 data-[state=closed]:animate-menu-hide data-[state=open]:animate-menu-show"
+            >
               <ul>
                 <li>
                   <NavMenu.Link asChild>
@@ -144,7 +152,11 @@ export default function Navbar({ userState }: { userState: UserState }) {
           {match(userState)
             .with("User", () => (
               <>
-                <NavMenu.Trigger className="flex items-center p-1.5 transition hover:bg-gray-100">
+                <NavMenu.Trigger
+                  onPointerMove={(event) => event.preventDefault()}
+                  onPointerLeave={(event) => event.preventDefault()}
+                  className="flex items-center p-1.5 transition hover:bg-gray-100"
+                >
                   <GearIcon className="h-6 w-6" />
                 </NavMenu.Trigger>
                 <NavMenu.Content className="absolute right-0 top-10 w-[200px] border bg-white p-2">
