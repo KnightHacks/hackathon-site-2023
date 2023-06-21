@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     data: applicationPayload,
   });
 
-  console.log("hackathon application data: ", data);
+  console.log("hackathon application data: ", data, errors);
 
   if (errors) {
     return new NextResponse("Error applying to hackathon", {
@@ -64,8 +64,8 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
     hackathonId: currentHackathon.id,
     input: {
       whyAttend: data.whyAttend,
-      whatLearn: data.whatLearn,
-      shareInfo: data.shareInfo,
+      whatDoYouWantToLearn: data.whatLearn,
+      shareInfoWithSponsors: data.shareInfo,
     },
   };
 
