@@ -75,7 +75,9 @@ export default function EditInfoForm({ user }: { user: any }) {
       </p>
       <div className="font-serif text-xl font-bold">Application Status</div>
       <p className="mb-4">
-        {user.applications.length === 0 && "You have not applied :("}
+        {user.applications.length === 0
+          ? "You have not applied :("
+          : user.applications[0].status}
       </p>
       <div className="mb-2 font-serif text-xl font-bold">Welcome Hacker</div>
       <Input
