@@ -6,6 +6,8 @@ export const metadata = {
   title: "Registration",
 };
 
+export const runtime = "edge";
+
 const getUser = async (accessToken: string) => {
   const query = `
 query Me {
