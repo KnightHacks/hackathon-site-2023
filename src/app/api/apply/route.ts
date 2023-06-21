@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
     data: applicationPayload,
   });
 
+  console.log("hackathon application data: ", data);
+
   if (errors) {
     return new NextResponse("Error applying to hackathon", {
       status: 500,
