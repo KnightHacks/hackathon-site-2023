@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <NavMenu userState={userState} />
       <div className="px-8">
-        <MainSection />
+        <MainSection userState={userState}/>
         <AboutSection />
         <HackersGuideSection />
         <FAQSection />

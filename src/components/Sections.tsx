@@ -2,11 +2,12 @@
 
 import * as Accordion from "@radix-ui/react-accordion";
 import Link from "next/link";
-import { scrollToElementById } from "../utils";
+import { UserState, scrollToElementById } from "../utils";
 import { BlackDragonFullLogo } from "./Logos";
 import { FadeInSection } from "./FadeInSection";
+import { match } from "ts-pattern";
 
-export function MainSection() {
+export function MainSection({ userState }: { userState: UserState }) {
   return (
     <FadeInSection
       id="main"
@@ -16,11 +17,18 @@ export function MainSection() {
       <div className="mb-8 text-2xl uppercase">October 6-8</div>
       <div className="flex w-full max-w-xs flex-col gap-2">
         <Link
-          href="/apply"
-          prefetch={false}
+          href={match(userState)
+            .with("User", () => "/apply")
+            .with("OAuth", () => "/register")
+            .with("Guest", () => "/signin")
+            .exhaustive()}
           className="border border-black bg-black py-3 text-center font-medium uppercase text-white transition"
         >
-          Apply
+          {match(userState)
+            .with("User", () => "Apply")
+            .with("OAuth", () => "Register")
+            .with("Guest", () => "Sign In")
+            .exhaustive()}
         </Link>
         <button
           onClick={() => scrollToElementById("#sponsors")}

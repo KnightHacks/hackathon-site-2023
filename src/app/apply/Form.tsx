@@ -10,7 +10,7 @@ import { redirect, useRouter } from "next/navigation";
 const applySchema = z.object({
   // tracks: z.enum(["Beginner", "Regular", "Cybersecurity"]),
   whyAttend: z.string().nonempty("This field is required"),
-  whatLearn: z.string().nonempty("This field is required"),
+  whatLearn: z.string().nonempty("This field is required")  ,
   shareInfo: z.boolean(),
 });
 

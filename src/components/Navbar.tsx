@@ -7,19 +7,20 @@ import { match } from "ts-pattern";
 import { UserState, scrollToElementById } from "../utils";
 import { BlackDragonLogo } from "./Logos";
 import Image from "next/image";
-import { FadeInSection } from "./FadeInSection";
 
 export default function Navbar({ userState }: { userState: UserState }) {
   return (
     <NavMenu.Root>
       <NavMenu.List className="fixed top-0 z-50 flex h-16 w-full items-center justify-between bg-white px-6 font-serif text-lg shadow">
-        <Image
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-black.svg"
-          width={60}
-          height={60}
-          alt="MLH 2024 banner"
-          className="absolute top-16"
-        />
+        <Link href="https://mlh.io/" className="absolute top-16">
+          <Image
+            src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-black.svg"
+            width={60}
+            height={60}
+            alt="MLH 2024 banner"
+          />
+        </Link>
+
         <div className="flex items-center">
           <NavMenu.Item className="relative md:hidden">
             <NavMenu.Trigger

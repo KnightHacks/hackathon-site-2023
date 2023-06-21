@@ -13,7 +13,6 @@ import {
   states,
 } from "../../constants";
 import { useState } from "react";
-import { Toast } from "@/components/Toast";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
@@ -56,13 +55,13 @@ export default function EditInfoForm({ user }: { user: any }) {
   const [open, setOpen] = useState(false);
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
-    // await fetch("/api/update_user", {
-    //   method: "POST",
-    //   body: JSON.stringify({ ...data, userId: user.id }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
+    await fetch("/api/update_user", {
+      method: "POST",
+      body: JSON.stringify({ ...data, userId: user.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     setOpen(true);
   };
@@ -228,7 +227,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         })}
       />
       <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">
-        Submit
+        Save Changes
       </button>
     </form>
   );
