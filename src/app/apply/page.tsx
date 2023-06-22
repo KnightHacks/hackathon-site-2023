@@ -62,7 +62,12 @@ export default async function KnightHacksRegistration() {
 
   if (!accessToken) redirect("/sigin");
 
-  const { data } = await getUser(accessToken);
+  const { data, errors } = await getUser(accessToken);
+
+  if (errors) {
+    console.log(errors);
+    redirect("/");
+  }
 
   return (
     <div className="mx-auto my-10 w-full max-w-screen-md px-6">

@@ -108,6 +108,7 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
         graduationDate: new Date(0),
       },
       age: data.age,
+      race: data.race,
     },
     provider,
   };
