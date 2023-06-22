@@ -64,14 +64,16 @@ export default async function KnightHacksRegistration() {
 
   const { data, errors } = await getUser(accessToken);
 
+  console.log(data);
+
   if (errors) {
-    console.log(errors);
+    console.log(data, errors);
     redirect("/");
   }
 
   return (
     <div className="mx-auto my-10 w-full max-w-screen-md px-6">
-      {data.applications.length > 0 ? (
+      {data.me.applications.length > 0 ? (
         <>
           <div className="font-serif text-4xl font-bold">Thank you!</div>
           <p className="mb-4">You&apos;ve already applied!</p>
