@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
   const { data, errors } = await login(code, state, oAuthState!.value);
 
-  console.log("login data: ", data);
+  console.log("login payload: ", data, errors);
 
   if (errors) {
     const response = new NextResponse("Error logging in", {
