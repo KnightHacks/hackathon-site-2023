@@ -37,10 +37,9 @@ const schema = z.object({
   zipCode: z.string().nonempty("This field is required"),
   schoolName: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This field is required"),
-  graduationDate: z.date({
-    required_error: "This field is required",
-    invalid_type_error: "Invalid date",
-  }).min(new Date(), {message: "Graduation date must be in the future"}),
+  graduationDate: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date().min(new Date(), { message: "Graduation date must be in the future" })),
   shareResume: z.boolean(),
   agreesToMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({ message: "You must agree to the MLH Code of Conduct" }),
