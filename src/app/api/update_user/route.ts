@@ -73,6 +73,8 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
         major: data.major,
         graduationDate: data.graduationDate,
       },
+      firstTimeHacker: data.isFirstTimeHacker,
+      cyberTrack: data.isDoingCybersecurityTrack,
       age: data.age,
     },
   };
