@@ -105,12 +105,16 @@ export default function EditInfoForm({ user }: { user: any }) {
       <Checkbox
         label="Are you a first time hacker?"
         error={errors.isFirstTimeHacker}
-        {...register("isFirstTimeHacker")}
+        {...register("isFirstTimeHacker", {
+          value: user.isFirstTimeHacker,
+        })}
       />
       <Checkbox
         label="Are you interested in participating in our cybersecurity track?"
         error={errors.isDoingCybersecurityTrack}
-        {...register("isDoingCybersecurityTrack")}
+        {...register("isDoingCybersecurityTrack", {
+          value: user.isDoingCybersecurityTrack,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input
