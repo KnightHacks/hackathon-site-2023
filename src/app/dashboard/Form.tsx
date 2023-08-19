@@ -62,6 +62,8 @@ export default function EditInfoForm({ user }: { user: any }) {
   const [open, setOpen] = useState(false);
 
   const onSubmit: SubmitHandler<UpdateUserFields> = async (data) => {
+    console.log(data);
+
     await fetch("/api/update_user", {
       method: "POST",
       body: JSON.stringify({ ...data, userId: user.id }),
