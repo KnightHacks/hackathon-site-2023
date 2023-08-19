@@ -60,7 +60,7 @@ query Me {
 export default async function KnightHacksRegistration() {
   const accessToken = cookies().get("accessToken")?.value;
 
-  if (!accessToken) redirect("/sigin");
+  if (!accessToken) redirect("/signin");
 
   const { data, errors } = await getUser(accessToken);
 

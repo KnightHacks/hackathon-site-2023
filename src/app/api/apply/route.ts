@@ -67,8 +67,6 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
       whyAttend: data.whyAttend,
       whatDoYouWantToLearn: data.whatLearn,
       shareInfoWithSponsors: data.shareInfo,
-      cyberTrack: data.isDoingCybersecurityTrack,
-      firstTimeHacker: data.isFirstTimeHacker,
     },
   };
 

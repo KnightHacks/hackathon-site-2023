@@ -11,7 +11,7 @@ const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
-  resume: z.instanceof(File).optional(),
+  resume: z.custom<File>().optional(),
 });
 
 export type ApplicationFields = z.infer<typeof applySchema>;
@@ -27,7 +27,28 @@ export default function KnightHacksRegistrationForm() {
     resolver: zodResolver(applySchema),
   });
 
+  const uploadResume = (sasURL: string, resume: File) => {
+    fetch(sasURL, {
+      method: "PUT",
+      body: resume,
+      headers: {
+        "x-ms-blob-type": "BlockBlob",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        console.log("File uploaded successfully!");
+      })
+      .catch((error) => {
+        console.error("There was a problem with the upload:", error);
+      });
+  }
+
   const onSubmit: SubmitHandler<ApplicationFields> = async (data) => {
+    console.log(data)
+
     const res = await fetch("/api/apply", {
       method: "POST",
       body: JSON.stringify(data),
@@ -38,6 +59,12 @@ export default function KnightHacksRegistrationForm() {
 
     if (res.ok) {
       await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      const sasURL = await res.json();
+
+      if (data.resume)
+        uploadResume(sasURL, data.resume);
+  
       router.push("/dashboard");
     }
   };
@@ -60,7 +87,7 @@ export default function KnightHacksRegistrationForm() {
         error={errors.whatLearn}
         {...register("whatLearn")}
       />
-
+      <ResumeUpload register={register} />
       <Checkbox
         label="I would like to share my information with sponsors"
         error={errors.shareInfo}
@@ -96,7 +123,7 @@ const ResumeUpload = ({
           {...props}
           {...register("resume", {
             onChange: (e) => {
-              const file = e.target.files?.[0];
+              const file: File = e.target.files?.[0];
               if (file) setFile(file);
             },
           })}
