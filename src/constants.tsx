@@ -1,13 +1,48 @@
 export const ethnicities = [
-  "American Indian or Alaskan Native",
-  "Asian",
-  "Black or African American",
-  "Hispanic or Latino",
-  "Middle Eastern",
-  "Native Hawaiian or Other Pacific Islander",
-  "White",
-  "Two or more",
-] as const; // Asserts that this array is immutable
+  {
+    label: "American Indian or Alaskan Native",
+    value: "AMERICAN_INDIAN_OR_ALASKAN_NATIVE",
+  },
+  {
+    label: "Asian",
+    value: "ASIAN",
+  },
+  {
+    label: "Black or African American",
+    value: "BLACK_OR_AFRICAN_AMERICAN",
+  },
+  {
+    label: "Hispanic or Latino",
+    value: "HISPANIC_OR_LATINO",
+  },
+  {
+    label: "Middle Eastern",
+    value: "MIDDLE_EASTERN",
+  },
+  {
+    label: "Native Hawaiian or Other Pacific Islander",
+    value: "NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER",
+  },
+  {
+    label: "White",
+    value: "WHITE",
+  },
+  {
+    label: "Two or more",
+    value: "TWO_OR_MORE",
+  },
+] as const;
+
+export const ethnicityValues = [
+  "AMERICAN_INDIAN_OR_ALASKAN_NATIVE",
+  "ASIAN",
+  "BLACK_OR_AFRICAN_AMERICAN",
+  "HISPANIC_OR_LATINO",
+  "MIDDLE_EASTERN",
+  "NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER",
+  "WHITE",
+  "TWO_OR_MORE",
+] as const;
 
 export const countries = [
   "United States",
@@ -269,11 +304,7 @@ export const graduationYears = [
   "Spring 2027",
 ] as const;
 
-export const tracks = [
-  "Beginner",
-  "Regular",
-  "Cybersecurity",
-] as const;
+export const tracks = ["Beginner", "Regular", "Cybersecurity"] as const;
 
 export const schools = [
   "21st Century Cyber Charter School",

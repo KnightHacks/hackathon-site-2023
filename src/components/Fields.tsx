@@ -30,7 +30,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 type SelectProps = {
   label: string;
   error?: FieldError;
-  options: readonly string[];
+  options: readonly { label: string; value: string }[] | readonly string[];
 } & ReturnType<UseFormRegister<FieldValues>> &
   HTMLProps<HTMLSelectElement>;
 
@@ -49,8 +49,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           }`}
         >
           {options.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option
+              key={typeof option === "string" ? option : option.value}
+              value={typeof option === "string" ? option : option.value}
+            >
+              {typeof option === "string" ? option : option.label}
             </option>
           ))}
         </select>
