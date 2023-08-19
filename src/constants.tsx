@@ -1,5 +1,5 @@
 export const ethnicities = [
-  "American Indian or Alaska Native",
+  "American Indian or Alaskan Native",
   "Asian",
   "Black or African American",
   "Hispanic or Latino",
