@@ -37,10 +37,12 @@ const schema = z.object({
   zipCode: z.string().nonempty("This field is required"),
   schoolName: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This field is required"),
-  graduationDate: z.string().datetime(),
+  graduationDate: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date().min(new Date(), { message: "Graduation date must be in the future" })),
   shareResume: z.boolean(),
-  isDoingCybersecurityTrack: z.boolean(),
   isFirstTimeHacker: z.boolean(),
+  isDoingCybersecurityTrack: z.boolean(),
 });
 
 export type UpdateUserFields = z.infer<typeof schema>;
