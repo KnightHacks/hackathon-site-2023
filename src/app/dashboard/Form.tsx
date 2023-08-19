@@ -112,9 +112,7 @@ export default function EditInfoForm({ user }: { user: any }) {
       <Checkbox
         label="Are you interested in participating in our cybersecurity track?"
         error={errors.isDoingCybersecurityTrack}
-        {...register("isDoingCybersecurityTrack", {
-          value: user.isDoingCybersecurityTrack,
-        })}
+        {...register("isDoingCybersecurityTrack")}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input
