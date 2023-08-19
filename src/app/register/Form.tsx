@@ -7,6 +7,7 @@ import { z } from "zod";
 import {
   countries,
   ethnicities,
+  ethnicityValues,
   genders,
   graduationYears,
   shirtSizes,
@@ -26,7 +27,7 @@ const schema = z.object({
     .min(18, "You must be 18 or older"),
   gender: z.enum(genders),
   shirtSize: z.enum(shirtSizes),
-  ethnicity: z.enum(ethnicities),
+  ethnicity: z.enum(ethnicityValues),
   email: z.string().email("Invalid email address"),
   phoneNumber: z.string().nonempty("This field is required"),
   country: z.enum(countries),

@@ -67,7 +67,7 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
       lastName: data.lastName,
       email: data.email,
       gender: data.gender,
-      race: data.ethnicity.toUpperCase().replaceAll(" ", "_"),
+      race: data.ethnicity,
       educationInfo: {
         name: data.schoolName,
         major: data.major,
