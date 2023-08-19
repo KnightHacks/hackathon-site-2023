@@ -53,7 +53,7 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
     input: {
       shirtSize: data.shirtSize,
       mlh: {
-        shareInfo: true,
+        shareInfo: data.shareResume,
       },
       phoneNumber: data.phoneNumber,
       mailingAddress: {

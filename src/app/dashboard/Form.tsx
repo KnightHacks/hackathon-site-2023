@@ -255,7 +255,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         label="I would like to share my resume with sponsors"
         error={errors.shareResume}
         {...register("shareResume", {
-          value: user.shareResume,
+          value: user.mlh.shareInfo,
         })}
       />
       <button className="mt-6 w-full border border-black bg-black px-4 py-3 text-center font-bold text-white">

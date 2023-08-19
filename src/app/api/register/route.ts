@@ -83,7 +83,7 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
     input: {
       shirtSize: data.shirtSize,
       mlh: {
-        shareInfo: true,
+        shareInfo: data.shareResume,
         codeOfConduct: true,
         sendMessages: true,
       },
