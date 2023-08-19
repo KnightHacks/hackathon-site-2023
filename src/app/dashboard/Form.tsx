@@ -233,7 +233,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         label="Graduation Date"
         error={errors.graduationDate}
         {...register("graduationDate", {
-          value: new Date(user.educationInfo?.graduationDate),
+          value: user?.educationInfo?.graduationDate?.split("T")[0],
         })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
