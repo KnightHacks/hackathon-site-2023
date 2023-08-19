@@ -41,6 +41,8 @@ query Me {
       whatDoYouWantToLearn
       status
     }
+    firstTimeHacker
+    cyberTrack
   }
 }
   `;
