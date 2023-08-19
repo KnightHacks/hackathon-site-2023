@@ -8,7 +8,6 @@ import {
   countries,
   ethnicities,
   genders,
-  graduationYears,
   shirtSizes,
   states,
 } from "../../constants";
@@ -55,6 +54,8 @@ export default function EditInfoForm({ user }: { user: any }) {
   } = useForm<UpdateUserFields>({
     resolver: zodResolver(schema),
   });
+
+  console.log(user);
 
   const [open, setOpen] = useState(false);
 
@@ -141,7 +142,6 @@ export default function EditInfoForm({ user }: { user: any }) {
         error={errors.ethnicity}
         options={ethnicities}
         {...register("ethnicity", {
-          // @ts-ignore
           value: user.race,
         })}
       />
@@ -232,7 +232,9 @@ export default function EditInfoForm({ user }: { user: any }) {
         type="date"
         label="Graduation Date"
         error={errors.graduationDate}
-        {...register("graduationDate")}
+        {...register("graduationDate", {
+          value: new Date(user.educationInfo?.graduationDate),
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
