@@ -4,15 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
-import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
-  isFirstTimeHacker: z.boolean(),
-  isDoingCybersecurityTrack: z.boolean(),
 });
 
 export type ApplicationFields = z.infer<typeof applySchema>;
@@ -38,6 +35,7 @@ export default function KnightHacksRegistrationForm() {
     });
 
     if (res.ok) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       router.push("/dashboard");
     }
   };
@@ -60,16 +58,7 @@ export default function KnightHacksRegistrationForm() {
         error={errors.whatLearn}
         {...register("whatLearn")}
       />
-      <Checkbox
-        label="Are you a first time hacker?"
-        error={errors.shareInfo}
-        {...register("isFirstTimeHacker")}
-      />
-      <Checkbox
-        label="Are you interested in participating in our cybersecurity track?"
-        error={errors.shareInfo}
-        {...register("isDoingCybersecurityTrack")}
-      />
+
       <Checkbox
         label="I would like to share my information with sponsors"
         error={errors.shareInfo}

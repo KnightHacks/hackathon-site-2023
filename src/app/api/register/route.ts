@@ -1,7 +1,6 @@
 import { RegistrationFields } from "@/app/register/Form";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { FieldValues } from "react-hook-form";
 
 export const runtime = "edge";
 
@@ -106,6 +105,8 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
       },
       age: data.age,
       race: (data.ethnicity as string).toUpperCase().replaceAll(" ", "_"),
+      firstTimeHacker: data.isFirstTimeHacker,
+      cyberTrack: data.isDoingCybersecurityTrack,
     },
     provider,
   };

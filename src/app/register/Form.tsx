@@ -42,6 +42,8 @@ const schema = z.object({
   agreesToMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({ message: "You must agree to the MLH Code of Conduct" }),
   }),
+  isFirstTimeHacker: z.boolean(),
+  isDoingCybersecurityTrack: z.boolean(),
 });
 
 export type RegistrationFields = z.infer<typeof schema>;
@@ -86,6 +88,16 @@ export default function KnightHacksAccountRegistrationForm() {
         placeholder="Farmer"
         error={errors.lastName}
         {...register("lastName")}
+      />
+      <Checkbox
+        label="Are you a first time hacker?"
+        error={errors.isFirstTimeHacker}
+        {...register("isFirstTimeHacker")}
+      />
+      <Checkbox
+        label="Are you interested in participating in our cybersecurity track?"
+        error={errors.isDoingCybersecurityTrack}
+        {...register("isDoingCybersecurityTrack")}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input
@@ -184,6 +196,7 @@ export default function KnightHacksAccountRegistrationForm() {
         error={errors.graduationDate}
         {...register("graduationDate")}
       />
+
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
         label="I would like to share my resume with sponsors"

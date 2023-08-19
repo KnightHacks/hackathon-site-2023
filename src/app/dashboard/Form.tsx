@@ -37,8 +37,10 @@ const schema = z.object({
   zipCode: z.string().nonempty("This field is required"),
   schoolName: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This field is required"),
-  graduationYear: z.enum(graduationYears),
+  graduationYear: z.string().datetime(),
   shareResume: z.boolean(),
+  isDoingCybersecurityTrack: z.boolean(),
+  isFirstTimeHacker: z.boolean(),
 });
 
 type Fields = z.infer<typeof schema>;
@@ -95,6 +97,16 @@ export default function EditInfoForm({ user }: { user: any }) {
         {...register("lastName", {
           value: user.lastName,
         })}
+      />
+      <Checkbox
+        label="Are you a first time hacker?"
+        error={errors.isFirstTimeHacker}
+        {...register("isFirstTimeHacker")}
+      />
+      <Checkbox
+        label="Are you interested in participating in our cybersecurity track?"
+        error={errors.isDoingCybersecurityTrack}
+        {...register("isDoingCybersecurityTrack")}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input

@@ -62,17 +62,13 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
         postalCode: data.zipCode,
         country: data.country,
       },
-      pronouns: {
-        subjective: "",
-        objective: "",
-      },
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       educationInfo: {
         name: data.schoolName,
         major: data.major,
-        graduationDate: new Date(0),
+        graduationDate: data.graduationDate,
       },
       age: data.age,
     },
