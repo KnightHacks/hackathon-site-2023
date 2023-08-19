@@ -196,7 +196,6 @@ export default function KnightHacksAccountRegistrationForm() {
         error={errors.graduationDate}
         {...register("graduationDate")}
       />
-
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
         label="I would like to share my resume with sponsors"

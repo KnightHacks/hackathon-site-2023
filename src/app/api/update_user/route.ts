@@ -1,3 +1,4 @@
+import { UpdateUserFields } from "@/app/dashboard/Form";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValues } from "react-hook-form";
@@ -37,7 +38,7 @@ async function updateUser({
   data,
 }: {
   accessToken: string;
-  data: FieldValues;
+  data: UpdateUserFields & { userId: string };
 }) {
   const query = `
 mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
@@ -65,6 +66,7 @@ mutation Mutation($updateUserId: ID!, $input: UpdatedUser!) {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
+      race: data.ethnicity,
       educationInfo: {
         name: data.schoolName,
         major: data.major,

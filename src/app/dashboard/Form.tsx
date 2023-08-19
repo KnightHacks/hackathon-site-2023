@@ -37,26 +37,26 @@ const schema = z.object({
   zipCode: z.string().nonempty("This field is required"),
   schoolName: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This field is required"),
-  graduationYear: z.string().datetime(),
+  graduationDate: z.string().datetime(),
   shareResume: z.boolean(),
   isDoingCybersecurityTrack: z.boolean(),
   isFirstTimeHacker: z.boolean(),
 });
 
-type Fields = z.infer<typeof schema>;
+export type UpdateUserFields = z.infer<typeof schema>;
 
 export default function EditInfoForm({ user }: { user: any }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Fields>({
+  } = useForm<UpdateUserFields>({
     resolver: zodResolver(schema),
   });
 
   const [open, setOpen] = useState(false);
 
-  const onSubmit: SubmitHandler<Fields> = async (data) => {
+  const onSubmit: SubmitHandler<UpdateUserFields> = async (data) => {
     await fetch("/api/update_user", {
       method: "POST",
       body: JSON.stringify({ ...data, userId: user.id }),
@@ -226,11 +226,11 @@ export default function EditInfoForm({ user }: { user: any }) {
           value: user.educationInfo?.major,
         })}
       />
-      <Select
-        label="Graduation Year"
-        error={errors.graduationYear}
-        options={graduationYears}
-        {...register("graduationYear")}
+      <Input
+        type="date"
+        label="Graduation Date"
+        error={errors.graduationDate}
+        {...register("graduationDate")}
       />
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
