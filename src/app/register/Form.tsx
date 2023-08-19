@@ -151,7 +151,7 @@ export default function KnightHacksAccountRegistrationForm() {
       />
       <Input
         label="Address Line 2"
-        placeholder="11200 SW 8th St"
+        placeholder="Apt 302"
         error={errors.addressLine2}
         {...register("addressLine2")}
       />
