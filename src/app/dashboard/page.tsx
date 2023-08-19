@@ -29,6 +29,9 @@ query Me {
       city
       addressLines
     }
+    mlh {
+      shareInfo
+    }
     educationInfo {
       major
       name
