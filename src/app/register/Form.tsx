@@ -187,7 +187,6 @@ export default function KnightHacksAccountRegistrationForm() {
       />
       <Input
         label="Major"
-        type="date"
         placeholder="Computer Science"
         error={errors.major}
         {...register("major")}
