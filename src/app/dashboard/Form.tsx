@@ -98,7 +98,9 @@ export default function EditInfoForm({ user }: { user: any }) {
         label="Last Name"
         placeholder="Farmer"
         error={errors.lastName}
-        {...register("lastName")}
+        {...register("lastName", {
+          value: user.lastName,
+        })}
       />
       <Checkbox
         label="Are you a first time hacker?"
