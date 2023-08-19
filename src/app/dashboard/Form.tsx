@@ -53,10 +53,6 @@ export default function EditInfoForm({ user }: { user: any }) {
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateUserFields>({
-    defaultValues: {
-      isFirstTimeHacker: user.isFirstTimeHacker,
-      isDoingCybersecurityTrack: user.isDoingCybersecurityTrack,
-    },
     resolver: zodResolver(schema),
   });
 
@@ -107,12 +103,16 @@ export default function EditInfoForm({ user }: { user: any }) {
       <Checkbox
         label="Are you a first time hacker?"
         error={errors.isFirstTimeHacker}
-        {...register("isFirstTimeHacker")}
+        {...register("isFirstTimeHacker", {
+          value: user.firstTimeHacker,
+        })}
       />
       <Checkbox
         label="Are you interested in participating in our cybersecurity track?"
         error={errors.isDoingCybersecurityTrack}
-        {...register("isDoingCybersecurityTrack")}
+        {...register("isDoingCybersecurityTrack", {
+          value: user.cyberTrack,
+        })}
       />
       <div className="mb-2 font-serif text-xl font-bold">About You</div>
       <Input
