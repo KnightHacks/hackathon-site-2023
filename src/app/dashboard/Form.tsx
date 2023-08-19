@@ -13,6 +13,7 @@ import {
   states,
 } from "../../constants";
 import { useState } from "react";
+import { Toast } from "@/components/Toast";
 
 const schema = z.object({
   firstName: z.string().nonempty("This field is required"),
@@ -74,6 +75,12 @@ export default function EditInfoForm({ user }: { user: any }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Toast
+        open={open}
+        setOpen={setOpen}
+        title="Success!"
+        description="Your information has been updated."
+      />
       <div className="font-serif text-4xl font-bold">Dashboard</div>
       <p className="mb-4">
         Here you&apos;ll be able to edit your information and view your
