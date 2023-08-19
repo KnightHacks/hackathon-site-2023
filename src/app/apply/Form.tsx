@@ -1,15 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
+  resume: z.instanceof(File).optional(),
 });
 
 export type ApplicationFields = z.infer<typeof applySchema>;
@@ -74,36 +76,36 @@ export default function KnightHacksRegistrationForm() {
   );
 }
 
-// const ResumeUpload = ({
-//   register,
-//   ...props
-// }: {
-//   register: UseFormRegister<Fields>;
-// }) => {
-//   const [file, setFile] = useState<File | null>(null);
-//   return (
-//     <div className="mb-8 flex flex-col">
-//       <label
-//         className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
-//         tabIndex={0}
-//         placeholder="Resume"
-//         htmlFor="resume"
-//       >
-//         Upload Resume
-//         <input
-//           {...props}
-//           {...register("resume", {
-//             onChange: (e) => {
-//               const file = e.target.files?.[0];
-//               if (file) setFile(file);
-//             },
-//           })}
-//           className="hidden"
-//           id="resume"
-//           type="file"
-//         />
-//       </label>
-//       {file && <p>{file.name}</p>}
-//     </div>
-//   );
-// };
+const ResumeUpload = ({
+  register,
+  ...props
+}: {
+  register: UseFormRegister<ApplicationFields>;
+}) => {
+  const [file, setFile] = useState<File | null>(null);
+  return (
+    <div className="mb-8 flex flex-col">
+      <label
+        className="flex w-min cursor-pointer flex-col whitespace-nowrap border px-4 py-3 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500"
+        tabIndex={0}
+        placeholder="Resume"
+        htmlFor="resume"
+      >
+        Upload Resume
+        <input
+          {...props}
+          {...register("resume", {
+            onChange: (e) => {
+              const file = e.target.files?.[0];
+              if (file) setFile(file);
+            },
+          })}
+          className="hidden"
+          id="resume"
+          type="file"
+        />
+      </label>
+      {file && <p>{file.name}</p>}
+    </div>
+  );
+};
