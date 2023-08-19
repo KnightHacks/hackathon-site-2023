@@ -143,7 +143,7 @@ export default function EditInfoForm({ user }: { user: any }) {
         error={errors.ethnicity}
         options={ethnicities}
         {...register("ethnicity", {
-          value: user.race,
+          value: user.race ?? "AMERICAN_INDIAN_OR_ALASKAN_NATIVE",
         })}
       />
       <div className="mb-2 font-serif text-xl font-bold">Contact</div>
