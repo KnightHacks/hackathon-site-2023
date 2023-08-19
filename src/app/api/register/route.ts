@@ -104,7 +104,7 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
         graduationDate: data.graduationDate,
       },
       age: data.age,
-      race: (data.ethnicity as string).toUpperCase().replaceAll(" ", "_"),
+      race: data.ethnicity,
       firstTimeHacker: data.isFirstTimeHacker,
       cyberTrack: data.isDoingCybersecurityTrack,
     },
