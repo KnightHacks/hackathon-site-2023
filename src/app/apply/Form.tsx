@@ -8,13 +8,14 @@ import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 
 const applySchema = z.object({
-  // tracks: z.enum(["Beginner", "Regular", "Cybersecurity"]),
   whyAttend: z.string().nonempty("This field is required"),
-  whatLearn: z.string().nonempty("This field is required")  ,
+  whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
+  isFirstTimeHacker: z.boolean(),
+  isDoingCybersecurityTrack: z.boolean(),
 });
 
-type Fields = z.infer<typeof applySchema>;
+export type ApplicationFields = z.infer<typeof applySchema>;
 
 export default function KnightHacksRegistrationForm() {
   const router = useRouter();
@@ -23,11 +24,11 @@ export default function KnightHacksRegistrationForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Fields>({
+  } = useForm<ApplicationFields>({
     resolver: zodResolver(applySchema),
   });
 
-  const onSubmit: SubmitHandler<Fields> = async (data) => {
+  const onSubmit: SubmitHandler<ApplicationFields> = async (data) => {
     const res = await fetch("/api/apply", {
       method: "POST",
       body: JSON.stringify(data),
@@ -37,7 +38,7 @@ export default function KnightHacksRegistrationForm() {
     });
 
     if (res.ok) {
-      router.push("/dashboard");    
+      router.push("/dashboard");
     }
   };
 
@@ -58,6 +59,16 @@ export default function KnightHacksRegistrationForm() {
         placeholder="I want to learn about..."
         error={errors.whatLearn}
         {...register("whatLearn")}
+      />
+      <Checkbox
+        label="Are you a first time hacker?"
+        error={errors.shareInfo}
+        {...register("isFirstTimeHacker")}
+      />
+      <Checkbox
+        label="Are you interested in participating in our cybersecurity track?"
+        error={errors.shareInfo}
+        {...register("isDoingCybersecurityTrack")}
       />
       <Checkbox
         label="I would like to share my information with sponsors"

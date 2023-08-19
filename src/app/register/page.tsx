@@ -1,5 +1,5 @@
 import HackathonRegistrationForm from "./Form";
-
+ 
 export const metadata = {
   title: "Register",
 };

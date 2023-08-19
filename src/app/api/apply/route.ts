@@ -1,3 +1,4 @@
+import { ApplicationFields } from "@/app/apply/Form";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValues } from "react-hook-form";
@@ -39,7 +40,7 @@ const apply = async ({
   data,
 }: {
   accessToken: string;
-  data: FieldValues;
+  data: ApplicationFields;
 }) => {
   const {
     data: { currentHackathon },
@@ -66,6 +67,8 @@ mutation ApplyToHackathon($hackathonId: ID!, $input: HackathonApplicationInput!)
       whyAttend: data.whyAttend,
       whatDoYouWantToLearn: data.whatLearn,
       shareInfoWithSponsors: data.shareInfo,
+      cyberTrack: data.isDoingCybersecurityTrack,
+      firstTimeHacker: data.isFirstTimeHacker,
     },
   };
 

@@ -1,3 +1,4 @@
+import { RegistrationFields } from "@/app/register/Form";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValues } from "react-hook-form";
@@ -66,7 +67,7 @@ async function register({
   provider,
 }: {
   encryptedOAuthAccessToken: string;
-  data: FieldValues;
+  data: RegistrationFields;
   provider: string;
 }) {
   const query = `
@@ -95,20 +96,16 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
         postalCode: data.zipCode,
         country: data.country,
       },
-      pronouns: {
-        subjective: "",
-        objective: "",
-      },
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       educationInfo: {
         name: data.schoolName,
         major: data.major,
-        graduationDate: new Date(0),
+        graduationDate: data.graduationDate,
       },
       age: data.age,
-      race: data.race,
+      race: (data.ethnicity as string).toUpperCase().replaceAll(" ", "_"),
     },
     provider,
   };

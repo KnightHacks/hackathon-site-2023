@@ -37,14 +37,14 @@ const schema = z.object({
   zipCode: z.string().nonempty("This field is required"),
   schoolName: z.string().nonempty("This field is required"),
   major: z.string().nonempty("This field is required"),
-  graduationYear: z.enum(graduationYears),
+  graduationDate: z.string().datetime(),
   shareResume: z.boolean(),
   agreesToMLHCodeOfConduct: z.literal(true, {
     errorMap: () => ({ message: "You must agree to the MLH Code of Conduct" }),
   }),
 });
 
-type Fields = z.infer<typeof schema>;
+export type RegistrationFields = z.infer<typeof schema>;
 
 export default function KnightHacksAccountRegistrationForm() {
   const router = useRouter();
@@ -53,11 +53,11 @@ export default function KnightHacksAccountRegistrationForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Fields>({
+  } = useForm<RegistrationFields>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Fields> = async (data) => {
+  const onSubmit: SubmitHandler<RegistrationFields> = async (data) => {
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -173,15 +173,16 @@ export default function KnightHacksAccountRegistrationForm() {
       />
       <Input
         label="Major"
+        type="date"
         placeholder="Computer Science"
         error={errors.major}
         {...register("major")}
       />
-      <Select
-        label="Graduation Year"
-        error={errors.graduationYear}
-        options={graduationYears}
-        {...register("graduationYear")}
+      <Input
+        type="date"
+        label="Graduation Date"
+        error={errors.graduationDate}
+        {...register("graduationDate")}
       />
       <div className="mb-2 font-serif text-xl font-bold">Other</div>
       <Checkbox
