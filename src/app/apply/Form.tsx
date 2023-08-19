@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BlobServiceClient, newPipeline } from "@azure/storage-blob";
 
 const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
@@ -27,28 +28,25 @@ export default function KnightHacksRegistrationForm() {
     resolver: zodResolver(applySchema),
   });
 
-  const uploadResume = (sasURL: string, resume: File) => {
-    fetch(sasURL, {
-      method: "PUT",
-      body: resume,
-      headers: {
-        "x-ms-blob-type": "BlockBlob",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        console.log("File uploaded successfully!");
-      })
-      .catch((error) => {
-        console.error("There was a problem with the upload:", error);
+  const uploadResume = async (url: string, file: File) => {
+    const pipeline = newPipeline();
+    const blobService = new BlobServiceClient(url, pipeline);
+    const containerClient = blobService.getContainerClient("resumes");
+
+    const blobClient = containerClient.getBlockBlobClient(file.name);
+
+    try {
+      await blobClient.uploadData(file, {
+        blobHTTPHeaders: {
+          blobContentType: file.type,
+        },
       });
-  }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const onSubmit: SubmitHandler<ApplicationFields> = async (data) => {
-    console.log(data)
-
     const res = await fetch("/api/apply", {
       method: "POST",
       body: JSON.stringify(data),
@@ -62,9 +60,8 @@ export default function KnightHacksRegistrationForm() {
 
       const sasURL = await res.json();
 
-      if (data.resume)
-        uploadResume(sasURL, data.resume);
-  
+      if (data.resume) uploadResume(sasURL, data.resume);
+
       router.push("/dashboard");
     }
   };
