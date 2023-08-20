@@ -44,7 +44,7 @@ export default function KnightHacksRegistrationForm() {
   };
 
   const onSubmit: SubmitHandler<ApplicationFields> = async (data) => {
-    console.log(data)
+    console.log(data);
 
     const res = await fetch("/api/apply", {
       method: "POST",
@@ -57,12 +57,12 @@ export default function KnightHacksRegistrationForm() {
     if (res.ok) {
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
-      const sasURL = await res.json();
+      const { applyToHackathon: sasURL } = await res.json();
 
-      console.log(sasURL)
+      console.log(sasURL);
+      console.log(data.resume);
 
       if (data.resume) uploadResume(sasURL, data.resume);
-
     }
   };
 
@@ -120,7 +120,7 @@ const ResumeUpload = ({
           {...props}
           {...register("resume", {
             onChange: (e) => {
-              const file: File = e.target.files?.[0];
+              const file: File = e.target.files[0];
               if (file) setFile(file);
             },
           })}
