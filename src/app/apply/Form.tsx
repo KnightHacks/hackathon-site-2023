@@ -120,7 +120,7 @@ const ResumeUpload = ({
           {...props}
           {...register("resume", {
             onChange: (e) => {
-              const file: File = e.target.files[0].item(0);
+              const file: File = e.target.files[0];
               if (file) setFile(file);
             },
           })}
