@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { DiscordIcon, GitHubIcon, GoogleIcon } from "../../components/Icons";
 import { Toast } from "../../components/Toast";
-import { HTMLAttributes, use, useState } from "react";
+import { HTMLAttributes,  useState } from "react";
 
 export function OAuthButtons() {
   const [toastState, setToastState] = useState({

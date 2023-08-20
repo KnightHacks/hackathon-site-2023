@@ -103,6 +103,10 @@ mutation Mutation($encryptedOAuthAccessToken: String!, $input: NewUser!, $provid
         major: data.major,
         graduationDate: data.graduationDate,
       },
+      pronouns: {
+        subjective:"",
+        objective:"",
+      },
       age: data.age,
       race: data.ethnicity,
       firstTimeHacker: data.isFirstTimeHacker,
