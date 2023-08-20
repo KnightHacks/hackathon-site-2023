@@ -1,7 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
+import {
+  FieldError,
+  SubmitHandler,
+  UseFormRegister,
+  useForm,
+} from "react-hook-form";
 import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useRouter } from "next/navigation";
@@ -94,7 +99,7 @@ export default function KnightHacksRegistrationForm() {
         error={errors.whatLearn}
         {...register("whatLearn")}
       />
-      <ResumeUpload register={register} />
+      <ResumeUpload error={errors.resume} register={register} />
       <Checkbox
         label="I would like to share my information with sponsors"
         error={errors.shareInfo}
@@ -112,8 +117,10 @@ export default function KnightHacksRegistrationForm() {
 
 const ResumeUpload = ({
   register,
+  error,
   ...props
 }: {
+  error: FieldError | undefined;
   register: UseFormRegister<ApplicationFields>;
 }) => {
   const [file, setFile] = useState<File | null>(null);
@@ -139,7 +146,11 @@ const ResumeUpload = ({
           type="file"
         />
       </label>
-      {file && <p>{file.name}</p>}
+      {error ? (
+        <p className="text-red-500">{error.message}</p>
+      ) : (
+        file && <p>{file.name}</p>
+      )}
     </div>
   );
 };
