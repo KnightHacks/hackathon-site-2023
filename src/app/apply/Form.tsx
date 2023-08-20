@@ -13,7 +13,17 @@ const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
   whatLearn: z.string().nonempty("This field is required"),
   shareInfo: z.boolean(),
-  resume: z.custom<FileList>().optional(),
+  resume: z
+    .custom<FileList>()
+    .optional()
+    .refine((files) => {
+      if (files) {
+        const file = files[0];
+        if (file.type !== "application/pdf") {
+          return "Resume must be a PDF";
+        }
+      }
+    }),
 });
 
 export type ApplicationFields = z.infer<typeof applySchema>;
