@@ -59,6 +59,8 @@ export default function KnightHacksRegistrationForm() {
 
       const sasURL = await res.json();
 
+      console.log(sasURL)
+
       if (data.resume) uploadResume(sasURL, data.resume);
 
     }
