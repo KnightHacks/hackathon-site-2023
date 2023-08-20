@@ -62,7 +62,7 @@ export default function KnightHacksRegistrationForm() {
       console.log(sasURL);
       console.log(data.resume);
 
-      if (data.resume) uploadResume(sasURL, data.resume);
+      if (data.resume) uploadResume(sasURL, data.resume[0]);
     }
   };
 
