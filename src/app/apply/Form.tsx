@@ -16,11 +16,10 @@ const applySchema = z.object({
   resume: z
     .custom<FileList>()
     .refine((files) => {
-      if (files) {
-        const file = files[0];
-        if (file.type !== "application/pdf") return false;
-      }
-      return true;
+      if (files.length > 1) return false;
+      if (files.length < 1) return true;
+      const file = files[0];
+      return file.type === "application/pdf";
     }, "File must be a PDF")
     .optional(),
 });
