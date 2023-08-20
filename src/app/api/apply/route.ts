@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
   console.log("Successfully applied to hackathon");
 
-  return new NextResponse(data, {
+  return new NextResponse(JSON.stringify(data), {
     status: 200,
   });
 }
