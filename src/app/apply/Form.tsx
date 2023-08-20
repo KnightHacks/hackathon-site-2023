@@ -42,6 +42,8 @@ export default function KnightHacksRegistrationForm() {
     resolver: zodResolver(applySchema),
   });
 
+  console.log(errors)
+
   const uploadResume = async (url: string, file: File) => {
     convertFileToArrayBuffer(file).then((fileArrayBuffer) => {
       if (
