@@ -15,15 +15,14 @@ const applySchema = z.object({
   shareInfo: z.boolean(),
   resume: z
     .custom<FileList>()
-    .optional()
     .refine((files) => {
       if (files) {
         const file = files[0];
-        if (file.type !== "application/pdf") {
-          return "Resume must be a PDF";
-        }
+        if (file.type !== "application/pdf") return false;
       }
-    }),
+      return true;
+    }, "File must be a PDF")
+    .optional(),
 });
 
 export type ApplicationFields = z.infer<typeof applySchema>;
