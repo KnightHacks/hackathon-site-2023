@@ -1,7 +1,6 @@
 import { ApplicationFields } from "@/app/apply/Form";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { FieldValues } from "react-hook-form";
 
 export const runtime = "edge";
 

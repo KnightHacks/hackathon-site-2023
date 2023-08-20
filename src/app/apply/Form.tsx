@@ -6,7 +6,8 @@ import { z } from "zod";
 import { Checkbox, TextArea } from "../../components/Fields";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { BlobServiceClient, newPipeline } from "@azure/storage-blob";
+import { BlockBlobClient } from "@azure/storage-blob";
+import { convertFileToArrayBuffer } from "@/utils";
 
 const applySchema = z.object({
   whyAttend: z.string().nonempty("This field is required"),
@@ -29,24 +30,22 @@ export default function KnightHacksRegistrationForm() {
   });
 
   const uploadResume = async (url: string, file: File) => {
-    const pipeline = newPipeline();
-    const blobService = new BlobServiceClient(url, pipeline);
-    const containerClient = blobService.getContainerClient("resumes");
+    convertFileToArrayBuffer(file).then((fileArrayBuffer) => {
+      if (
+        fileArrayBuffer === null ||
+        fileArrayBuffer.byteLength < 1 ||
+        fileArrayBuffer.byteLength > 256000
+      )
+        return;
 
-    const blobClient = containerClient.getBlockBlobClient(file.name);
-
-    try {
-      await blobClient.uploadData(file, {
-        blobHTTPHeaders: {
-          blobContentType: file.type,
-        },
-      });
-    } catch (e) {
-      console.error(e);
-    }
+      const blockBlobClient = new BlockBlobClient(url);
+      return blockBlobClient.uploadData(fileArrayBuffer);
+    });
   };
 
   const onSubmit: SubmitHandler<ApplicationFields> = async (data) => {
+    console.log(data)
+
     const res = await fetch("/api/apply", {
       method: "POST",
       body: JSON.stringify(data),
